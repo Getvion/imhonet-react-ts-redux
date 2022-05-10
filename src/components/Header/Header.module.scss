@@ -1,0 +1,40 @@
+@import '../../styles/varibles';
+
+.container {
+  max-width: 1320px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+.logo {
+  font-family: $family-title;
+  font-weight: $fw-bold;
+  font-size: $fs-big;
+}
+
+.nav {
+  &__list {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__item {
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-bottom: 2px solid $primary-text-color;
+    }
+
+    &.active {
+      border-bottom: 2px solid $primary-text-color;
+    }
+  }
+
+  &__link {
+    transition: all 0.15s ease;
+  }
+}
