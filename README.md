@@ -27,3 +27,10 @@
 5. Профиль
 6. Статистика
 7. Избранное / Отложенное / Отмеченное
+
+apis:
+https://api.myshows.me/shared/doc/ - сериалы
+https://rawg.io/apidocs - игры
+https://www.omdbapi.com - фильмы
+https://www.last.fm/api - музыка
+https://developers.google.com/books/ - книги
