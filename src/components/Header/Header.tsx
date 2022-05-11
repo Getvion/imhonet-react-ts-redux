@@ -2,9 +2,23 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { GlobalSvgSelector } from '../../assets/icons/SvgSelector';
+
 import classes from './Header.module.scss';
 
-export const Header = () => {
+interface IHeader {
+  theme: string;
+  setTheme: Function;
+  isUserLogined: boolean;
+  setIsUserLogined: Function;
+}
+
+export const Header: React.FC<IHeader> = ({
+  theme,
+  setTheme,
+  isUserLogined,
+  setIsUserLogined,
+}: IHeader) => {
   const [currentPage, setCurrentPage] = useState(10);
 
   const navArr = [
@@ -16,6 +30,10 @@ export const Header = () => {
     { text: 'Музыка', link: 'music' },
   ];
 
+  const toggleTheme = () => {
+    return theme === 'light' ? setTheme('dark') : setTheme('light');
+  };
+
   return (
     <div className={classes.container}>
       <Link to='/' className={classes.logo} onClick={() => setCurrentPage(-1)}>
@@ -24,17 +42,30 @@ export const Header = () => {
       <nav className={classes.nav}>
         <ul className={classes.nav__list}>
           {navArr.map((obj, index) => (
-            <li
+            <Link
               key={obj.text}
+              to={`/${obj.link}`}
               onClick={() => setCurrentPage(index)}
               className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}
             >
-              <Link className={classes.nav__link} to={`/${obj.link}`}>
-                {obj.text}
-              </Link>
-            </li>
+              <span className={classes.nav__link}>{obj.text}</span>
+            </Link>
           ))}
         </ul>
+        <div onClick={toggleTheme} className={classes.nav__theme}>
+          {theme === 'light' ? <GlobalSvgSelector id='moon' /> : <GlobalSvgSelector id='sun' />}
+        </div>
+        <div className={classes.user}>
+          {isUserLogined ? (
+            <div className={classes.user__avatar} onClick={(prev) => setIsUserLogined(!prev)}>
+              H
+            </div>
+          ) : (
+            <Link to='/auth' className={classes.user__login}>
+              Login
+            </Link>
+          )}
+        </div>
       </nav>
     </div>
   );
