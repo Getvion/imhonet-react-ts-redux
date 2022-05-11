@@ -23,7 +23,7 @@
 
 .card {
   cursor: pointer;
-  box-shadow: $shadow-color;
+  box-shadow: var(#{--shadow-color-default});
   border-radius: 8px;
   position: relative;
 

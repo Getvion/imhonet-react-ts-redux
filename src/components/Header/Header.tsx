@@ -27,11 +27,10 @@ export const Header: React.FC<IHeader> = ({
     { text: 'Фильмы', link: 'movies' },
     { text: 'Сериалы', link: 'shows' },
     { text: 'Книги', link: 'books' },
-    { text: 'Музыка', link: 'music' },
   ];
 
-  const toggleTheme = () => {
-    return theme === 'light' ? setTheme('dark') : setTheme('light');
+  const changeTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (
@@ -52,12 +51,12 @@ export const Header: React.FC<IHeader> = ({
             </Link>
           ))}
         </ul>
-        <div onClick={toggleTheme} className={classes.nav__theme}>
+        <div onClick={changeTheme} className={classes.nav__theme}>
           {theme === 'light' ? <GlobalSvgSelector id='moon' /> : <GlobalSvgSelector id='sun' />}
         </div>
         <div className={classes.user}>
           {isUserLogined ? (
-            <div className={classes.user__avatar} onClick={(prev) => setIsUserLogined(!prev)}>
+            <div className={classes.user__avatar} onClick={() => setIsUserLogined(!isUserLogined)}>
               H
             </div>
           ) : (

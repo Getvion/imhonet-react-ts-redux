@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import App from './App';
 
-import 'normalize.css';
 import './styles/app.scss';
 
 const container = document.getElementById('root')!;
