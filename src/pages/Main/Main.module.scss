@@ -1,0 +1,46 @@
+@import '../../styles/varibles';
+
+.container {
+  max-width: 1320px;
+  margin: auto;
+  padding: 0 10px;
+}
+
+.category {
+  margin-bottom: 30px;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.card {
+  cursor: pointer;
+  box-shadow: $shadow-color;
+  border-radius: 8px;
+  position: relative;
+
+  &__img {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  &__name {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    line-height: 1;
+    font-weight: $fw-light;
+    color: #fff;
+    font-size: $fs-big;
+    text-shadow: 1px 1px black;
+  }
+}
