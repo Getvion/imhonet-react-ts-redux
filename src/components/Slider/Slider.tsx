@@ -1,32 +1,65 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import './Slider.scss';
 
-export const Slider = () => {
+interface ISlider {
+  items: {
+    id: number;
+    background_image: string;
+    metacritic: number;
+    rating: number;
+    name: string;
+    released: string;
+    genres: {
+      id: number;
+      name: string;
+    }[];
+    short_screenshots: {
+      id: number;
+      image: string;
+    }[];
+  }[];
+}
+
+export const Slider: React.FC<ISlider> = ({ items }) => {
   return (
-    <Carousel centerMode={true} infiniteLoop={true}>
-      <div>
-        <img
-          src='https://media.rawg.io/media/games/4be/4be6a6ad0364751a96229c56bf69be59.jpg'
-          alt='slide'
-        />
-        <p className='legend'>Legend 1</p>
-      </div>
-      <div>
-        <img
-          src='https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg'
-          alt='slide'
-        />
-        <p className='legend'>Legend 2</p>
-      </div>
-      <div>
-        <img
-          src='https://media.rawg.io/media/games/b7d/b7d3f1715fa8381a4e780173a197a615.jpg'
-          alt='slide'
-        />
-        <p className='legend'>Legend 3</p>
-      </div>
+    <Carousel
+      infiniteLoop={true}
+      showStatus={false}
+      showArrows={true}
+      showIndicators={true}
+      showThumbs={false}
+      stopOnHover={true}
+      selectedItem={1}
+    >
+      {items.map((item) => (
+        <div key={item.id} className='slide__inner'>
+          <img className='slide__img' src={item.background_image} alt='slide' />
+          <div className='slide__content'>
+            <h2 className='slide__name'>{item.name}</h2>
+            <div className='slide__reviews'>
+              <span className='slide__review'>{item.metacritic}</span>
+              <span className='slide__review'>{item.rating}</span>
+            </div>
+            <span className='slide__release'>Год релиза: {item.released.split('-')[0]}</span>
+            <div className='slide__genres'>
+              Жанры:{' '}
+              {item.genres.map((genre) => (
+                <span key={genre.id} className='slide__genre'>
+                  {genre.name.toLowerCase()}{' '}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className='slide__screens'>
+            {item.short_screenshots.slice(0, 5).map((img) => (
+              <img className='slide__screens-img' key={img.id} src={img.image} alt={img.image} />
+            ))}
+          </div>
+        </div>
+      ))}
     </Carousel>
   );
 };

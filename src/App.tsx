@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('https://api.rawg.io/api/games?key=2d5893a4192a410486b36abbd099f4cb&page=2')
+      .get('https://api.rawg.io/api/games?key=2d5893a4192a410486b36abbd099f4cb&page=1')
       .then(({ data }) => setGames(data.results));
   }, []);
 

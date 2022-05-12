@@ -15,8 +15,6 @@ interface IGame {
   name: string;
   released: string;
   background_image: string;
-  saturated_color: string;
-  dominant_color: string;
   rating: number;
   metacritic: number;
   genres: {
@@ -40,7 +38,7 @@ interface IGame {
 export const Games: React.FC<IGames> = ({ name, games }) => {
   return (
     <div className={classes.games}>
-      <Slider />
+      <Slider items={games} />
       <h2 className={classes.games__title}>{name}</h2>
       <div className={classes.games__list}>
         {games.map((game: IGame) => (
