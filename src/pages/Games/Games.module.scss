@@ -1,13 +1,10 @@
 .games {
   max-width: 1320px;
   margin: auto;
-  // display: flex;
-  // justify-content: space-between;
-  // align-items: center;
   padding: 20px 10px;
 
   &__title {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 
   &__list {

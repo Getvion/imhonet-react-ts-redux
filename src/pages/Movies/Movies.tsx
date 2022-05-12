@@ -1,5 +1,14 @@
 import React from 'react';
 
-export const Movies = () => {
+interface IMovies {
+  name: string;
+  movies: Array<IMovie>;
+}
+
+interface IMovie {
+  title: string;
+}
+
+export const Movies: React.FC<IMovies> = ({ name, movies }) => {
   return <div>Movies</div>;
 };
