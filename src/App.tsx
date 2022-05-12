@@ -6,8 +6,6 @@ import { Header } from './components';
 import { Auth, Main, Profile, Games, Movies, Shows, Books } from './pages';
 
 function App() {
-  const [theme, setTheme] = useState('light');
-  const [isUserLogined, setIsUserLogined] = useState(true);
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -16,23 +14,10 @@ function App() {
       .then(({ data }) => setGames(data.results));
   }, []);
 
-  useEffect(() => {
-    const root = document.querySelector(':root') as HTMLElement;
-    const components = ['bg-color', 'text-color', 'shadow-color'];
-
-    components.forEach((component) => {
-      root.style.setProperty(`--${component}-default`, `var(--${component}-${theme})`);
-    });
-  }, [theme]);
-
+  useEffect(() => {}, []);
   return (
     <div className='app'>
-      <Header
-        theme={theme}
-        setTheme={setTheme}
-        isUserLogined={isUserLogined}
-        setIsUserLogined={setIsUserLogined}
-      />
+      <Header />
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/profile' element={<Profile />} />

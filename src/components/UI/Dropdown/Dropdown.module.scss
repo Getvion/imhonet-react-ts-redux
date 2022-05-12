@@ -1,0 +1,35 @@
+@import '../../../styles/varibles';
+
+.nav__item {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-bottom: 2px solid var(#{--text-color-default});
+  }
+}
+
+.dropdown {
+  left: -20px;
+  top: 20px;
+  position: absolute;
+  background-color: var(#{--bg-color-default});
+  box-shadow: var(#{--shadow-color-default});
+  border: 1px solid var(#{--shadow-color-default});
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 2;
+
+  &__item {
+    padding: 10px;
+  }
+
+  &__logout {
+    border: none;
+  }
+}

@@ -19,6 +19,10 @@
   align-items: center;
   gap: 15px;
 
+  svg {
+    cursor: pointer;
+  }
+
   &__list {
     display: flex;
     gap: 10px;
@@ -48,19 +52,6 @@
 
 .user {
   cursor: pointer;
-
-  &__avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: purple;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: #fff;
-    font-weight: $fw-normal;
-    font-size: $fs-big;
-  }
 
   &__login {
     border-bottom: 2px solid transparent;

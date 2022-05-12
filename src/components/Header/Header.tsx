@@ -1,37 +1,21 @@
-import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 
-import { GlobalSvgSelector } from '../../assets/icons/SvgSelector';
+import { ThemeSwitcher } from '../../features/theme/ThemeSwitcher';
 
 import classes from './Header.module.scss';
+import { Dropdown } from '../UI/Dropdown/Dropdown';
 
-interface IHeader {
-  theme: string;
-  setTheme: Function;
-  isUserLogined: boolean;
-  setIsUserLogined: Function;
-}
-
-export const Header: React.FC<IHeader> = ({
-  theme,
-  setTheme,
-  isUserLogined,
-  setIsUserLogined,
-}: IHeader) => {
+export const Header = () => {
   const [currentPage, setCurrentPage] = useState(10);
 
   const navArr = [
-    { text: 'USERNAME', link: 'profile' },
     { text: 'Игры', link: 'games' },
     { text: 'Фильмы', link: 'movies' },
     { text: 'Сериалы', link: 'shows' },
     { text: 'Книги', link: 'books' },
   ];
-
-  const changeTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
 
   return (
     <div className={classes.container}>
@@ -40,30 +24,23 @@ export const Header: React.FC<IHeader> = ({
       </Link>
       <nav className={classes.nav}>
         <ul className={classes.nav__list}>
+          <Dropdown username='username' />
           {navArr.map((obj, index) => (
-            <Link
+            <li
               key={obj.text}
-              to={`/${obj.link}`}
-              onClick={() => setCurrentPage(index)}
               className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}
             >
-              <span className={classes.nav__link}>{obj.text}</span>
-            </Link>
+              <Link to={`/${obj.link}`} onClick={() => setCurrentPage(index)}>
+                <span className={classes.nav__link}>{obj.text}</span>
+              </Link>
+            </li>
           ))}
         </ul>
-        <div onClick={changeTheme} className={classes.nav__theme}>
-          {theme === 'light' ? <GlobalSvgSelector id='moon' /> : <GlobalSvgSelector id='sun' />}
-        </div>
+        <ThemeSwitcher />
         <div className={classes.user}>
-          {isUserLogined ? (
-            <div className={classes.user__avatar} onClick={() => setIsUserLogined(!isUserLogined)}>
-              H
-            </div>
-          ) : (
-            <Link to='/auth' className={classes.user__login}>
-              Login
-            </Link>
-          )}
+          <Link to='/auth' className={classes.user__login}>
+            Login
+          </Link>
         </div>
       </nav>
     </div>
