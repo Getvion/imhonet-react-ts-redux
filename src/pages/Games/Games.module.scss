@@ -1,0 +1,31 @@
+.games {
+  max-width: 1320px;
+  margin: auto;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  padding: 20px 10px;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+    justify-content: space-between;
+  }
+}
+
+.game {
+  box-shadow: var(#{--shadow-color-default});
+  cursor: pointer;
+  max-width: 300px;
+
+  &__img {
+    max-width: 300px;
+    height: auto;
+  }
+}
