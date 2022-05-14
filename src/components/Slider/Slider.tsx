@@ -30,7 +30,7 @@ export const Slider: React.FC<ISlider> = ({ items }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const onImageSelect = (event: any, index: number) => {
-    setSlideImageUrl(event.target.currentSrc);
+    setSlideImageUrl(event.target?.currentSrc);
     setActiveSlide(index);
   };
 

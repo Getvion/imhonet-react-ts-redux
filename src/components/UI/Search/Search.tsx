@@ -22,6 +22,7 @@ export const Search: React.FC<ISearch> = ({ onClick }) => {
         className={classes.input}
         onChange={(e) => setInputValue(e.target.value)}
         value={inputValue}
+        placeholder={'Grand Theft Auto 5'}
       />
       <Button onClick={handleSumbit} type='submit' />
     </form>

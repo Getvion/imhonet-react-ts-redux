@@ -6,6 +6,7 @@ import { ThemeSwitcher } from '../../features/theme/ThemeSwitcher';
 
 import classes from './Header.module.scss';
 import { Dropdown } from '../UI/Dropdown/Dropdown';
+import { Search } from '../UI/Search/Search';
 
 export const Header = () => {
   const [currentPage, setCurrentPage] = useState(10);
@@ -22,6 +23,7 @@ export const Header = () => {
       <Link to='/' className={classes.logo} onClick={() => setCurrentPage(-1)}>
         IMHONET
       </Link>
+      <Search onClick={(value: string) => console.log(value)} />
       <nav className={classes.nav}>
         <ul className={classes.nav__list}>
           <Dropdown username='username' />
