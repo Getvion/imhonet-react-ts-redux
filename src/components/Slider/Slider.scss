@@ -2,12 +2,6 @@
 
 .swiper {
   border-radius: 20px;
-
-  &-wrapper {
-  }
-
-  &-slide {
-  }
 }
 
 .slide {
@@ -22,10 +16,10 @@
 
   &__img {
     border-radius: 20px;
+    min-height: 700px;
     width: 100%;
-    height: 100%;
     object-fit: cover;
-    object-position: left center;
+    object-position: center center;
   }
 
   &__content {
