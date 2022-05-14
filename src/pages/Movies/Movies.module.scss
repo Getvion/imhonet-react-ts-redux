@@ -1,0 +1,82 @@
+@import '../../styles/varibles';
+
+.movies {
+  max-width: 1320px;
+  margin: auto;
+  padding: 20px 10px;
+
+  &__title {
+    margin: 20px 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+    justify-content: space-between;
+  }
+}
+
+.movie {
+  cursor: pointer;
+  max-width: 300px;
+  border-radius: 20px;
+  min-height: 400px;
+  position: relative;
+
+  &:hover {
+    .movie__img {
+      transform: scale(1.1);
+    }
+
+    .additional {
+      display: block;
+    }
+  }
+
+  &__img__wrapper {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  &__img {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    min-height: 300px;
+    max-height: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  &__title {
+    margin-top: 10px;
+    padding: 0 15px;
+  }
+
+  &__descr {
+    padding: 0 15px;
+    margin-top: 10px;
+    max-width: 270px;
+  }
+}
+
+.additional {
+  display: none;
+  position: absolute;
+  background-color: var(#{--bg-color-default});
+  width: 100%;
+  z-index: 10;
+  padding: 10px;
+
+  &__release,
+  &__rating {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+}
