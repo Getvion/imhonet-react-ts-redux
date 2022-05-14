@@ -1,5 +1,7 @@
 import React from 'react';
-import { Search, Slider } from '../../components';
+import clsx from 'clsx';
+
+import { Slider } from '../../components';
 
 import classes from './Games.module.scss';
 
@@ -38,14 +40,14 @@ interface IGame {
 export const Games: React.FC<IGames> = ({ name, games }) => {
   return (
     <div className={classes.games}>
-      <Search onClick={(value: string) => console.log(value)} />
-
       <Slider items={games} />
       <h2 className={classes.games__title}>{name}</h2>
       <div className={classes.games__list}>
         {games.map((game: IGame) => (
           <div key={game.id} className={classes.game}>
-            <img className={classes.game__img} src={game.background_image} alt={game.name} />
+            <div className={classes.game__img__wrapper}>
+              <img className={classes.game__img} src={game.background_image} alt={game.name} />
+            </div>
             <h3 className={classes.game__title}>{game.name}</h3>
             <div className={classes.game__descr}>
               {game.genres.map((genre) => (
@@ -54,12 +56,23 @@ export const Games: React.FC<IGames> = ({ name, games }) => {
                 </span>
               ))}
             </div>
-            <div className={classes.game__descr}>
-              {game.stores.map((store) => (
-                <span key={store.id} className={classes.game__store}>
-                  {store.store.name.toLowerCase()}{' '}
-                </span>
-              ))}
+
+            <div className={classes.additional}>
+              <div
+                className={clsx(classes.additional__metacritic, {
+                  [classes.metacriti_red]: game.metacritic < 60,
+                  [classes.metacriti_yellow]: game.metacritic > 60 && game.metacritic < 80,
+                  [classes.metacriti_green]: game.metacritic > 80,
+                })}
+              >
+                {game.metacritic}
+              </div>
+              <div className={classes.additional__release}>
+                Дата релиза<span>{game.released}</span>
+              </div>
+              <div className={classes.additional__rating}>
+                Рейтинг <span>{game.rating}</span>
+              </div>
             </div>
           </div>
         ))}
