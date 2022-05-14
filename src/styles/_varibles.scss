@@ -33,5 +33,5 @@ $shadow-color-dark: rgba(100, 100, 100, 0.5) 0 0 8px; // dark
   // shadow
   --shadow-color-light: #{$shadow-color-light};
   --shadow-color-dark: #{$shadow-color-dark};
-  --shadow-color-default: var(#{var(--shadow-color-ligth)});
+  --shadow-color-default: var(#{--shadow-color-ligt});
 }

@@ -10,5 +10,6 @@ interface IMovie {
 }
 
 export const Movies: React.FC<IMovies> = ({ name, movies }) => {
+  console.log(movies);
   return <div>Movies</div>;
 };

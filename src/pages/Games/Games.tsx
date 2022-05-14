@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider } from '../../components';
+import { Search, Slider } from '../../components';
 
 import classes from './Games.module.scss';
 
@@ -38,6 +38,8 @@ interface IGame {
 export const Games: React.FC<IGames> = ({ name, games }) => {
   return (
     <div className={classes.games}>
+      <Search onClick={(value: string) => console.log(value)} />
+
       <Slider items={games} />
       <h2 className={classes.games__title}>{name}</h2>
       <div className={classes.games__list}>

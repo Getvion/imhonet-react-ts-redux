@@ -1,8 +1,10 @@
-import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
+import React, { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import 'swiper/css';
+
 import './Slider.scss';
+import clsx from 'clsx';
 
 interface ISlider {
   items: {
@@ -24,19 +26,28 @@ interface ISlider {
 }
 
 export const Slider: React.FC<ISlider> = ({ items }) => {
+  const [slideImageUrl, setSlideImageUrl] = useState('');
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const onImageSelect = (event: any, index: number) => {
+    setSlideImageUrl(event.target.currentSrc);
+    setActiveSlide(index);
+  };
+
+  const onSlideChange = () => {
+    setSlideImageUrl('');
+    setActiveSlide(0);
+  };
+
   return (
-    <Carousel
-      infiniteLoop={true}
-      showStatus={false}
-      showArrows={true}
-      showIndicators={true}
-      showThumbs={false}
-      stopOnHover={true}
-      selectedItem={1}
-    >
+    <Swiper slidesPerView={1} loop={true} autoplay={true} onSlideChange={onSlideChange}>
       {items.map((item) => (
-        <div key={item.id} className='slide__inner'>
-          <img className='slide__img' src={item.background_image} alt='slide' />
+        <SwiperSlide className='slide__inner' key={item.id}>
+          <img
+            className='slide__img'
+            src={slideImageUrl ? slideImageUrl : item.background_image}
+            alt='slide'
+          />
           <div className='slide__content'>
             <h2 className='slide__name'>{item.name}</h2>
             <div className='slide__reviews'>
@@ -54,12 +65,18 @@ export const Slider: React.FC<ISlider> = ({ items }) => {
             </div>
           </div>
           <div className='slide__screens'>
-            {item.short_screenshots.slice(0, 5).map((img) => (
-              <img className='slide__screens-img' key={img.id} src={img.image} alt={img.image} />
+            {item.short_screenshots.slice(0, 5).map((img, index) => (
+              <img
+                onClick={(event) => onImageSelect(event, index)}
+                className={clsx('slide__screens-img', { active: index === activeSlide })}
+                key={img.id}
+                src={img.image}
+                alt={item.name}
+              />
             ))}
           </div>
-        </div>
+        </SwiperSlide>
       ))}
-    </Carousel>
+    </Swiper>
   );
 };

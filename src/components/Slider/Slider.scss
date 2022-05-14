@@ -1,5 +1,15 @@
 @import '../../styles/varibles';
 
+.swiper {
+  border-radius: 20px;
+
+  &-wrapper {
+  }
+
+  &-slide {
+  }
+}
+
 .slide {
   &__inner {
     cursor: pointer;
@@ -65,10 +75,14 @@
     gap: 5px;
 
     &-img {
+      max-width: 100px;
       border-radius: 5px;
-      max-width: 170px;
       z-index: 10;
-      height: auto;
+      transition: all 0.1s ease;
+
+      &.active {
+        border: 2px solid #fff;
+      }
     }
   }
 }

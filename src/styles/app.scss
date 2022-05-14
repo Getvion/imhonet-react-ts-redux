@@ -14,14 +14,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+html {
+  margin: 0;
+  transition: all 0.3s ease;
+  background-color: var(#{--bg-color-default});
+  color: var(#{--text-color-default});
+}
+
 body {
   font-family: $family-text;
 }
 
 .app {
-  transition: all 0.3s ease;
-  background-color: var(#{--bg-color-default});
-  color: var(#{--text-color-default});
   font-size: $fs-md;
   font-weight: $fw-light;
   width: 100%;

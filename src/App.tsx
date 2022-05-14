@@ -11,16 +11,33 @@ import { Auth, Main, Profile, Games, Movies, Shows, Books } from './pages';
 function App() {
   const [games, setGames] = useState([]);
   const [movies, setMovies] = useState([]);
+  const [shows, setShows] = useState([]);
+
+  const BASE_GAMES = 'https://api.rawg.io/api';
+  const GAMES_API_KEY = '2d5893a4192a410486b36abbd099f4cb';
+
+  const MOVIES_API_KEY = '7dcd1d86-569b-4840-9c72-fa383b7b693a';
+  const BASE_MOVIES = 'https://kinopoiskapiunofficial.tech/api';
+
+  const BASE_SHOWS = 'https://api.tvmaze.com';
 
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get('https://api.rawg.io/api/games?key=2d5893a4192a410486b36abbd099f4cb&page=1')
+        .get(`${BASE_GAMES}/games?key=${GAMES_API_KEY}&page=1`)
         .then(({ data }) => setGames(data.results));
+
       await axios
-        .get('https://omdbapi.com/?i=tt3896198&apikey=8a6a67e4')
-        .then(({ data }) => setMovies(data));
+        .get(`${BASE_MOVIES}/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1`, {
+          headers: {
+            'X-API-KEY': MOVIES_API_KEY,
+          },
+        })
+        .then(({ data }) => setMovies(data.films));
+
+      await axios.get(`${BASE_SHOWS}/search/shows?q=girls`).then(({ data }) => setShows(data));
     }
+
     fetchData();
   }, []);
 
