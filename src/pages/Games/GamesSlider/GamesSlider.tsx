@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import clsx from 'clsx';
 
 import 'swiper/css';
 
-import './Slider.scss';
-import clsx from 'clsx';
+import classes from './GamesSlider.module.scss';
 
-interface ISlider {
+interface Game {
   items: {
     id: number;
     background_image: string;
@@ -25,7 +25,7 @@ interface ISlider {
   }[];
 }
 
-export const Slider: React.FC<ISlider> = ({ items }) => {
+export const GamesSlider: React.FC<Game> = ({ items }) => {
   const [slideImageUrl, setSlideImageUrl] = useState('');
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -40,35 +40,45 @@ export const Slider: React.FC<ISlider> = ({ items }) => {
   };
 
   return (
-    <Swiper slidesPerView={1} loop={true} autoplay={true} onSlideChange={onSlideChange}>
+    <Swiper
+      slidesPerView={1}
+      loop={true}
+      autoplay={true}
+      onSlideChange={onSlideChange}
+      style={{ borderRadius: '20px' }}
+    >
       {items.map((item) => (
-        <SwiperSlide className='slide__inner' key={item.id}>
+        <SwiperSlide className={classes.slide__inner} key={item.id}>
           <img
-            className='slide__img'
+            className={classes.slide__img}
             src={slideImageUrl ? slideImageUrl : item.background_image}
             alt='slide'
           />
-          <div className='slide__content'>
-            <h2 className='slide__name'>{item.name}</h2>
-            <div className='slide__reviews'>
-              <span className='slide__review'>{item.metacritic}</span>
-              <span className='slide__review'>{item.rating}</span>
+          <div className={classes.slide__content}>
+            <h2 className={classes.slide__name}>{item.name}</h2>
+            <div className={classes.slide__reviews}>
+              <span className={classes.slide__review}>{item.metacritic}</span>
+              <span className={classes.slide__review}>{item.rating}</span>
             </div>
-            <span className='slide__release'>Год релиза: {item.released.split('-')[0]}</span>
-            <div className='slide__genres'>
+            <span className={classes.slide__release}>
+              Год релиза: {item.released.split('-')[0]}
+            </span>
+            <div className={classes.slide__genres}>
               Жанры:{' '}
               {item.genres.map((genre) => (
-                <span key={genre.id} className='slide__genre'>
+                <span key={genre.id} className={classes.slide__genre}>
                   {genre.name.toLowerCase()}{' '}
                 </span>
               ))}
             </div>
           </div>
-          <div className='slide__screens'>
+          <div className={classes.slide__screens}>
             {item.short_screenshots.slice(0, 5).map((img, index) => (
               <img
                 onClick={(event) => onImageSelect(event, index)}
-                className={clsx('slide__screens-img', { active: index === activeSlide })}
+                className={clsx(classes.slide__screens_img, {
+                  [classes.active]: index === activeSlide,
+                })}
                 key={img.id}
                 src={img.image}
                 alt={item.name}

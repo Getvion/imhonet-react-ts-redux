@@ -1,8 +1,4 @@
-@import '../../styles/varibles';
-
-.swiper {
-  border-radius: 20px;
-}
+@import '../../../styles/varibles';
 
 .slide {
   &__inner {
@@ -68,7 +64,7 @@
     display: flex;
     gap: 5px;
 
-    &-img {
+    &_img {
       max-width: 100px;
       border-radius: 5px;
       z-index: 10;

@@ -1,7 +1,6 @@
 import React from 'react';
-import clsx from 'clsx';
 
-import { Slider } from '../../components';
+import { MoviesSlider } from './MoviesSlider/MoviesSlider';
 
 import classes from './Movies.module.scss';
 
@@ -26,7 +25,7 @@ interface IMovie {
 export const Movies: React.FC<IMovies> = ({ name, movies }) => {
   return (
     <div className={classes.movies}>
-      {/* <Slider items={movies} /> */}
+      <MoviesSlider items={movies} />
       <h2 className={classes.movies__title}>{name}</h2>
       <div className={classes.movies__list}>
         {movies.map((movie: IMovie) => (

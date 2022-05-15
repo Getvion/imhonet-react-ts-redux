@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { Slider } from '../../components';
+import { GamesSlider } from './GamesSlider/GamesSlider';
 
 import classes from './Games.module.scss';
 
@@ -40,7 +40,7 @@ interface IGame {
 export const Games: React.FC<IGames> = ({ name, games }) => {
   return (
     <div className={classes.games}>
-      <Slider items={games} />
+      <GamesSlider items={games} />
       <h2 className={classes.games__title}>{name}</h2>
       <div className={classes.games__list}>
         {games.map((game: IGame) => (
