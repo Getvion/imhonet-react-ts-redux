@@ -57,8 +57,24 @@ export const GamesSlider: React.FC<Game> = ({ items }) => {
           <div className={classes.slide__content}>
             <h2 className={classes.slide__name}>{item.name}</h2>
             <div className={classes.slide__reviews}>
-              <span className={classes.slide__review}>{item.metacritic}</span>
-              <span className={classes.slide__review}>{item.rating}</span>
+              <span
+                className={clsx(classes.slide__review, {
+                  [classes.green]: item.metacritic >= 80,
+                  [classes.yellow]: item.metacritic < 80 && item.metacritic > 60,
+                  [classes.red]: item.metacritic < 60,
+                })}
+              >
+                {item.metacritic}
+              </span>
+              <span
+                className={clsx(classes.slide__review, {
+                  [classes.green]: item.rating >= 4,
+                  [classes.yellow]: item.rating < 4 && item.rating > 3,
+                  [classes.red]: item.rating < 2,
+                })}
+              >
+                {item.rating}
+              </span>
             </div>
             <span className={classes.slide__release}>
               Год релиза: {item.released.split('-')[0]}
