@@ -34,8 +34,13 @@ export const Header = () => {
         <Search onClick={(value: string) => console.log(value)} />
 
         <Dropdown username='username' />
-        <div className={classes.burger__button} onClick={() => setIsMenuVisible(!isMenuVisible)}>
-          <span></span>
+        <div
+          className={clsx(classes.burger__button, { [classes.visible]: isMenuVisible })}
+          onClick={() => setIsMenuVisible(!isMenuVisible)}
+        >
+          <span className={classes.burger__line}></span>
+          <span className={classes.burger__line}></span>
+          <span className={classes.burger__line}></span>
         </div>
 
         <div
