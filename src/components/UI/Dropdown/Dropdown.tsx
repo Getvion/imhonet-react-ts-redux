@@ -16,7 +16,7 @@ export const Dropdown: React.FC<IDropdown> = ({ username }) => {
   return (
     <>
       {isDropdownVisible && <div onClick={toggleDropdown} className={classes.wrap}></div>}
-      <li className={classes.nav__item} onClick={toggleDropdown}>
+      <div className={classes.nav__item} onClick={toggleDropdown}>
         {username}
         {isDropdownVisible && (
           <div className={classes.dropdown}>
@@ -26,12 +26,12 @@ export const Dropdown: React.FC<IDropdown> = ({ username }) => {
             <Link className={classes.dropdown__item} to={'/settings'}>
               Настройки
             </Link>
-            <button className={`${classes.dropdown__item} ${classes.dropdown__logout}`}>
-              Выйти
-            </button>
+            <Link to='/auth' className={`${classes.dropdown__item} ${classes.dropdown__logout}`}>
+              Войти
+            </Link>
           </div>
         )}
-      </li>
+      </div>
     </>
   );
 };
