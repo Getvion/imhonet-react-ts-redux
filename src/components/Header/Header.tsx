@@ -20,6 +20,11 @@ export const Header = () => {
     { text: 'Книги', link: 'books' },
   ];
 
+  const onLinkClick = (index: number) => {
+    setCurrentPage(index);
+    setIsMenuVisible(false);
+  };
+
   return (
     <header className={classes.header}>
       <div className={classes.container}>
@@ -33,8 +38,12 @@ export const Header = () => {
           <span></span>
         </div>
 
+        <div
+          onClick={() => setIsMenuVisible(!isMenuVisible)}
+          className={clsx(classes.nav__fade, { [classes.visible]: isMenuVisible })}
+        ></div>
+
         <nav className={clsx(classes.nav, { [classes.visible]: isMenuVisible })}>
-          <div className={clsx(classes.nav__fade, { [classes.visible]: isMenuVisible })}></div>
           <ul className={classes.nav__list}>
             {navArr.map((obj, index) => (
               <li
@@ -43,12 +52,10 @@ export const Header = () => {
               >
                 <Link
                   to={`/${obj.link}`}
-                  onClick={() => {
-                    setCurrentPage(index);
-                    setIsMenuVisible(false);
-                  }}
+                  onClick={() => onLinkClick(index)}
+                  className={classes.nav__link}
                 >
-                  <span className={classes.nav__link}>{obj.text}</span>
+                  {obj.text}
                 </Link>
               </li>
             ))}
