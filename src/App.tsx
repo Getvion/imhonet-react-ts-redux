@@ -45,15 +45,17 @@ function App() {
   return (
     <div className='app'>
       <Header />
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/games' element={<Games name={'Лучшие игры'} games={games} />} />
-        <Route path='/movies' element={<Movies name={'Лучшие фильмы'} movies={movies} />} />
-        <Route path='/shows' element={<Shows />} />
-        <Route path='/books' element={<Books />} />
-        <Route path='/auth' element={<Auth />} />
-      </Routes>
+      <div className='app__container'>
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/games' element={<Games name={'Лучшие игры'} games={games} />} />
+          <Route path='/movies' element={<Movies name={'Лучшие фильмы'} movies={movies} />} />
+          <Route path='/shows' element={<Shows />} />
+          <Route path='/books' element={<Books />} />
+          <Route path='/auth' element={<Auth />} />
+        </Routes>
+      </div>
     </div>
   );
 }

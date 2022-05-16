@@ -1,12 +1,24 @@
 @import '../../styles/varibles';
 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(#{--bg-color-default});
+  width: 100%;
+  box-shadow: var(#{--shadow-color-default});
+}
+
 .container {
+  padding: 20px 10px;
+  margin: 0 auto;
   max-width: 1320px;
-  margin: auto;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10px;
+  gap: 20px;
 }
 
 .logo {
@@ -44,21 +56,90 @@
   &__link {
     transition: all 0.15s ease;
   }
+}
 
-  &__theme {
-    cursor: pointer;
+.burger__button {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  span {
+    height: 3px;
+    width: 100%;
+    background-color: var(#{--text-color-default});
+    display: block;
+
+    &::after,
+    &::before {
+      position: absolute;
+      content: '';
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: var(#{--text-color-default});
+    }
+
+    &::after {
+      top: 0;
+    }
+
+    &::before {
+      bottom: 0;
+    }
   }
 }
 
-.user {
-  cursor: pointer;
+@media screen and (max-width: 768px) {
+  .header {
+    width: 100%;
+  }
 
-  &__login {
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s ease;
+  .nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(300%);
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100vh;
+    background-color: var(#{--bg-color-default});
+    padding: 100px 0;
 
-    &:hover {
-      border-bottom: 2px solid var(#{--text-color-default});
+    &__list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
+
+    &__link {
+      font-size: 30px;
+    }
+
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .nav.visible {
+    transform: translateX(0%);
+  }
+
+  .burger__button {
+    height: 20px;
+    width: 30px;
+    pointer-events: all;
   }
 }
