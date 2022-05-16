@@ -1,0 +1,74 @@
+@import '../../styles/varibles';
+
+.profile {
+  padding: 15px 10px;
+  margin: 0 auto;
+  max-width: 1320px;
+  width: 100%;
+
+  &__info {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &_container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+
+  &__avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  &__username {
+    display: inline-block;
+  }
+
+  &__button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid var(#{--text-color-default});
+    background-color: var(#{--bg-color-default});
+    cursor: pointer;
+  }
+
+  &__content {
+  }
+}
+
+.tabs {
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(#{--text-color-default});
+    background-color: var(#{--bg-color-default});
+    border-bottom: 2px solid transparent;
+    outline: none;
+    padding: 5px;
+
+    &.active {
+      transform: scale(1.1);
+      border-bottom: 2px solid var(#{--text-color-default});
+    }
+  }
+
+  &__content {
+  }
+}
