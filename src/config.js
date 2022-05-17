@@ -9,3 +9,7 @@ export const BASE_SHOWS = 'https://api.tvmaze.com';
 export const GET_BEST_GAMES = (pageNumber) => {
   return `${GAMES_BASE}/games?key=${GAMES_API_KEY}&page=${pageNumber}`;
 };
+
+export const GET_BEST_MOVIES = (pageNumber) => {
+  return `${MOVIES_BASE}/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${pageNumber}`;
+};

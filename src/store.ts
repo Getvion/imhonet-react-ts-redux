@@ -5,13 +5,15 @@ import * as requests from './config';
 
 import counterReducer from './features/counter/counterSlice';
 import { themeReducer } from './features/theme/themeSlice';
-import { bestGamesReducer } from './features/bestGames/bestGamesSlice';
+import { bestGamesReducer } from './features/games/bestGamesSlice';
+import { bestMoviesReducer } from './features/movies/bestMoviesSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     theme: themeReducer,
     bestGames: bestGamesReducer,
+    bestMovies: bestMoviesReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>
@@ -22,6 +24,7 @@ export const store = configureStore({
           requests,
         },
       },
+      serializableCheck: false,
     }),
 });
 
