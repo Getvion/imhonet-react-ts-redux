@@ -5,3 +5,4 @@ export { Button } from './UI/Button/Button';
 export { LoadingSpinner } from './LoadingSpinner/LoadingSpinner';
 
 export { GameCard } from './GameCard/GameCard';
+export { MovieCard } from './MovieCard/MovieCard';
