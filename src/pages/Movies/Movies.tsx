@@ -3,6 +3,7 @@ import React from 'react';
 import { MoviesSlider } from './MoviesSlider/MoviesSlider';
 
 import classes from './Movies.module.scss';
+import { Link } from 'react-router-dom';
 
 interface IMovies {
   name: string;
@@ -29,7 +30,7 @@ export const Movies: React.FC<IMovies> = ({ name, movies }) => {
       <h2 className={classes.movies__title}>{name}</h2>
       <div className={classes.movies__list}>
         {movies.map((movie: IMovie) => (
-          <div key={movie.filmId} className={classes.movie}>
+          <Link to={String(movie.filmId)} key={movie.filmId} className={classes.movie}>
             <div className={classes.movie__img__wrapper}>
               <img className={classes.movie__img} src={movie.posterUrlPreview} alt={movie.nameRu} />
             </div>
@@ -50,7 +51,7 @@ export const Movies: React.FC<IMovies> = ({ name, movies }) => {
                 Рейтинг <span>{movie.rating}</span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

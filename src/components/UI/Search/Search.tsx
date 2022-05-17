@@ -24,7 +24,7 @@ export const Search: React.FC<ISearch> = ({ onClick }) => {
         value={inputValue}
         placeholder={'Grand Theft Auto 5'}
       />
-      <Button onClick={handleSumbit} type='submit' />
+      <Button text='Поиск' onClick={handleSumbit} type='submit' />
     </form>
   );
 };

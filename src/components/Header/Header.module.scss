@@ -73,6 +73,7 @@
   transition: all 0.3s ease;
 
   span {
+    border-radius: 5px;
     height: 3px;
     width: 100%;
     background-color: var(#{--text-color-default});

@@ -3,10 +3,10 @@
 .button {
   background-color: var(#{--bg-color-default});
   color: var(#{--text-color-default});
-  border: 2px solid var(#{--text-color-default});
+  border: 1px solid var(#{--text-color-default});
   border-radius: 8px;
   font-size: $fs-md;
-  padding: 7px 20px;
+  padding: 6px 16px;
   cursor: pointer;
   transition: all 0.3s ease;
 

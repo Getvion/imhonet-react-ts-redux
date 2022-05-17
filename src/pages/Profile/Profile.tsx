@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import 'react-tabs/style/react-tabs.css';
 
 import { Button } from '../../components';
-import { Collections, About, Lists, Waiting } from './';
+import { Collections, About, Lists, Waiting, Stats } from './';
 
 import classes from './Profile.module.scss';
 
-// todo perhaps возможно сделать не табами а ссылками /profile/about, /profile/lists, /profile/waiting/, /profile/collections
 // todo подробная статистика
 // todo раздел с подробной статистикой график распределения разного контента по годам, + все что есть в myshows
 
 export const Profile = () => {
   const navigate = useNavigate();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const tabsTitles: string[] = ['Обо мне', 'Списки', 'Ожидаемое', 'Коллекции'];
+  const tabsTitles = [
+    { title: 'Обо-мне', route: 'about' },
+    { title: 'Списки', route: 'lists' },
+    { title: 'Ожидаемое', route: 'waiting' },
+    { title: 'Коллекции', route: 'collections' },
+    { title: 'Статистика', route: 'stats' },
+  ];
 
   return (
     <div className={classes.profile}>
@@ -33,33 +36,28 @@ export const Profile = () => {
         <Button text='Settings' onClick={() => navigate('/settings')} />
         {/* </div> */}
       </div>
-      <div className={classes.profile__content}>
-        <Tabs className={classes.tabs}>
-          <TabList className={classes.tabs__list}>
-            {tabsTitles.map((item, index) => (
-              <Tab
-                onClick={() => setActiveTabIndex(index)}
-                className={clsx(classes.tabs__title, {
-                  [classes.active]: activeTabIndex === index,
-                })}
-              >
-                {item}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanel className={classes.tabs__content}>
-            <About />
-          </TabPanel>
-          <TabPanel className={classes.tabs__content}>
-            <Lists />
-          </TabPanel>
-          <TabPanel className={classes.tabs__content}>
-            <Waiting />
-          </TabPanel>
-          <TabPanel className={classes.tabs__content}>
-            <Collections />
-          </TabPanel>
-        </Tabs>
+      <div className={classes.tabs}>
+        <div className={classes.tabs__list}>
+          {tabsTitles.map((item, index) => (
+            <Link
+              key={item.route}
+              to={item.route}
+              onClick={() => setActiveTabIndex(index)}
+              className={clsx(classes.tabs__title, {
+                [classes.active]: activeTabIndex === index,
+              })}
+            >
+              {item.title}
+            </Link>
+          ))}
+        </div>
+        <Routes>
+          <Route path='about' element={<About />} />
+          <Route path='lists' element={<Lists />} />
+          <Route path='waiting' element={<Waiting />} />
+          <Route path='collections' element={<Collections />} />
+          <Route path='stats' element={<Stats />} />
+        </Routes>
       </div>
     </div>
   );

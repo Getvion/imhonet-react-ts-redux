@@ -20,7 +20,7 @@ export const Dropdown: React.FC<IDropdown> = ({ username }) => {
         {username}
         {isDropdownVisible && (
           <div className={classes.dropdown}>
-            <Link className={classes.dropdown__item} to={'/profile'}>
+            <Link className={classes.dropdown__item} to={'/profile/about'}>
               {username}
             </Link>
             <Link className={classes.dropdown__item} to={'/settings'}>

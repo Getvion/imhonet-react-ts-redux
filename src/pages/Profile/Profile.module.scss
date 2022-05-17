@@ -41,9 +41,6 @@
     background-color: var(#{--bg-color-default});
     cursor: pointer;
   }
-
-  &__content {
-  }
 }
 
 .tabs {
@@ -67,8 +64,5 @@
       transform: scale(1.1);
       border-bottom: 2px solid var(#{--text-color-default});
     }
-  }
-
-  &__content {
   }
 }
