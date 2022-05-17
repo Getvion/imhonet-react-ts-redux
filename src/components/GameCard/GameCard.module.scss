@@ -1,0 +1,90 @@
+@import '../../styles/varibles';
+
+.game {
+  cursor: pointer;
+  max-width: 300px;
+  border-radius: 20px;
+  min-height: 400px;
+  position: relative;
+
+  &:hover {
+    .game__img {
+      transform: scale(1.1);
+    }
+
+    .additional {
+      display: block;
+    }
+  }
+
+  &__img__wrapper {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  &__img {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    min-height: 300px;
+    max-height: 300px;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  &__title {
+    margin-top: 10px;
+    padding: 0 15px;
+  }
+
+  &__descr {
+    padding: 0 15px;
+    margin-top: 10px;
+    max-width: 270px;
+  }
+}
+
+.additional {
+  display: none;
+  position: absolute;
+  background-color: var(#{--bg-color-default});
+  width: 100%;
+  z-index: 1;
+  padding: 10px;
+
+  &__metacritic {
+    color: rgb(240, 240, 240);
+    border-radius: 5px;
+    font-size: $fs-md;
+    font-weight: $fw-normal;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -50px;
+    right: 10px;
+  }
+  .metacriti_green {
+    color: green;
+    border: 1px solid green;
+  }
+  .metacriti_yellow {
+    color: #fdca52;
+    border: 1px solid rgb(253, 202, 82);
+  }
+  .metacriti_red {
+    color: red;
+    border: 1px solid red;
+  }
+
+  &__release,
+  &__rating {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+}
