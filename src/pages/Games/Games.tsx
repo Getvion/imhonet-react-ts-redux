@@ -6,7 +6,7 @@ import { GameCard, LoadingSpinner } from '../../components';
 import classes from './Games.module.scss';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { loadBestGames } from '../../features/bestGames/bestGamesSlice';
+import { loadBestGames } from '../../features/games/bestGamesSlice';
 import { AppDispatch } from '../../store';
 
 interface IGame {
