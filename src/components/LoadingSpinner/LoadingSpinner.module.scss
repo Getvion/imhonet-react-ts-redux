@@ -9,13 +9,15 @@ $size: 80px;
 }
 
 .section {
-  width: 99vw;
-  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ccc;
   transition: 0.3s linear;
+  position: fixed;
+  max-width: 1320px;
+  height: 80%;
+  width: 100%;
 }
 
 .loader {
