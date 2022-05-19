@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import classes from './Auth.module.scss';
 
+// todo добавить кнопку возврата при переходе в раздел "забыли пароль", в мобильном режиме при переходе в режим "забыли пароль" некоректно переходит
+
 export const Auth = () => {
+  const UserForms: any = useRef(null);
   // Variables
   // const signupButton = document.getElementById('signup-button'),
   // loginButton = document.getElementById('login-button'),
@@ -12,6 +15,44 @@ export const Auth = () => {
   // userForms = document.getElementById('user_options-forms'),
   // loginForm = document.getElementById('user_forms-login'),
   // signUpForm = document.getElementById('user_forms-signup');
+
+  const onLoginClick = () => {
+    // loginButton.addEventListener('click', () => {
+    UserForms.current.classList.remove(classes.bounceLeft, classes.show_forgotPass);
+    UserForms.current.classList.add(classes.bounceRight);
+    // }, false);
+  };
+
+  const onSignUpClick = () => {
+    // signupButton.addEventListener('click', () => {
+    UserForms.current.classList.remove(classes.bounceRight, classes.show_forgotPass);
+    UserForms.current.classList.add(classes.bounceLeft);
+    // }, false)
+  };
+
+  const onForgetButtonClick = () => {
+    // Add event listener to the "Forget Password" button
+    // forgetButton.addEventListener('click', () => {
+    UserForms.current.classList.remove(classes.bounceLeft, classes.show_login, classes.show_signup);
+    UserForms.current.classList.add(classes.show_forgotPass, classes.bounceRight);
+    // }, false)
+  };
+
+  const onMobileSignUpClick = () => {
+    // Add event listener to the "Signup" button mobile
+    // signupButtonMb.addEventListener('click', () => {
+    UserForms.current.classList.remove(classes.show_login, classes.show_forgotPass);
+    UserForms.current.classList.add(classes.show_signup);
+    // }, false)
+  };
+
+  const onMobileLoginClick = () => {
+    // Add event listener to the "Login" button mobile
+    // loginButtonMb.addEventListener('click', () => {
+    UserForms.current.classList.remove(classes.show_signup, classes.show_forgotPass);
+    UserForms.current.classList.add(classes.show_login);
+    // }, false)
+  };
 
   return (
     <div className={classes.user}>
@@ -24,14 +65,7 @@ export const Auth = () => {
               <button
                 className={classes.user__unregistered_signup}
                 id='signup-button'
-                onClick={() =>
-                  console.log(` // Add event listener to the "Sign Up" button
-  // signupButton.addEventListener('click', () => {
-  // userForms.classList.remove('show-forgotPass');
-  // userForms.classList.remove('bounceRight');
-  // userForms.classList.add('bounceLeft');
-  // }, false)`)
-                }
+                onClick={onSignUpClick}
               >
                 Sign up
               </button>
@@ -43,19 +77,14 @@ export const Auth = () => {
               <button
                 className={classes.user__registered_login}
                 id='login-button'
-                onClick={() => `// Add event listener to the "Login" button
-  // loginButton.addEventListener('click', () => {
-  // userForms.classList.remove('show-forgotPass');
-  // userForms.classList.remove('bounceLeft');
-  // userForms.classList.add('bounceRight');
-  // }, false)`}
+                onClick={onLoginClick}
               >
                 Login
               </button>
             </div>
           </div>
 
-          <div className={classes.user__options_forms} id='user_options-forms'>
+          <div className={classes.user__options_forms} id='user_options-forms' ref={UserForms}>
             <div className={classes.user__forms_login}>
               <h2 className={classes.forms__title}>Login</h2>
               <form className='forms_form'>
@@ -82,37 +111,20 @@ export const Auth = () => {
                     type='button'
                     className={classes.forms__buttons_forgot}
                     id='forget-button'
-                    onClick={() =>
-                      console.log(`// Add event listener to the "Forget Password" button
-                    // forgetButton.addEventListener('click', () => {
-                    // userForms.classList.add('show-forgotPass');
-                    // userForms.classList.add('bounceRight');
-                    // userForms.classList.remove('bounceLeft');
-                    // userForms.classList.remove('show-login');
-                    // userForms.classList.remove('show-signup');
-                    // }, false)`)
-                    }
+                    onClick={onForgetButtonClick}
                   >
                     Forgot password?
                   </button>
                   <button type='submit' className={classes.forms__buttons_action}>
                     Login
                   </button>
-                  <a
+                  <span
                     className={classes.forms__buttons_mb_button}
                     id='signup-button-mb'
-                    href='https://google.com'
-                    onClick={() =>
-                      console.log(` // Add event listener to the "Signup" button mobile
-                    // signupButtonMb.addEventListener('click', () => {
-                    // userForms.classList.remove('show-forgotPass');
-                    // userForms.classList.remove('show-login');
-                    // userForms.classList.add('show-signup');
-                    // }, false)`)
-                    }
+                    onClick={onMobileSignUpClick}
                   >
                     Sign up
-                  </a>
+                  </span>
                 </div>
               </form>
             </div>
@@ -149,22 +161,13 @@ export const Auth = () => {
                   <button type='submit' className={classes.forms__buttons_action}>
                     Sign up
                   </button>
-                  <a
+                  <span
                     className={classes.forms__buttons_mb_button}
                     id='login-button-mb'
-                    href='https://google.com'
-                    onClick={() =>
-                      console.log(`
-                    // Add event listener to the "Login" button mobile
-                    // loginButtonMb.addEventListener('click', () => {
-                    // userForms.classList.remove('show-forgotPass');
-                    // userForms.classList.add('show-login');
-                    // userForms.classList.remove('show-signup');
-                    // }, false)`)
-                    }
+                    onClick={onMobileLoginClick}
                   >
                     Login
-                  </a>
+                  </span>
                 </div>
               </form>
             </div>
