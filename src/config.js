@@ -13,3 +13,11 @@ export const GET_BEST_GAMES = (pageNumber) => {
 export const GET_BEST_MOVIES = (pageNumber) => {
   return `${MOVIES_BASE}/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${pageNumber}`;
 };
+
+export const GET_MOVIE_INFO_BY_ID = (filmId) => {
+  return `https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}`;
+};
+
+export const GET_MOVIE_STAFF_INFO_BY_ID = (filmId) => {
+  return `https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=${filmId}`;
+};
