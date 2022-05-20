@@ -7,6 +7,7 @@ import counterReducer from './features/counter/counterSlice';
 import { themeReducer } from './features/theme/themeSlice';
 import { bestGamesReducer } from './features/games/bestGamesSlice';
 import { bestMoviesReducer } from './features/movies/bestMoviesSlice';
+import { movieInfoReducer } from './features/movies/loadMovieInfo';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     theme: themeReducer,
     bestGames: bestGamesReducer,
     bestMovies: bestMoviesReducer,
+    movieInfo: movieInfoReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

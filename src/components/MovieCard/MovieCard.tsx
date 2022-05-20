@@ -1,5 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { loadMovieInfo } from '../../features/movies/loadMovieInfo';
+import { AppDispatch } from '../../store';
 
 import classes from './MoviesCard.module.scss';
 
@@ -19,8 +23,18 @@ interface IMovie {
 }
 
 export const MovieCard: React.FC<IMovie> = ({ movie }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onMovieClick = (filmId: number) => {
+    dispatch(loadMovieInfo(filmId));
+  };
+
   return (
-    <Link to={String(movie.filmId)} className={classes.movie}>
+    <Link
+      to={String(movie.filmId)}
+      className={classes.movie}
+      onClick={() => onMovieClick(movie.filmId)}
+    >
       <div className={classes.movie__img__wrapper}>
         <img className={classes.movie__img} src={movie.posterUrlPreview} alt={movie.nameRu} />
       </div>
