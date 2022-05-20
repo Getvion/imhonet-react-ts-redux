@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import classes from './Movie.module.scss';
 
 import 'swiper/css/bundle';
 import { Button, LoadingSpinner } from '../../../components';
-import { useDispatch, useSelector } from 'react-redux';
+import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo, loadMovieSimilar, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../../store';
 
@@ -109,6 +110,7 @@ export const Movie = () => {
     if (movieData.ratingAgeLimits === 'age18') return '18+';
     if (movieData.ratingAgeLimits === 'age16') return '16+';
     if (movieData.ratingAgeLimits === 'age12') return '12+';
+    return '';
   };
 
   const onSimilarMovieClick = (filmId: number) => {
@@ -142,34 +144,20 @@ export const Movie = () => {
                 <div className={classes.movie__info}>
                   <h3 className={classes.movie__about}>О фильме</h3>
                   <ul className={classes.movie__list}>
-                    <li className={classes.movie__list_item}>
-                      <span className={classes.movie__list_descr}>Год производства</span>
-                      <span className={classes.movie__list_content}>{year}</span>
-                    </li>
-                    <li className={classes.movie__list_item}>
-                      <span className={classes.movie__list_descr}>Страна</span>
-                      <span className={classes.movie__list_content}>
-                        {countries.map((c, i) => (i === countries.length - 1 ? c.country : `${c.country}, `))}
-                      </span>
-                    </li>
-                    <li className={classes.movie__list_item}>
-                      <span className={classes.movie__list_descr}>Жанр</span>
-                      <span className={classes.movie__list_content}>
-                        {genres.map((g, i) => (i === genres.length - 1 ? g.genre : `${g.genre}, `))}
-                      </span>
-                    </li>
-                    <li className={classes.movie__list_item}>
-                      <span className={classes.movie__list_descr}>Возраст</span>
-                      <span className={classes.movie__list_content}>{ratingAgeLimits()}</span>
-                    </li>
-                    <li className={classes.movie__list_item}>
-                      <span className={classes.movie__list_descr}>Возраст MRAA</span>
-                      <span className={classes.movie__list_content}>{ratingMpaa.toUpperCase()}</span>
-                    </li>
-                    <li className={classes.movie__list_item}>
-                      <span className={classes.movie__list_descr}>Время</span>
-                      <span className={classes.movie__list_content}>{filmLength}</span>
-                    </li>
+                    <MovieListItem description={'Год производства'} content={year} />
+                    <MovieListItem
+                      description={'Страна'}
+                      content={countries.map((c, i) =>
+                        i === countries.length - 1 ? c.country : `${c.country}, `
+                      )}
+                    />
+                    <MovieListItem
+                      description={'Жанр'}
+                      content={genres.map((g, i) => (i === genres.length - 1 ? g.genre : `${g.genre}, `))}
+                    />
+                    <MovieListItem description={'Возраст'} content={ratingAgeLimits()} />
+                    <MovieListItem description={'Возраст MRAA'} content={ratingMpaa.toUpperCase()} />
+                    <MovieListItem description={'Продолжительность'} content={`${filmLength} мин`} />
                   </ul>
                 </div>
               </div>
