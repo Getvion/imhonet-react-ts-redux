@@ -8,7 +8,7 @@ import classes from './Movie.module.scss';
 import 'swiper/css/bundle';
 import { Button, LoadingSpinner } from '../../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadMovieInfo, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
+import { loadMovieInfo, loadMovieSimilar, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../../store';
 
 interface IMovie {
@@ -75,6 +75,13 @@ interface IMovieData {
       professionText: string;
       professionKey: string;
     }[];
+    movieSimilar: {
+      items: {
+        filmId: number;
+        nameRu: string;
+        posterUrlPreview: string;
+      }[];
+    };
   };
 }
 
@@ -82,35 +89,7 @@ interface IMovieData {
 
 export const Movie = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { movieData, movieStaffData } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
-
-  useEffect(() => {
-    const currentMovieId = window.location.href.split('/').reverse()[0];
-
-    dispatch(loadMovieStaffInfo(currentMovieId));
-
-    if (!movieData.kinopoiskId) dispatch(loadMovieInfo(currentMovieId));
-  }, [dispatch, movieData.kinopoiskId]);
-
-  const similar = {
-    items: [
-      {
-        filmId: 586397,
-        nameRu: 'Джанго освобожденный',
-        nameEn: 'Django Unchained',
-        nameOriginal: 'Django Unchained',
-        posterUrl: 'https://kinopoiskapiunofficial.tech/images/posters/kp/586397.jpg',
-        posterUrlPreview: 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/586397.jpg',
-        relationType: 'SIMILAR',
-      },
-    ],
-  };
-
-  const ratingAgeLimits = () => {
-    if (movieData.ratingAgeLimits === 'age18') return '18+';
-    if (movieData.ratingAgeLimits === 'age16') return '16+';
-    if (movieData.ratingAgeLimits === 'age12') return '12+';
-  };
+  const { movieData, movieStaffData, movieSimilar } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
 
   const {
     posterUrl,
@@ -125,6 +104,26 @@ export const Movie = () => {
     ratingKinopoisk,
     ratingImdb,
   } = movieData;
+
+  const ratingAgeLimits = () => {
+    if (movieData.ratingAgeLimits === 'age18') return '18+';
+    if (movieData.ratingAgeLimits === 'age16') return '16+';
+    if (movieData.ratingAgeLimits === 'age12') return '12+';
+  };
+
+  const onSimilarMovieClick = (filmId: number) => {
+    dispatch(loadMovieInfo(filmId));
+    dispatch(loadMovieStaffInfo(filmId));
+    dispatch(loadMovieSimilar(filmId));
+  };
+
+  useEffect(() => {
+    const currentMovieId = window.location.href.split('/').reverse()[0];
+
+    dispatch(loadMovieInfo(currentMovieId));
+    dispatch(loadMovieStaffInfo(currentMovieId));
+    dispatch(loadMovieSimilar(currentMovieId));
+  }, [dispatch]);
 
   return (
     <div className={classes.movie}>
@@ -197,7 +196,7 @@ export const Movie = () => {
             </div>
           </div>
           <div className={classes.movie__descr}>
-            <h3 className={classes.movie__about}>О фильме</h3>
+            <h3 className={classes.movie__about}>Описание</h3>
             <p className={classes.movie__descr_text}>{description}</p>
           </div>
 
@@ -206,30 +205,33 @@ export const Movie = () => {
           <div className={classes.roles}>
             <h3 className={classes.movie__about}>Актеры и роли</h3>
             <Swiper slidesPerView={5} spaceBetween={30} loop={false}>
-              {movieStaffData.map((person: IStaff) => (
-                <div key={person.nameEn}>
-                  {person.professionKey === 'ACTOR' && (
-                    <SwiperSlide className={classes.roles__person}>
-                      <img className={classes.roles__img} src={person.posterUrl} alt={person.nameRu} />
-                      <span className={classes.roles__name}>{person.nameRu}</span>
-                      <span className={classes.roles__role}>{person.description}</span>
-                    </SwiperSlide>
-                  )}
-                </div>
-              ))}
+              {movieStaffData.length &&
+                movieStaffData.map((person: IStaff) => (
+                  <div key={person.nameEn}>
+                    {person.professionKey === 'ACTOR' && (
+                      <SwiperSlide className={classes.roles__person}>
+                        <img className={classes.roles__img} src={person.posterUrl} alt={person.nameRu} />
+                        <span className={classes.roles__name}>{person.nameRu}</span>
+                        <span className={classes.roles__role}>{person.description}</span>
+                      </SwiperSlide>
+                    )}
+                  </div>
+                ))}
             </Swiper>
           </div>
+
           <div className={classes.similar}>
             <h3 className={classes.movie__about}>Похожие фильмы</h3>
             <Swiper slidesPerView={5} spaceBetween={10} loop={false}>
-              {similar.items.map((item) => (
-                <SwiperSlide className={classes.similar__movie} key={item.filmId}>
-                  <Link to={String(item.filmId)}>
-                    <img className={classes.similar__img} src={item.posterUrlPreview} alt={item.nameRu} />
-                    <span className={classes.similar__name}>{item.nameRu}</span>
-                  </Link>
-                </SwiperSlide>
-              ))}
+              {movieSimilar.items &&
+                movieSimilar.items.map((item) => (
+                  <SwiperSlide className={classes.similar__movie} key={item.filmId}>
+                    <Link to={String(item.filmId)} onClick={() => onSimilarMovieClick(item.filmId)}>
+                      <img className={classes.similar__img} src={item.posterUrlPreview} alt={item.nameRu} />
+                      <span className={classes.similar__name}>{item.nameRu}</span>
+                    </Link>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </>

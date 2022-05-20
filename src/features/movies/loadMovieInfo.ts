@@ -22,9 +22,21 @@ export const loadMovieStaffInfo = createAsyncThunk(
   }
 );
 
+export const loadMovieSimilar = createAsyncThunk(
+  'load-movie-similar-info',
+  async (filmId: number | string, { extra: { axios, requests } }: any) => {
+    return await axios.get(requests.GET_MOVIE_SIMILAR_BY_ID(filmId), {
+      headers: {
+        'X-API-KEY': requests.MOVIES_API_KEY,
+      },
+    });
+  }
+);
+
 const initialState = {
   movieData: {},
   movieStaffData: [],
+  movieSimilar: {},
 };
 
 const movieInfo = createSlice({
@@ -38,6 +50,9 @@ const movieInfo = createSlice({
       })
       .addCase(loadMovieStaffInfo.fulfilled, (state, action) => {
         state.movieStaffData = action.payload.data;
+      })
+      .addCase(loadMovieSimilar.fulfilled, (state, action) => {
+        state.movieSimilar = action.payload.data;
       });
   },
 });

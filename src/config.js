@@ -21,3 +21,7 @@ export const GET_MOVIE_INFO_BY_ID = (filmId) => {
 export const GET_MOVIE_STAFF_INFO_BY_ID = (filmId) => {
   return `https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=${filmId}`;
 };
+
+export const GET_MOVIE_SIMILAR_BY_ID = (filmId) => {
+  return `https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}/similars`;
+};
