@@ -1,9 +1,5 @@
 @import '../../styles/varibles';
 
-$lightGray: #ccc;
-$primaryColor: #e8716d;
-$darkGray: gray;
-
 .user {
   &__authentication {
     display: flex;
@@ -13,13 +9,13 @@ $darkGray: gray;
     height: 100vh;
     background-image: url(../../assets/images/floating-cogs.svg);
     background-position: center center;
-    background-size: cover;
     position: fixed;
 
     button {
       background-color: transparent;
       cursor: pointer;
     }
+
     input {
       background-color: transparent;
       padding: 0;
@@ -30,7 +26,7 @@ $darkGray: gray;
         font-size: 0.85rem;
         font-weight: 300;
         letter-spacing: 0.1rem;
-        color: $lightGray;
+        color: #ccc;
       }
     }
   }
@@ -64,13 +60,6 @@ $darkGray: gray;
     line-height: 1em;
   }
 
-  &__registered_text,
-  &__unregistered_text {
-    font-size: 0.85rem;
-    line-height: 1.4em;
-    letter-spacing: 0.5px;
-  }
-
   &__registered_login,
   &__unregistered_signup {
     margin-top: 30px;
@@ -84,7 +73,7 @@ $darkGray: gray;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     &:hover {
       color: rgba(34, 34, 34, 0.85);
-      background-color: $lightGray;
+      background-color: #ccc;
     }
   }
 
@@ -102,8 +91,7 @@ $darkGray: gray;
     transition: transform 0.4s ease-in-out, background-color 0.3s ease, color 0.3s ease;
 
     .user__forms_login,
-    .user__forms_signup,
-    .user__forms_forgot {
+    .user__forms_signup {
       position: absolute;
       top: 80px;
       left: 40px;
@@ -124,12 +112,6 @@ $darkGray: gray;
       .forms_buttons {
         justify-content: flex-end;
       }
-    }
-
-    .user__forms_forgot {
-      opacity: 0;
-      visibility: hidden;
-      transform: translate3d(120px, 0, 0);
     }
 
     .forms__title {
@@ -154,11 +136,11 @@ $darkGray: gray;
       padding: 6px 20px 6px 0;
       font-size: 1rem;
       font-weight: 300;
-      color: $darkGray;
+      color: gray;
       letter-spacing: 0.1rem;
       transition: border-color 0.2s ease-in-out;
       &:focus {
-        border-color: $darkGray;
+        border-color: gray;
       }
     }
 
@@ -167,17 +149,6 @@ $darkGray: gray;
       justify-content: space-between;
       align-items: center;
       margin-top: 35px;
-    }
-
-    .forms__buttons_forgot {
-      border: none;
-      letter-spacing: 0.1rem;
-      color: $lightGray;
-      text-decoration: underline;
-      transition: color 0.2s ease-in-out;
-      &:hover {
-        color: $lightGray;
-      }
     }
 
     .forms__buttons_action {
@@ -201,7 +172,6 @@ $darkGray: gray;
       display: none;
     }
 
-    //
     &.show_signup {
       display: block;
       transform: translate3d(2%, -50%, 0);
@@ -232,26 +202,6 @@ $darkGray: gray;
       }
     }
 
-    &.show_forgotPass {
-      display: block;
-      transform: translate3d(100%, -50%, 0);
-      .user__forms_forgot {
-        opacity: 1;
-        visibility: visible;
-        transform: translate3d(0, 0, 0);
-      }
-      .user__forms_signup {
-        opacity: 0;
-        visibility: hidden;
-        transform: translate3d(150%, 0%, 0);
-      }
-      .user__forms_login {
-        opacity: 0;
-        visibility: hidden;
-        transform: translate3d(-120%, 0, 0);
-      }
-    }
-
     &.bounceLeft {
       animation: bounceLeft 1s forwards;
       .user__forms_signup {
@@ -266,45 +216,6 @@ $darkGray: gray;
 
     &.bounceRight {
       animation: bounceRight 1s forwards;
-    }
-  }
-}
-
-@media screen and (max-width: 580px) {
-  .user {
-    &__options {
-      &_text {
-        display: none;
-      }
-
-      &_forms {
-        width: 96%;
-        left: 0;
-        min-height: 400px !important;
-        transform: translate3d(2%, -50%, 0);
-
-        .forms__buttons_mb_button {
-          display: block;
-          border: 2px solid $primaryColor;
-          color: $primaryColor;
-          padding: 10px 26px;
-          margin: 20px auto;
-          font-size: 16px;
-          border-radius: 3px;
-          text-transform: uppercase;
-          letter-spacing: 0.1rem;
-          transition-duration: 300ms;
-          &:hover {
-            background-color: $primaryColor;
-            color: #fff;
-          }
-        }
-
-        .forms__title {
-          margin-bottom: 20px;
-          text-align: center;
-        }
-      }
     }
   }
 }
@@ -344,21 +255,45 @@ $darkGray: gray;
   }
 }
 
-// Bounce to the left side Starts
-@-webkit-keyframes bounceLeft {
-  0% {
-    -webkit-transform: translate3d(100%, -50%, 0);
-    transform: translate3d(100%, -50%, 0);
-  }
-  50% {
-    -webkit-transform: translate3d(-30px, -50%, 0);
-    transform: translate3d(-30px, -50%, 0);
-  }
-  100% {
-    -webkit-transform: translate3d(0, -50%, 0);
-    transform: translate3d(0, -50%, 0);
+@media screen and (max-width: 825px) {
+  .user {
+    &__options {
+      &_text {
+        display: none;
+      }
+
+      &_forms {
+        width: 96%;
+        left: 0;
+        min-height: 400px;
+        transform: translate3d(2%, -50%, 0);
+
+        .forms__buttons_mb_button {
+          display: block;
+          border: 2px solid #e8716d;
+          color: #e8716d;
+          padding: 10px 26px;
+          margin: 20px auto;
+          border-radius: 5px;
+          text-transform: uppercase;
+          letter-spacing: 0.1rem;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: #e8716d;
+            color: #fff;
+          }
+        }
+
+        .forms__title {
+          margin-bottom: 20px;
+          text-align: center;
+        }
+      }
+    }
   }
 }
+
 @keyframes bounceLeft {
   0% {
     -webkit-transform: translate3d(100%, -50%, 0);
@@ -371,23 +306,6 @@ $darkGray: gray;
   100% {
     -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
-  }
-}
-// Bounce to the left side Ends
-
-// Bounce to the Right side Starts
-@-webkit-keyframes bounceRight {
-  0% {
-    -webkit-transform: translate3d(0, -50%, 0);
-    transform: translate3d(0, -50%, 0);
-  }
-  50% {
-    -webkit-transform: translate3d(calc(100% + 30px), -50%, 0);
-    transform: translate3d(calc(100% + 30px), -50%, 0);
-  }
-  100% {
-    -webkit-transform: translate3d(100%, -50%, 0);
-    transform: translate3d(100%, -50%, 0);
   }
 }
 @keyframes bounceRight {
@@ -404,17 +322,7 @@ $darkGray: gray;
     transform: translate3d(100%, -50%, 0);
   }
 }
-// Bounce to the Right side Ends
 
-// Show Sign Up form Starts
-@-webkit-keyframes showSignUp {
-  100% {
-    opacity: 1;
-    visibility: visible;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
 @keyframes showSignUp {
   100% {
     opacity: 1;
@@ -423,4 +331,3 @@ $darkGray: gray;
     transform: translate3d(0, 0, 0);
   }
 }
-// Show Sign Up form Ends
