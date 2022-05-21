@@ -33,7 +33,7 @@ export const Header = () => {
         </Link>
         <Search onClick={(value: string) => console.log(value)} />
 
-        <Dropdown username='username' />
+        <Dropdown />
         <div
           className={clsx(classes.burger__button, { [classes.visible]: isMenuVisible })}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
@@ -55,11 +55,7 @@ export const Header = () => {
                 key={obj.text}
                 className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}
               >
-                <Link
-                  to={`/${obj.link}`}
-                  onClick={() => onLinkClick(index)}
-                  className={classes.nav__link}
-                >
+                <Link to={`/${obj.link}`} onClick={() => onLinkClick(index)} className={classes.nav__link}>
                   {obj.text}
                 </Link>
               </li>
