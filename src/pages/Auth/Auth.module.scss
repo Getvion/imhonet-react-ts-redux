@@ -223,16 +223,15 @@
 @media screen and (max-width: 990px) {
   .user {
     &__options {
-      &_container {
-        width: 90%;
+      &_text {
+        display: none;
       }
 
       &_forms {
-        min-height: 360px;
-
-        .forms__buttons {
-          flex-direction: column;
-        }
+        width: 96%;
+        left: 0;
+        min-height: 400px;
+        transform: translate3d(2%, -50%, 0);
 
         .user__forms_login {
           top: 40px;
@@ -245,28 +244,10 @@
         .user__forms_signup {
           top: 40px;
         }
-      }
 
-      &_registered,
-      &_unregistered {
-        padding: 50px 45px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 825px) {
-  .user {
-    &__options {
-      &_text {
-        display: none;
-      }
-
-      &_forms {
-        width: 96%;
-        left: 0;
-        min-height: 400px;
-        transform: translate3d(2%, -50%, 0);
+        .forms__buttons {
+          flex-direction: column;
+        }
 
         .forms__buttons_mb_button {
           display: block;
