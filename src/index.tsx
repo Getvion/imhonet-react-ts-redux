@@ -8,6 +8,8 @@ import App from './App';
 
 import './styles/app.scss';
 
+import './firebase';
+
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
