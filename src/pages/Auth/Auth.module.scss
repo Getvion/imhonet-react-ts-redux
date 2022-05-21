@@ -8,33 +8,39 @@
     width: 100%;
     height: 100vh;
     background-image: url(../../assets/images/floating-cogs.svg);
-    background-position: center center;
     position: fixed;
 
     button {
       background-color: transparent;
       cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px 30px;
+      color: #fff;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
     }
 
     input {
       background-color: transparent;
-      padding: 0;
       border: 0;
       outline: 0;
 
       &::placeholder {
-        font-size: 0.85rem;
-        font-weight: 300;
-        letter-spacing: 0.1rem;
+        font-size: $fs-sm;
         color: #ccc;
       }
     }
   }
 
   &__options {
+    position: relative;
+    width: 80%;
+
     &_container {
-      position: relative;
-      width: 80%;
+      width: 50%;
+      padding: 75px 45px;
+      color: #fff;
     }
 
     &_text {
@@ -42,38 +48,21 @@
       justify-content: space-between;
       width: 100%;
       background-color: rgba(34, 34, 34, 0.85);
-      border-radius: 3px;
     }
-    &_unregistered,
-    &_registered {
-      width: 50%;
-      padding: 75px 45px;
-      color: #fff;
-      font-weight: 300;
+
+    &_title {
+      margin-bottom: 15px;
+      font-size: 1.66rem;
+      line-height: 1em;
     }
-  }
 
-  &__registered_title,
-  &__unregistered_title {
-    margin-bottom: 15px;
-    font-size: 1.66rem;
-    line-height: 1em;
-  }
-
-  &__registered_login,
-  &__unregistered_signup {
-    margin-top: 30px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 10px 30px;
-    color: #fff;
-    text-transform: uppercase;
-    line-height: 1em;
-    letter-spacing: 0.2rem;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    &:hover {
-      color: rgba(34, 34, 34, 0.85);
-      background-color: #ccc;
+    &_button {
+      margin-top: 30px;
+      letter-spacing: 0.2rem;
+      &:hover {
+        color: rgba(34, 34, 34, 0.85);
+        background-color: #ccc;
+      }
     }
   }
 
@@ -153,14 +142,9 @@
 
     .forms__buttons_action {
       background-color: var(#{--bg-color-defult});
-      border-radius: 5px;
-      padding: 10px 35px;
       color: var(#{--text-color-defult});
-      text-transform: uppercase;
       letter-spacing: 0.1rem;
-      transition: all 0.2s ease;
       border: 1px solid var(#{--text-color-default});
-      font-weight: $fw-light;
 
       &:hover {
         background-color: var(#{--text-color-default});
@@ -253,12 +237,8 @@
           display: block;
           border: 2px solid #e8716d;
           color: #e8716d;
-          padding: 10px 26px;
           margin: 20px auto;
-          border-radius: 5px;
-          text-transform: uppercase;
           letter-spacing: 0.1rem;
-          transition: all 0.3s ease;
 
           &:hover {
             background-color: #e8716d;

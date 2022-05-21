@@ -7,15 +7,38 @@ interface Props {
   text: string;
   buttonText: string;
   isRegistration?: boolean;
+  onSubmitForm: any;
 }
 
-export const Form: React.FC<Props> = ({ onMobileButtonClick, text, buttonText, isRegistration }) => {
+export const Form: React.FC<Props> = ({
+  onMobileButtonClick,
+  text,
+  buttonText,
+  isRegistration,
+  onSubmitForm,
+}) => {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [nicknameValue, setNicknameValue] = useState('');
 
+  const onSubmitButtonClick = (e: any) => {
+    e.preventDefault();
+
+    const formData = {
+      email: emailValue,
+      password: passwordValue,
+      nickname: nicknameValue,
+    };
+
+    onSubmitForm(formData);
+
+    setEmailValue('');
+    setPasswordValue('');
+    setNicknameValue('');
+  };
+
   return (
-    <form className={classes.forms__form}>
+    <form className={classes.forms__form} onSubmit={(e) => onSubmitButtonClick(e)}>
       <fieldset className={classes.forms__fieldset}>
         {isRegistration && (
           <div className={classes.forms__field}>
@@ -51,7 +74,11 @@ export const Form: React.FC<Props> = ({ onMobileButtonClick, text, buttonText, i
         </div>
       </fieldset>
       <div className={classes.forms__buttons}>
-        <button className={classes.forms__buttons_action} type='submit'>
+        <button
+          className={classes.forms__buttons_action}
+          type='submit'
+          onClick={(e) => onSubmitButtonClick(e)}
+        >
           {buttonText}
         </button>
         <button

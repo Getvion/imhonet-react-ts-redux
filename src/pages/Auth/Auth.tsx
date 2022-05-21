@@ -29,20 +29,24 @@ export const Auth = () => {
     UserForms.current.classList.add(classes.show_login);
   };
 
+  const onSubmitForm = (data: { nickname: string; login: string; password: string }) => {
+    console.log(data);
+  };
+
   return (
     <section className={clsx(classes.user, classes.user__authentication)}>
-      <div className={classes.user__options_container}>
+      <div className={classes.user__options}>
         <div className={classes.user__options_text}>
-          <div className={classes.user__options_unregistered}>
-            <h2 className={classes.user__unregistered_title}>Нет аккаунта?</h2>
-            <button className={classes.user__unregistered_signup} id='signup-button' onClick={onSignUpClick}>
+          <div className={classes.user__options_container}>
+            <h2 className={classes.user__options_title}>Нет аккаунта?</h2>
+            <button className={classes.user__options_button} id='signup-button' onClick={onSignUpClick}>
               Зарегистрироваться
             </button>
           </div>
 
-          <div className={classes.user__options_registered}>
-            <h2 className={classes.user__registered_title}>Уже есть аккаунт?</h2>
-            <button className={classes.user__registered_login} id='login-button' onClick={onLoginClick}>
+          <div className={classes.user__options_container}>
+            <h2 className={classes.user__options_title}>Уже есть аккаунт?</h2>
+            <button className={classes.user__options_button} id='login-button' onClick={onLoginClick}>
               Войти
             </button>
           </div>
@@ -55,6 +59,7 @@ export const Auth = () => {
               onMobileButtonClick={() => onMobileSignUpClick()}
               text='Зарегистрироваться'
               buttonText='Войти'
+              onSubmitForm={onSubmitForm}
             />
           </div>
           <div className={classes.user__forms_signup}>
@@ -64,6 +69,7 @@ export const Auth = () => {
               text='Войти'
               buttonText='Зарегистрироваться'
               isRegistration={true}
+              onSubmitForm={onSubmitForm}
             />
           </div>
         </div>
