@@ -8,6 +8,7 @@ import { themeReducer } from './features/theme/themeSlice';
 import { bestGamesReducer } from './features/games/bestGamesSlice';
 import { bestMoviesReducer } from './features/movies/bestMoviesSlice';
 import { movieInfoReducer } from './features/movies/loadMovieInfo';
+import { userReducer } from './features/auth/userSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     bestGames: bestGamesReducer,
     bestMovies: bestMoviesReducer,
     movieInfo: movieInfoReducer,
+    user: userReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

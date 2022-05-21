@@ -10,7 +10,7 @@ interface Props {
   onSubmitForm: any;
 }
 
-export const Form: React.FC<Props> = ({
+export const RegistrationForm: React.FC<Props> = ({
   onMobileButtonClick,
   text,
   buttonText,
@@ -24,17 +24,7 @@ export const Form: React.FC<Props> = ({
   const onSubmitButtonClick = (e: any) => {
     e.preventDefault();
 
-    const formData = {
-      email: emailValue,
-      password: passwordValue,
-      nickname: nicknameValue,
-    };
-
-    onSubmitForm(formData);
-
-    setEmailValue('');
-    setPasswordValue('');
-    setNicknameValue('');
+    onSubmitForm(nicknameValue, emailValue, passwordValue);
   };
 
   return (
@@ -54,8 +44,8 @@ export const Form: React.FC<Props> = ({
         )}
         <div className={classes.forms__field}>
           <input
-            value={passwordValue}
-            onChange={(e) => setPasswordValue(e.target.value)}
+            value={emailValue}
+            onChange={(e) => setEmailValue(e.target.value)}
             className={classes.forms__field_input}
             type='email'
             placeholder='Емейл'
@@ -64,8 +54,8 @@ export const Form: React.FC<Props> = ({
         </div>
         <div className={classes.forms__field}>
           <input
-            value={emailValue}
-            onChange={(e) => setEmailValue(e.target.value)}
+            value={passwordValue}
+            onChange={(e) => setPasswordValue(e.target.value)}
             className={classes.forms__field_input}
             type='password'
             placeholder='Пароль'
@@ -81,12 +71,7 @@ export const Form: React.FC<Props> = ({
         >
           {buttonText}
         </button>
-        <button
-          className={classes.forms__buttons_mb_button}
-          id='signup-button-mb'
-          onClick={onMobileButtonClick}
-          type='button'
-        >
+        <button className={classes.forms__buttons_mb_button} onClick={onMobileButtonClick} type='button'>
           {text}
         </button>
       </div>
