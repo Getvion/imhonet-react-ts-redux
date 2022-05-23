@@ -26,6 +26,7 @@ export const Ratings = () => {
     <div className={classes.stat}>
       {ratingsData.map((obj, index) => (
         <div
+          key={obj.title}
           className={clsx(classes.stat__item, { [classes.active]: selectedRating === index })}
           onClick={() => onSelectRating(index)}
         >
