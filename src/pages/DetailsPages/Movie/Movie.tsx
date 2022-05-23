@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './Movie.module.scss';
 
 import 'swiper/css/bundle';
-import { Button, LoadingSpinner } from '../../../components';
+import { Button, LoadingSpinner, Ratings } from '../../../components';
 import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo, loadMovieSimilar, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../../store';
@@ -188,7 +188,10 @@ export const Movie = () => {
             <p className={classes.movie__descr_text}>{description}</p>
           </div>
 
-          <div className={classes.movie__ratings}>select rating</div>
+          <div className={classes.movie__ratings}>
+            <h3 className={classes.movie__about}>Оценка</h3>
+            <Ratings />
+          </div>
 
           <div className={classes.roles}>
             <h3 className={classes.movie__about}>Актеры и роли</h3>
