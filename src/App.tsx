@@ -6,9 +6,6 @@ import { Header } from './components';
 import { Auth, Main, Profile, Games, Movies, Shows, Books } from './pages';
 import { Book, Game, Movie, Show } from './pages/DetailsPages';
 
-// todo: добавить индикатор загрузки при переклюечении картинок в слайдере
-// todo: в слайдер вставлять случайную игру
-
 function App() {
   const [shows, setShows] = useState([]);
 
