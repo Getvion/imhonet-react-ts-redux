@@ -9,6 +9,7 @@ import { bestGamesReducer } from './features/games/bestGamesSlice';
 import { bestMoviesReducer } from './features/movies/bestMoviesSlice';
 import { movieInfoReducer } from './features/movies/loadMovieInfo';
 import { userReducer } from './features/auth/userSlice';
+import { gameInfoReducer } from './features/games/loadGameInfo';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     bestMovies: bestMoviesReducer,
     movieInfo: movieInfoReducer,
     user: userReducer,
+    gameInfo: gameInfoReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 
-// todo стикеры как в rawg, при нажатии добавлять класс активности и приподнимать
-// todo виды оценок: обязательно, рекомендую, так себе, пропуск
-// todo отдельная кнопка для отметки просмотренным / поигранным / прочитанным
-
 import exceptionalImg from './img/exceptional.png';
 import recomendedImg from './img/recomended.png';
 import mehImg from './img/meh.png';
