@@ -7,11 +7,7 @@ import { setSearch } from '../../../features/search/searchSlice';
 
 import classes from './Search.module.scss';
 
-interface ISearch {
-  onClick: Function;
-}
-
-export const Search: React.FC<ISearch> = ({ onClick }) => {
+export const Search = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');

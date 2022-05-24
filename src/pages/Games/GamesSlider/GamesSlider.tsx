@@ -14,14 +14,8 @@ interface Game {
     rating: number;
     name: string;
     released: string;
-    genres: {
-      id: number;
-      name: string;
-    }[];
-    short_screenshots: {
-      id: number;
-      image: string;
-    }[];
+    genres: { id: number; name: string }[];
+    short_screenshots: { id: number; image: string }[];
   }[];
 }
 
@@ -76,9 +70,7 @@ export const GamesSlider: React.FC<Game> = ({ items }) => {
                 {item.rating}
               </span>
             </div>
-            <span className={classes.slide__release}>
-              Год релиза: {item.released.split('-')[0]}
-            </span>
+            <span className={classes.slide__release}>Год релиза: {item.released.split('-')[0]}</span>
             <div className={classes.slide__genres}>
               Жанры:{' '}
               {item.genres.map((genre) => (

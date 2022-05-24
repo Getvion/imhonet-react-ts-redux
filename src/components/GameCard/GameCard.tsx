@@ -6,30 +6,13 @@ import classes from './GameCard.module.scss';
 
 interface IGame {
   game: {
-    prev?: string;
-    next?: string;
     id: number;
     name: string;
     released: string;
     background_image: string;
     rating: number;
     metacritic: number;
-    genres: {
-      id: number;
-      name: string;
-    }[];
-    stores: {
-      id: number;
-      store: {
-        id: number;
-        name: string;
-        image_background: string;
-      };
-    }[];
-    short_screenshots: {
-      id: number;
-      image: string;
-    }[];
+    genres: { id: number; name: string }[];
   };
 }
 

@@ -31,8 +31,7 @@ export const Header = () => {
         <Link to='/' className={classes.logo} onClick={() => setCurrentPage(-1)}>
           IMHONET
         </Link>
-        <Search onClick={(value: string) => console.log(value)} />
-
+        <Search />
         <Dropdown />
         <div
           className={clsx(classes.burger__button, { [classes.visible]: isMenuVisible })}

@@ -5,19 +5,15 @@ import { Link } from 'react-router-dom';
 import { loadMovieInfo } from '../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../store';
 
-import classes from './MoviesCard.module.scss';
+import classes from './MovieCard.module.scss';
 
 interface IMovie {
   movie: {
     filmId: number;
     nameRu: string;
-    nameEn: string;
     year: string;
-    filmLength: string;
-    countries: { country: string }[];
     genres: { genre: string }[];
     rating: string;
-    posterUrl: string;
     posterUrlPreview: string;
   };
 }

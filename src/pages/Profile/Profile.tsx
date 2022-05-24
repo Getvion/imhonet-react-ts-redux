@@ -32,9 +32,7 @@ export const Profile = () => {
           />
           <h1 className={classes.profile__username}>Username</h1>
         </div>
-        {/* <div className={classes.profile__info_container}> */}
         <Button text='Settings' onClick={() => navigate('/settings')} />
-        {/* </div> */}
       </div>
       <div className={classes.tabs}>
         <div className={classes.tabs__list}>

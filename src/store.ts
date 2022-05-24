@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import * as requests from './config';
 
-import counterReducer from './features/counter/counterSlice';
 import { themeReducer } from './features/theme/themeSlice';
 import { bestGamesReducer } from './features/games/bestGamesSlice';
 import { bestMoviesReducer } from './features/movies/bestMoviesSlice';
@@ -14,7 +13,6 @@ import { searchReducer } from './features/search/searchSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     theme: themeReducer,
     bestGames: bestGamesReducer,
     bestMovies: bestMoviesReducer,

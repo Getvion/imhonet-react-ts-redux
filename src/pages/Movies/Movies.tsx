@@ -12,13 +12,9 @@ import { AppDispatch } from '../../store';
 interface IMovie {
   filmId: number;
   nameRu: string;
-  nameEn: string;
   year: string;
-  filmLength: string;
-  countries: { country: string }[];
   genres: { genre: string }[];
   rating: string;
-  posterUrl: string;
   posterUrlPreview: string;
 }
 
