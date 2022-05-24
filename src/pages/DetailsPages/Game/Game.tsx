@@ -40,7 +40,9 @@ export const Game = () => {
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
 
   useEffect(() => {
-    dispatch(loadGameInfo('chernobylite'));
+    const currentGameId = window.location.href.split('/').reverse()[0];
+
+    dispatch(loadGameInfo(currentGameId));
   }, [dispatch]);
 
   const {
@@ -71,7 +73,7 @@ export const Game = () => {
                 <h2 className={classes.game__original}>{name_original}</h2>
                 <div className={classes.game__add}>
                   <Button text='Буду играть' onClick={() => console.log('hi')} />
-                  <Button text='Любимый' onClick={() => console.log('hi')} />
+                  <Button text='Любимая игра' onClick={() => console.log('hi')} />
                 </div>
                 <div className={classes.game__info}>
                   <h3 className={classes.game__about}>О игре</h3>

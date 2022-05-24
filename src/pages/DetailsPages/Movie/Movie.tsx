@@ -110,7 +110,7 @@ export const Movie = () => {
     if (movieData.ratingAgeLimits === 'age18') return '18+';
     if (movieData.ratingAgeLimits === 'age16') return '16+';
     if (movieData.ratingAgeLimits === 'age12') return '12+';
-    return '';
+    return '0+';
   };
 
   const onSimilarMovieClick = (filmId: number) => {
