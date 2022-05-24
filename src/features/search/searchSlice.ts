@@ -20,10 +20,22 @@ export const searchMoviesByName = createAsyncThunk(
 
 const initialState = {
   searchInputValue: '',
-  gamesSearch: [],
-  moviesSearch: [],
-  showsSearch: [],
-  booksSearch: [],
+  games: {
+    gamesSearch: [],
+    isLoaded: false,
+  },
+  movies: {
+    moviesSearch: [],
+    isLoaded: false,
+  },
+  shows: {
+    showsSearch: [],
+    isLoaded: false,
+  },
+  books: {
+    booksSearch: [],
+    isLoaded: false,
+  },
 };
 
 const searchSlice = createSlice({
@@ -37,10 +49,18 @@ const searchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(searchGamesByName.fulfilled, (state, action) => {
-        state.gamesSearch = action.payload.data;
+        state.games.gamesSearch = action.payload.data;
+        state.games.isLoaded = true;
+      })
+      .addCase(searchGamesByName.pending, (state, action) => {
+        state.games.isLoaded = false;
       })
       .addCase(searchMoviesByName.fulfilled, (state, action) => {
-        state.moviesSearch = action.payload.data;
+        state.movies.moviesSearch = action.payload.data;
+        state.movies.isLoaded = true;
+      })
+      .addCase(searchMoviesByName.pending, (state, action) => {
+        state.movies.isLoaded = false;
       });
   },
 });
