@@ -1,0 +1,144 @@
+@import '../../../styles/varibles';
+
+.game {
+  max-width: 1020px;
+  padding: 0 10px;
+  margin: 0 auto;
+
+  &__about {
+    font-size: $fs-big;
+    margin: 10px 0;
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    height: 100%;
+    border-radius: 20px;
+  }
+
+  &__image {
+    height: 100%;
+    border-radius: 10px;
+    min-height: 400px;
+    max-height: 300px;
+    width: 100%;
+    max-width: 300px;
+    object-fit: cover;
+  }
+
+  &__title_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__inner {
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  &__title {
+    margin: 0 0 15px 0;
+  }
+
+  &__original {
+    font-size: 20px;
+    font-weight: $fw-light;
+    opacity: 0.7;
+  }
+
+  &__add {
+    margin: 20px 0;
+
+    button {
+      padding: 10px 15px;
+      margin-right: 10px;
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+  }
+
+  &__grades {
+    margin-top: 50px;
+    font-size: $fs-big;
+    font-weight: $fw-normal;
+    display: flex;
+    gap: 20px;
+  }
+
+  &__grade {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.green {
+      border: 2px solid green;
+      color: green;
+    }
+
+    &.yellow {
+      color: #fdca52;
+      border: 2px solid rgb(253, 202, 82);
+    }
+
+    &.red {
+      color: red;
+      border: 2px solid red;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    max-width: 90%;
+
+    &_item {
+      margin: 5px 0;
+      padding-bottom: 5px;
+    }
+
+    &_descr {
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      opacity: 0.7;
+      font-weight: $fw-light;
+    }
+  }
+
+  &__descr {
+    margin: 15px 0;
+
+    &_show {
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-weight: $fw-normal;
+
+      &:hover {
+        border-bottom: 2px solid var(#{--text-color-default});
+      }
+    }
+  }
+}
+
+.similar {
+  &__img {
+    width: 100%;
+    object-fit: cover;
+  }
+  &__name {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-weight: $fw-normal;
+  }
+}
