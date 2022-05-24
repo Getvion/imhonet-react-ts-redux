@@ -1,7 +1,8 @@
-export const GAMES_BASE = 'https://api.rawg.io/api';
-export const GAMES_API_KEY = 'key=2d5893a4192a410486b36abbd099f4cb';
+const GAMES_BASE = 'https://api.rawg.io/api';
+const GAMES_API_KEY = 'key=2d5893a4192a410486b36abbd099f4cb';
 
-export const BASE_SHOWS = 'https://api.tvmaze.com';
+// shows
+// const BASE_SHOWS = 'https://api.tvmaze.com';
 
 // games
 export const GET_BEST_GAMES = (pageNumber: number | string) => {
@@ -10,6 +11,10 @@ export const GET_BEST_GAMES = (pageNumber: number | string) => {
 
 export const GET_GAME_INFO_BY_ID = (gameId: number | string) => {
   return `${GAMES_BASE}/games/${gameId}?${GAMES_API_KEY}`;
+};
+
+export const SEARCH_GAME_BY_NAME = (gameQuery: string) => {
+  return `${GAMES_BASE}/games?${GAMES_API_KEY}&search=${gameQuery}`;
 };
 
 //
@@ -31,4 +36,8 @@ export const GET_MOVIE_STAFF_INFO_BY_ID = (filmId: number | string) => {
 
 export const GET_MOVIE_SIMILAR_BY_ID = (filmId: number | string) => {
   return `${MOVIES_BASE}/v2.2/films/${filmId}/similars`;
+};
+
+export const SEARCH_MOVIE_BY_NAME = (filmName: string) => {
+  return `${MOVIES_BASE}/v2.1/films/search-by-keyword?keyword=${filmName}`;
 };

@@ -30,11 +30,7 @@ export const MovieCard: React.FC<IMovie> = ({ movie }) => {
   };
 
   return (
-    <Link
-      to={String(movie.filmId)}
-      className={classes.movie}
-      onClick={() => onMovieClick(movie.filmId)}
-    >
+    <Link to={String(movie.filmId)} className={classes.movie} onClick={() => onMovieClick(movie.filmId)}>
       <div className={classes.movie__img__wrapper}>
         <img className={classes.movie__img} src={movie.posterUrlPreview} alt={movie.nameRu} />
       </div>
