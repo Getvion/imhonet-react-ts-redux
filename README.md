@@ -1,22 +1,6 @@
 # imhonet with react, redux and typescript
 
-сслылка на деплой:
-
-### todo
-
-1. Вывести с помощью апи список фильмов, игр, сериалов, книг, музыка
-2. Раздельные страницы для разных категорий
-3. Профиль пользователя
-4. Страница регистрации
-5. Избранное для пользователя
-6. Список "отложить" для каждого типа контента
-7. оценки
-8. статистика
-9. видеоплеер
-10. поиск
-11. отзывы
-12. возможноть создавать свои списки
-13. переклюение темной и светлой темы
+[деплой](https://imhonet-7f568.web.app)
 
 ### Страницы
 
@@ -29,8 +13,9 @@
 7. Избранное / Отложенное / Отмеченное
 
 apis:
-https://api.tvmaze.com/ - сериалы
-https://rawg.io/apidocs - игры
-https://kinopoiskapiunofficial.tech/ - фильмы
-https://www.last.fm/api - музыка
-https://developers.google.com/books/ - книги
+
+- https://api.tvmaze.com/ - сериалы
+- https://rawg.io/apidocs - игры
+- https://kinopoiskapiunofficial.tech/ - фильмы
+- https://www.last.fm/api - музыка
+- https://developers.google.com/books/ - книги

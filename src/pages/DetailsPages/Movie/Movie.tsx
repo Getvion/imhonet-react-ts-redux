@@ -56,7 +56,6 @@ interface IMovieData {
   };
 }
 
-// todo если пользователь не вошел в аккаунт, то  показывать попап с просьбой авторизоваться
 
 export const Movie = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -6,8 +6,6 @@ import { removeUser } from '../../../features/auth/userSlice';
 
 import classes from './Dropdown.module.scss';
 
-// todo заменить email на nickname
-
 export const Dropdown = () => {
   const dispatch = useDispatch();
   const { email } = useAuth();

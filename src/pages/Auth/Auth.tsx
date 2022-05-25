@@ -5,9 +5,6 @@ import { Register } from './Register';
 
 import classes from './Auth.module.scss';
 
-// todo bag: при переходе из мобильного режима в десктопный, ломается переключение формы
-// todo bag: при переходе из десктопного режима в мобильный ломается переключение формы
-
 export const Auth = () => {
   const UserForms: any = useRef(null);
   const onLoginClick = () => {

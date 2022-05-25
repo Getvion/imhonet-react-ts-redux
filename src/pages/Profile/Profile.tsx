@@ -7,9 +7,6 @@ import { Collections, About, Lists, Waiting, Stats } from './';
 
 import classes from './Profile.module.scss';
 
-// todo подробная статистика
-// todo раздел с подробной статистикой график распределения разного контента по годам, + все что есть в myshows
-
 export const Profile = () => {
   const navigate = useNavigate();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
