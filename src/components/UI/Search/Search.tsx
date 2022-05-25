@@ -16,7 +16,7 @@ export const Search = () => {
     event.preventDefault();
     if (inputValue) {
       dispatch(setSearch(inputValue));
-      navigate('/search');
+      navigate('/search/games');
       setInputValue('');
     }
   };
