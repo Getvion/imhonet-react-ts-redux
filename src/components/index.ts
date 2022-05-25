@@ -8,3 +8,4 @@ export { Ratings } from './UI/Ratings/Ratings';
 
 export { GameCard } from './GameCard/GameCard';
 export { MovieCard } from './MovieCard/MovieCard';
+export { SectionCard } from './SectionCard/SectionCard';

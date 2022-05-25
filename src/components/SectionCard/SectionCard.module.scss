@@ -1,0 +1,38 @@
+@import '../../styles/varibles';
+
+.card {
+  cursor: pointer;
+  max-width: 300px;
+  border-radius: 20px;
+  position: relative;
+
+  &:hover {
+    .card__img {
+      transform: scale(1.1);
+    }
+  }
+
+  &__img__wrapper {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  &__img {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    min-height: 300px;
+    max-height: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  &__title {
+    margin-top: 10px;
+    padding: 0 15px;
+    font-size: $fs-big;
+  }
+}

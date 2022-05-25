@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, Route, Routes } from 'react-router-dom';
+import clsx from 'clsx';
 
 import { AppDispatch } from '../../store';
 import { searchGamesByName, searchMoviesByName } from '../../features/search/searchSlice';
+import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Search.module.scss';
-
-// todo сдлать в виде табов как в профиле: все, игры, фильмы, сериалы, книги
-// todo сделать один компонент и передевать в него разные параметры: картинка и название. Верстка одинаковая.
 
 interface ISearch {
   search: {
@@ -17,9 +17,11 @@ interface ISearch {
     };
     games: {
       isLoaded: boolean;
+      gamesSearch: { results: { name: string; background_image: string; id: number }[] };
     };
     movies: {
       isLoaded: boolean;
+      moviesSearch: { films: { filmId: number; posterUrlPreview: string; nameEn: string; nameRu: string }[] };
     };
     shows: {
       isLoaded: boolean;
@@ -28,29 +30,79 @@ interface ISearch {
 }
 
 export const Search = () => {
-  const { searchInputValue, books, games, movies, shows } = useSelector((state: ISearch) => state.search);
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const { searchInputValue, games, movies } = useSelector((state: ISearch) => state.search);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(searchGamesByName('gta v'));
-    dispatch(searchMoviesByName('gta v'));
-  }, [dispatch]);
+    dispatch(searchGamesByName(searchInputValue));
+    dispatch(searchMoviesByName(searchInputValue));
+  }, [dispatch, searchInputValue]);
+
+  const searchTabs = [
+    { title: 'Игры', route: 'games' },
+    { title: 'Фильмы', route: 'movies' },
+    // { title: 'Сериалы', route: 'shows' }, { title: 'Книги', route: 'books' },
+  ];
 
   return (
     <div className={classes.search}>
       <h1 className={classes.search__title}>Поиск по запросу: {searchInputValue}</h1>
-      <section className={classes.games}>
-        <h2 className={classes.games__title}>Поиск в разделе игры:</h2>
-      </section>
-      <section className={classes.movies}>
-        <h2 className={classes.movies__title}>Поиск в разделе фильмы:</h2>
-      </section>
-      <section className={classes.shows}>
-        <h2 className={classes.shows__title}>Поиск в разделе сериалы:</h2>
-      </section>
-      <section className={classes.books}>
-        <h2 className={classes.books__title}>Поиск в разделе книги:</h2>
-      </section>
+      {searchTabs.map((tab, i) => (
+        <Link
+          to={tab.route}
+          key={tab.route}
+          onClick={() => setSelectedTab(i)}
+          className={clsx(classes.search__tab, { [classes.active]: selectedTab === i })}
+        >
+          {tab.title}
+        </Link>
+      ))}
+
+      <Routes>
+        <Route
+          path='games'
+          element={
+            <section className={classes.search__section}>
+              {games.isLoaded ? (
+                <>
+                  {games.gamesSearch.results.map(({ id, name, background_image }) => (
+                    <SectionCard key={id} name={name} id={id} bgImage={background_image} section={'games'} />
+                  ))}
+                </>
+              ) : (
+                <LoadingSpinner />
+              )}
+            </section>
+          }
+        />
+        <Route
+          path='movies'
+          element={
+            <section className={classes.search__section}>
+              {movies.isLoaded ? (
+                <>
+                  {movies.moviesSearch.films.map(({ filmId, nameEn, nameRu, posterUrlPreview }) => (
+                    <SectionCard
+                      key={filmId}
+                      name={nameEn}
+                      nameRu={nameRu}
+                      bgImage={posterUrlPreview}
+                      id={filmId}
+                      section={'movies'}
+                    />
+                  ))}
+                </>
+              ) : (
+                <LoadingSpinner />
+              )}
+            </section>
+          }
+        />
+        {/* <Route path='shows' element={<Section title={'Только cериалы:'} dataArray={[]} />} /> */}
+        {/* <Route path='books' element={<Section title={'Только книги:'} dataArray={[]} />} /> */}
+      </Routes>
     </div>
   );
 };

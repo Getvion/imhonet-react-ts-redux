@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
 import { Header } from './components';
-import { Auth, Main, Profile, Games, Movies, Shows, Books, Search} from './pages';
-import { Book, Game, Movie, Show} from './pages/DetailsPages';
+import { Auth, Main, Profile, Games, Movies, Shows, Books, Search } from './pages';
+import { Book, Game, Movie, Show } from './pages/DetailsPages';
 
 function App() {
   const [shows, setShows] = useState([]);
@@ -31,7 +31,7 @@ function App() {
           <Route path='/shows' element={<Shows />} />
           <Route path='/books' element={<Books />} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/search' element={<Search />} />
+          <Route path='/search/*' element={<Search />} />
 
           <Route path='/games/*' element={<Game />} />
           <Route path='/movies/*' element={<Movie />} />
