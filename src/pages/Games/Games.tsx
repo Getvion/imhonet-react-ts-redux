@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { GamesSlider } from './GamesSlider/GamesSlider';
-import { GameCard, LoadingSpinner } from '../../components';
+import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Games.module.scss';
 
@@ -34,8 +34,8 @@ export const Games = () => {
           <GamesSlider items={bestGames} />
           <h2 className={classes.games__title}>Лучшие игры</h2>
           <div className={classes.games__list}>
-            {bestGames.map((game: IGame) => (
-              <GameCard key={game.id} game={game} />
+            {bestGames.map(({ id, background_image, name }: IGame) => (
+              <SectionCard key={id} id={id} section={'games'} bgImage={background_image} name={name} />
             ))}
           </div>
         </>

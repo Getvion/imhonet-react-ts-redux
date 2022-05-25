@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { MoviesSlider } from './MoviesSlider/MoviesSlider';
-import { LoadingSpinner, MovieCard } from '../../components';
+import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Movies.module.scss';
 
@@ -12,9 +12,6 @@ import { AppDispatch } from '../../store';
 interface IMovie {
   filmId: number;
   nameRu: string;
-  year: string;
-  genres: { genre: string }[];
-  rating: string;
   posterUrlPreview: string;
 }
 
@@ -33,8 +30,14 @@ export const Movies = () => {
           <MoviesSlider items={movies} />
           <h2 className={classes.movies__title}>Лучшие фильмы</h2>
           <div className={classes.movies__list}>
-            {movies.map((movie: IMovie) => (
-              <MovieCard key={movie.filmId} movie={movie} />
+            {movies.map(({ filmId, nameRu, posterUrlPreview }: IMovie) => (
+              <SectionCard
+                key={filmId}
+                id={filmId}
+                name={nameRu}
+                bgImage={posterUrlPreview}
+                section={'movies'}
+              />
             ))}
           </div>
         </>
