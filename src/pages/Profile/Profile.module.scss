@@ -26,8 +26,16 @@
     object-fit: contain;
   }
 
+  &__content {
+    max-width: 300px;
+  }
+
   &__username {
     display: inline-block;
+  }
+
+  &__descr {
+    font-size: $fs-sm;
   }
 
   &__button {

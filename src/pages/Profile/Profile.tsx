@@ -3,7 +3,7 @@ import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { Button } from '../../components';
-import { Collections, About, Lists, Waiting, Stats } from './';
+import { Favorite, Lists, Waiting, Stats } from './';
 
 import classes from './Profile.module.scss';
 
@@ -11,10 +11,9 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const tabsTitles = [
-    { title: 'Обо-мне', route: 'about' },
+    { title: 'Избранные', route: 'favorite' },
     { title: 'Списки', route: 'lists' },
     { title: 'Ожидаемое', route: 'waiting' },
-    { title: 'Коллекции', route: 'collections' },
     { title: 'Статистика', route: 'stats' },
   ];
 
@@ -27,7 +26,10 @@ export const Profile = () => {
             alt='username'
             className={classes.profile__avatar}
           />
-          <h1 className={classes.profile__username}>Username</h1>
+          <div className={classes.profile__content}>
+            <h1 className={classes.profile__username}>Username</h1>
+            <p className={classes.profile__descr}>Lorem ipsum dolor sit amet,</p>
+          </div>
         </div>
         <Button text='Settings' onClick={() => navigate('/settings')} />
       </div>
@@ -47,10 +49,9 @@ export const Profile = () => {
           ))}
         </div>
         <Routes>
-          <Route path='about' element={<About />} />
+          <Route path='favorite' element={<Favorite />} />
           <Route path='lists' element={<Lists />} />
           <Route path='waiting' element={<Waiting />} />
-          <Route path='collections' element={<Collections />} />
           <Route path='stats' element={<Stats />} />
         </Routes>
       </div>
