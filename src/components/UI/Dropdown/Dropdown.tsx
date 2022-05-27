@@ -28,7 +28,7 @@ export const Dropdown = () => {
         {email ? <span onClick={toggleDropdown}>{email}</span> : <Link to='/auth'>Войти</Link>}
         {isDropdownVisible && (
           <div className={classes.dropdown} onClick={toggleDropdown}>
-            <Link className={classes.dropdown__item} to={'/profile/about'}>
+            <Link className={classes.dropdown__item} to={'/profile/favorite'}>
               {email}
             </Link>
             <Link className={classes.dropdown__item} to={'/settings'}>
