@@ -56,7 +56,6 @@ interface IMovieData {
   };
 }
 
-
 export const Movie = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { movieData, movieStaffData, movieSimilar } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
