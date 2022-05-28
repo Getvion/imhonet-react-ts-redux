@@ -3,8 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   email: null,
   token: null,
-  id: null,
-  nickname: null,
+  name: null,
 };
 
 const userSlice = createSlice({
@@ -14,14 +13,12 @@ const userSlice = createSlice({
     setUser(state, action) {
       state.email = action.payload.email;
       state.token = action.payload.token;
-      state.id = action.payload.id;
-      state.nickname = action.payload.nickname;
+      state.name = action.payload.name;
     },
     removeUser(state) {
       state.email = null;
       state.token = null;
-      state.id = null;
-      state.nickname = null;
+      state.name = null;
     },
   },
 });
