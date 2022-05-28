@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthInput } from '../../components';
 
 import classes from './Auth.module.scss';
 
@@ -31,37 +32,10 @@ export const RegistrationForm: React.FC<Props> = ({
     <form className={classes.forms__form} onSubmit={(e) => onSubmitButtonClick(e)}>
       <fieldset className={classes.forms__fieldset}>
         {isRegistration && (
-          <div className={classes.forms__field}>
-            <input
-              value={nicknameValue}
-              onChange={(e) => setNicknameValue(e.target.value)}
-              className={classes.forms__field_input}
-              type='text'
-              placeholder='Никнейм'
-              required
-            />
-          </div>
+          <AuthInput placeholder='Никнейм' onChange={(value: string) => setNicknameValue(value)} />
         )}
-        <div className={classes.forms__field}>
-          <input
-            value={emailValue}
-            onChange={(e) => setEmailValue(e.target.value)}
-            className={classes.forms__field_input}
-            type='email'
-            placeholder='Емейл'
-            required
-          />
-        </div>
-        <div className={classes.forms__field}>
-          <input
-            value={passwordValue}
-            onChange={(e) => setPasswordValue(e.target.value)}
-            className={classes.forms__field_input}
-            type='password'
-            placeholder='Пароль'
-            required
-          />
-        </div>
+        <AuthInput placeholder='Емейл' type='email' onChange={(value: string) => setEmailValue(value)} />
+        <AuthInput placeholder='Пароль' type='password' onChange={(val: string) => setPasswordValue(val)} />
       </fieldset>
       <div className={classes.forms__buttons}>
         <button

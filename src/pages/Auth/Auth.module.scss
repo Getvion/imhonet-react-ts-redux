@@ -20,17 +20,6 @@
     transition: all 0.2s ease;
   }
 
-  input {
-    background-color: transparent;
-    border: 0;
-    outline: 0;
-
-    &::placeholder {
-      font-size: $fs-sm;
-      color: #ccc;
-    }
-  }
-
   &__options {
     position: relative;
     width: 80%;
@@ -111,23 +100,9 @@
       letter-spacing: 0.1rem;
     }
 
-    .forms__field {
+    input {
       &:not(:last-of-type) {
         margin-bottom: 20px;
-      }
-    }
-
-    .forms__field_input {
-      width: 100%;
-      border-bottom: 1px solid #ccc;
-      padding: 6px 20px 6px 0;
-      font-size: 1rem;
-      font-weight: 300;
-      color: gray;
-      letter-spacing: 0.1rem;
-      transition: border-color 0.2s ease-in-out;
-      &:focus {
-        border-color: gray;
       }
     }
 
@@ -255,29 +230,23 @@
 
 @keyframes bounceLeft {
   0% {
-    -webkit-transform: translate3d(100%, -50%, 0);
     transform: translate3d(100%, -50%, 0);
   }
   50% {
-    -webkit-transform: translate3d(-30px, -50%, 0);
     transform: translate3d(-30px, -50%, 0);
   }
   100% {
-    -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
   }
 }
 @keyframes bounceRight {
   0% {
-    -webkit-transform: translate3d(0, -50%, 0);
     transform: translate3d(0, -50%, 0);
   }
   50% {
-    -webkit-transform: translate3d(calc(100% + 30px), -50%, 0);
     transform: translate3d(calc(100% + 30px), -50%, 0);
   }
   100% {
-    -webkit-transform: translate3d(100%, -50%, 0);
     transform: translate3d(100%, -50%, 0);
   }
 }
@@ -286,7 +255,6 @@
   100% {
     opacity: 1;
     visibility: visible;
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 }

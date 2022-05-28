@@ -1,0 +1,26 @@
+@import '../../../styles/varibles';
+
+input {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+
+  &::placeholder {
+    font-size: $fs-sm;
+    color: #ccc;
+  }
+}
+
+input.input {
+  width: 100%;
+  border-bottom: 1px solid #ccc !important;
+  padding: 6px 20px 6px 0;
+  font-size: 1rem;
+  color: var(#{--text-color-defailt});
+  letter-spacing: 0.1rem;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  &:focus {
+    border-color: gray !important;
+  }
+}
