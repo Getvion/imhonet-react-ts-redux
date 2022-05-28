@@ -1,12 +1,15 @@
 import React from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+
 import { setUser } from '../../features/auth/userSlice';
 
 import { RegistrationForm } from './RegistrationForm';
 
 import classes from './Auth.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onMobileButtonClick: () => void;
@@ -15,22 +18,22 @@ interface Props {
 export const Login: React.FC<Props> = ({ onMobileButtonClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const auth = getAuth();
 
-  const onLogin = (nickname: string, email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password)
+  const onLogin = async (nickname: string, loginEmail: string, loginPassword: string) => {
+    await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then(({ user }) => {
         dispatch(
           setUser({
             email: user.email,
             id: user.uid,
             token: user.refreshToken,
-            nickname: nickname,
+            name: user.displayName,
           })
         );
-        navigate('/');
+
+        navigate(-1);
       })
-      .catch(() => alert('Invalid user!'));
+      .catch((error) => console.log(error.message));
   };
 
   return (

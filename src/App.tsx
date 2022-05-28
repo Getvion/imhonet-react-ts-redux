@@ -14,23 +14,25 @@ import { Book, Game, Movie, Show } from './pages/DetailsPages';
 function App() {
   const [shows, setShows] = useState([]);
   const BASE_SHOWS = 'https://api.tvmaze.com';
+
   useEffect(() => {
     const fetchData = async () => {
       await axios.get(`${BASE_SHOWS}/search/shows?q=girls`).then(({ data }) => setShows(data));
     };
+
     fetchData();
-  }, [shows]);
+  }, []);
 
   // const [users, setUsers] = useState({});
   //
   // const usersCollectionRef = collection(db, 'users');
   // useEffect(() => {
   // async function fetchData() {
-  //
   // const data = await getDocs(usersCollectionRef);
   //
-  // получаем данные из файрбейза и добавляем id юзера
-  // setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  // получаем данные из файрбейза и добавляем id юзера в стейт
+  // console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
   //
   // const newUser = {
   //   name: `${Math.random()}-name`,

@@ -1,36 +1,48 @@
 import React from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth, db } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+
 import { setUser } from '../../features/auth/userSlice';
 
 import { RegistrationForm } from './RegistrationForm';
 
 import classes from './Auth.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onMobileButtonClick: () => void;
 }
 
 export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const auth = getAuth();
+  const navigate = useNavigate();
 
-  const onRegister = (nickname: string, email: string, password: string) => {
-    createUserWithEmailAndPassword(auth, email, password)
+  const onRegister = async (nickname: string, regEmail: string, regPassword: string) => {
+    await createUserWithEmailAndPassword(auth, regEmail, regPassword)
       .then(({ user }) => {
+        if (!auth.currentUser) return;
+
+        setDoc(doc(db, 'users', regEmail), {
+          name: nickname,
+          email: regEmail,
+          token: user.refreshToken,
+        });
+
+        updateProfile(auth.currentUser, { displayName: nickname });
+
         dispatch(
           setUser({
             email: user.email,
-            id: user.uid,
+            name: nickname,
             token: user.refreshToken,
-            nickname: nickname,
           })
         );
-        navigate('/');
+        navigate(-1);
       })
-      .catch((error) => console.log(error.code, error.message));
+      .catch((error) => console.log(error.message));
   };
 
   return (
