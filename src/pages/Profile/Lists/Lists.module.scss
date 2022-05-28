@@ -1,0 +1,41 @@
+@import '../../../styles/varibles';
+
+.lists {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.section {
+  margin-top: 20px;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: $fs-big;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    max-width: 630px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__item {
+    margin-top: 10px;
+
+    &:not(:nth-child(1)) {
+      transform: translateX(-60%);
+    }
+    &:nth-child(3) {
+      transform: translateX(-110%);
+    }
+  }
+}
