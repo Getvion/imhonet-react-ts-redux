@@ -4,6 +4,8 @@ const initialState = {
   email: null,
   token: null,
   name: null,
+  imageUrl: null,
+  description: null,
 };
 
 const userSlice = createSlice({
@@ -14,11 +16,15 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.token = action.payload.token;
       state.name = action.payload.name;
+      state.imageUrl = action.payload.imageUrl;
+      state.description = action.payload.description;
     },
     removeUser(state) {
       state.email = null;
       state.token = null;
       state.name = null;
+      state.imageUrl = null;
+      state.description = null;
     },
   },
 });
