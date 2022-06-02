@@ -23,7 +23,7 @@ export const Ratings = () => {
   };
 
   return (
-    <div className={classes.stat}>
+    <section className={classes.stat}>
       {ratingsData.map((obj, index) => (
         <div
           key={obj.title}
@@ -37,6 +37,6 @@ export const Ratings = () => {
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 };

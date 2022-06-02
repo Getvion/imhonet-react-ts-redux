@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { removeUser, setUser } from '../../../features/auth/userSlice';
+import { removeUser } from '../../../features/auth/userSlice';
 
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase';
 
 import classes from './Dropdown.module.scss';
+import { useAuthOnReload } from '../../../features/auth/useAuthOnReload';
+
+interface ISeletcorProps {
+  user: { name: string; email: string; token: string; imageUrl: string; description: string };
+}
 
 export const Dropdown = () => {
   const dispatch = useDispatch();
-  const userName = useSelector((state: any) => state.user.name);
+  const userName = useSelector((state: ISeletcorProps) => state.user.name);
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -25,19 +30,7 @@ export const Dropdown = () => {
     await signOut(auth);
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        dispatch(
-          setUser({
-            email: currentUser.email,
-            name: currentUser.displayName,
-            token: currentUser.refreshToken,
-          })
-        );
-      }
-    });
-  }, [dispatch]);
+  useAuthOnReload(auth);
 
   return (
     <>
