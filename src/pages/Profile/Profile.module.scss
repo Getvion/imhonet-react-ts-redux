@@ -31,6 +31,13 @@
     font-size: $fs-sm;
   }
 
+  &__avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
   &__button {
     width: 32px;
     height: 32px;

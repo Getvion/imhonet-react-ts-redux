@@ -86,8 +86,7 @@ export const Search = () => {
                   {movies.moviesSearch.films.map(({ filmId, nameEn, nameRu, posterUrlPreview }) => (
                     <SectionCard
                       key={filmId}
-                      name={nameEn}
-                      nameRu={nameRu}
+                      name={nameRu || nameEn}
                       bgImage={posterUrlPreview}
                       id={filmId}
                       section={'movies'}

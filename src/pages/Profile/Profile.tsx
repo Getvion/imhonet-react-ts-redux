@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { Button, UploadImage } from '../../components';
+import { Button } from '../../components';
 import { Favorite, Lists, Waiting, Stats } from './';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
@@ -27,7 +27,7 @@ export const Profile = () => {
     <div className={classes.profile}>
       <div className={classes.profile__info}>
         <div className={classes.profile__info_container}>
-          <UploadImage imageUrl={imageUrl} name={name} />
+          <img src={imageUrl} alt={name} className={classes.profile__avatar} />
           <div className={classes.profile__content}>
             <h1 className={classes.profile__username}>{name}</h1>
             <p className={classes.profile__descr}>{description}</p>
