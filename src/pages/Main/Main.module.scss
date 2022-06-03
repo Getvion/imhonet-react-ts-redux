@@ -1,6 +1,6 @@
 @import '../../styles/varibles';
 
-.container {
+.main {
   max-width: 1320px;
   margin: auto;
   padding: 0 10px;
@@ -19,28 +19,4 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
-}
-
-.card {
-  cursor: pointer;
-  box-shadow: var(#{--shadow-color-default});
-  border-radius: 8px;
-  position: relative;
-
-  &__img {
-    width: 300px;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  &__name {
-    position: absolute;
-    bottom: 20px;
-    left: 10px;
-    line-height: 1;
-    font-weight: $fw-light;
-    color: #fff;
-    font-size: $fs-big;
-    text-shadow: 1px 1px black;
-  }
 }
