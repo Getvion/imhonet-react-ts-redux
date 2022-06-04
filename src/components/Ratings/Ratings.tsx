@@ -7,9 +7,18 @@ import mehImg from './img/meh.png';
 import skipImg from './img/skip.png';
 
 import classes from './Ratings.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
+
+interface IUserData {
+  user: { email: string; name: string };
+}
 
 export const Ratings = () => {
+  const dispatch = useDispatch();
   const [selectedRating, setSelectedRating] = useState(-1);
+
+  const userData = useSelector(({ user }: IUserData) => user);
 
   const ratingsData = [
     { img: exceptionalImg, title: 'Великолепно', count: 0 },
@@ -19,6 +28,8 @@ export const Ratings = () => {
   ];
 
   const onSelectRating = (index: number) => {
+    if (!userData.name) return dispatch(setLoginOffer(true));
+
     setSelectedRating(index);
   };
 
