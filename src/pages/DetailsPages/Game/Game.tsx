@@ -10,6 +10,8 @@ import { AppDispatch } from '../../../store';
 import { Description } from './Description';
 import { loadGameInfo } from '../../../features/games/loadGameInfo';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
+// import { doc, getDoc, setDoc } from 'firebase/firestore';
+// import { db } from '../../../firebase';
 
 interface IGame {
   id: number;
@@ -44,13 +46,27 @@ export const Game = () => {
 
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
   const userData = useSelector(({ user }: IUserData) => user);
+  // const docRef = doc(db, 'users', userData.email);
 
-  const onWatchLaterClick = () => {
+  const onPlayLaterClick = () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
+
+    // при нажатии на кнопку, в добавляется эта игра в список play later
   };
 
-  const onFavoriteClick = () => {
+  const onFavoriteClick = async () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
+
+    // const docSnap = await getDoc(docRef);
+    // const fetchData = docSnap.data();
+    // console.log(fetchData);
+    // setDoc(doc(db, 'users', fetchData?.email), {
+    //   ...fetchData,
+    //   favoriteGames: [{ ...gameData }],
+    // });
+
+    // const doSnap2 = await getDoc(docRef);
+    // console.log(doSnap2.data());
   };
 
   useEffect(() => {
@@ -86,7 +102,7 @@ export const Game = () => {
                 <h1 className={classes.game__title}>{name}</h1>
                 <h2 className={classes.game__original}>{name_original}</h2>
                 <div className={classes.game__add}>
-                  <Button text='Буду играть' onClick={onWatchLaterClick} />
+                  <Button text='Буду играть' onClick={onPlayLaterClick} />
                   <Button text='Любимая игра' onClick={onFavoriteClick} />
                 </div>
                 <div className={classes.game__info}>

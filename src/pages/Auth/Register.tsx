@@ -29,6 +29,9 @@ export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
           name: nickname,
           email: regEmail,
           token: user.refreshToken,
+          description: '',
+          imageUrl:
+            'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
         });
 
         updateProfile(auth.currentUser, { displayName: nickname });

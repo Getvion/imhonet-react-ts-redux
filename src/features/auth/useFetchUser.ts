@@ -5,9 +5,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './userSlice';
 
+interface IUserData {
+  user: { email: string; name: string; description: string; imageUrl: string };
+}
+
 export const useFetchUser = () => {
   const dispatch = useDispatch();
-  const userData = useSelector((state: any) => state.user);
+  const userData = useSelector((state: IUserData) => state.user);
 
   useEffect(() => {
     const getData = async () => {
