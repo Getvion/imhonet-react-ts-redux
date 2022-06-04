@@ -9,7 +9,7 @@ import classes from './LoginPopupOffer.module.scss';
 export const LoginPopupOffer = () => {
   const dispatch = useDispatch();
 
-  const isPopupShow = useSelector((state: any) => state.showLoginPopup);
+  const isPopupShow = useSelector((state: { showLoginPopup: boolean }) => state.showLoginPopup);
 
   const onCloseModal = () => {
     dispatch(setLoginOffer(false));
