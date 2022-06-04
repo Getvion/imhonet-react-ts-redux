@@ -11,6 +11,7 @@ import { Button, LoadingSpinner, Ratings } from '../../../components';
 import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo, loadMovieSimilar, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../../store';
+import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 
 interface IMovie {
   kinopoiskId: number;
@@ -56,9 +57,44 @@ interface IMovieData {
   };
 }
 
+interface IUserData {
+  user: { email: string; name: string };
+}
+
 export const Movie = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { movieData, movieStaffData, movieSimilar } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
+
+  const userData = useSelector(({ user }: IUserData) => user);
+
+  const ratingAgeLimits = () => {
+    if (movieData.ratingAgeLimits === 'age18') return '18+';
+    if (movieData.ratingAgeLimits === 'age16') return '16+';
+    if (movieData.ratingAgeLimits === 'age12') return '12+';
+    return '0+';
+  };
+
+  const onSimilarMovieClick = (filmId: number) => {
+    dispatch(loadMovieInfo(filmId));
+    dispatch(loadMovieStaffInfo(filmId));
+    dispatch(loadMovieSimilar(filmId));
+  };
+
+  const onWatchLaterClick = () => {
+    if (!userData.name) return dispatch(setLoginOffer(true));
+  };
+
+  const onFavoriteClick = () => {
+    if (!userData.name) return dispatch(setLoginOffer(true));
+  };
+
+  useEffect(() => {
+    const currentMovieId = window.location.href.split('/').reverse()[0];
+
+    dispatch(loadMovieInfo(currentMovieId));
+    dispatch(loadMovieStaffInfo(currentMovieId));
+    dispatch(loadMovieSimilar(currentMovieId));
+  }, [dispatch]);
 
   const {
     posterUrl,
@@ -74,27 +110,6 @@ export const Movie = () => {
     ratingImdb,
   } = movieData;
 
-  const ratingAgeLimits = () => {
-    if (movieData.ratingAgeLimits === 'age18') return '18+';
-    if (movieData.ratingAgeLimits === 'age16') return '16+';
-    if (movieData.ratingAgeLimits === 'age12') return '12+';
-    return '0+';
-  };
-
-  const onSimilarMovieClick = (filmId: number) => {
-    dispatch(loadMovieInfo(filmId));
-    dispatch(loadMovieStaffInfo(filmId));
-    dispatch(loadMovieSimilar(filmId));
-  };
-
-  useEffect(() => {
-    const currentMovieId = window.location.href.split('/').reverse()[0];
-
-    dispatch(loadMovieInfo(currentMovieId));
-    dispatch(loadMovieStaffInfo(currentMovieId));
-    dispatch(loadMovieSimilar(currentMovieId));
-  }, [dispatch]);
-
   return (
     <div className={classes.movie}>
       {movieData.kinopoiskId ? (
@@ -106,8 +121,8 @@ export const Movie = () => {
                 <h1 className={classes.movie__title}>{nameRu}</h1>
                 <h2 className={classes.movie__original}>{nameOriginal}</h2>
                 <div className={classes.movie__add}>
-                  <Button text='Буду смотреть' onClick={() => console.log('hi')} />
-                  <Button text='Любимый' onClick={() => console.log('hi')} />
+                  <Button text='Буду смотреть' onClick={onWatchLaterClick} />
+                  <Button text='Любимый' onClick={onFavoriteClick} />
                 </div>
                 <div className={classes.movie__info}>
                   <h3 className={classes.movie__about}>О фильме</h3>

@@ -20,7 +20,7 @@ export const LoginPopupOffer = () => {
       <div className={classes.modal__dialog}>
         <div className={classes.modal__content}>
           <p className={classes.modal__text}>
-            Чтобы оставить оценку необходимо войти в акканут <br />
+            Чтобы соверить это действие необходимо войти в акканут <br />
             <span>Хотите войти?</span>
           </p>
           <div className={classes.modal__buttons}>

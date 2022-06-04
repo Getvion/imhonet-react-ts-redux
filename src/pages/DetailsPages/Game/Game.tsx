@@ -6,9 +6,10 @@ import classes from './Game.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
 import { GameListItem } from './GameListItem';
-import { loadGameInfo } from '../../../features/games/loadGameInfo';
 import { AppDispatch } from '../../../store';
 import { Description } from './Description';
+import { loadGameInfo } from '../../../features/games/loadGameInfo';
+import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 
 interface IGame {
   id: number;
@@ -34,10 +35,23 @@ interface IGameInfo {
   };
 }
 
+interface IUserData {
+  user: { email: string; name: string };
+}
+
 export const Game = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
+  const userData = useSelector(({ user }: IUserData) => user);
+
+  const onWatchLaterClick = () => {
+    if (!userData.name) return dispatch(setLoginOffer(true));
+  };
+
+  const onFavoriteClick = () => {
+    if (!userData.name) return dispatch(setLoginOffer(true));
+  };
 
   useEffect(() => {
     const currentGameId = window.location.href.split('/').reverse()[0];
@@ -72,8 +86,8 @@ export const Game = () => {
                 <h1 className={classes.game__title}>{name}</h1>
                 <h2 className={classes.game__original}>{name_original}</h2>
                 <div className={classes.game__add}>
-                  <Button text='Буду играть' onClick={() => console.log('hi')} />
-                  <Button text='Любимая игра' onClick={() => console.log('hi')} />
+                  <Button text='Буду играть' onClick={onWatchLaterClick} />
+                  <Button text='Любимая игра' onClick={onFavoriteClick} />
                 </div>
                 <div className={classes.game__info}>
                   <h3 className={classes.game__about}>О игре</h3>
