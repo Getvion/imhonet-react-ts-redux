@@ -10,6 +10,7 @@ import { movieInfoReducer } from './features/movies/loadMovieInfo';
 import { userReducer } from './features/auth/userSlice';
 import { gameInfoReducer } from './features/games/loadGameInfo';
 import { searchReducer } from './features/search/searchSlice';
+import { LoginPopupOfferReducer } from './features/loginOffer/loginOfferSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     user: userReducer,
     gameInfo: gameInfoReducer,
     search: searchReducer,
+    showLoginPopup: LoginPopupOfferReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

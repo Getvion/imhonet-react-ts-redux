@@ -10,6 +10,7 @@ import axios from 'axios';
 import { Header } from './components';
 import { Auth, Main, Profile, Games, Movies, Shows, Books, Search } from './pages';
 import { Book, Game, Movie, Show } from './pages/DetailsPages';
+import { LoginPopupOffer } from './features/loginOffer/LoginPopupOffer';
 
 function App() {
   const [shows, setShows] = useState([]);
@@ -64,6 +65,7 @@ function App() {
   return (
     <div className='app'>
       <Header />
+      <LoginPopupOffer />
       <div className='app__container'>
         <Routes>
           <Route path='/' element={<Main />} />
