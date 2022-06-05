@@ -48,9 +48,9 @@ export const Settings = () => {
         <button type='button' className={clsx(classes.button, classes.button__accept)}>
           Сохранить
         </button>
-        <button type='button' className={clsx(classes.button, classes.button__reject)}>
+        <Link to={'/profile/favorite'} className={clsx(classes.button, classes.button__reject)}>
           Отмена
-        </button>
+        </Link>
       </div>
     </div>
   );

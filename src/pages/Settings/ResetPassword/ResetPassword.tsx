@@ -1,26 +1,25 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import classes from './ResetPassword.module.scss';
 
 export const ResetPassword = () => {
   return (
-    <div className='tab-pane fade' id='password'>
-      <div className='card-body pb-2'>
-        <div className='form-group'>
-          <label className='form-label'>Current password</label>
-          <input type='password' className='form-control' />
-        </div>
-
-        <div className='form-group'>
-          <label className='form-label'>New password</label>
-          <input type='password' className='form-control' />
-        </div>
-
-        <div className='form-group'>
-          <label className='form-label'>Repeat new password</label>
-          <input type='password' className='form-control' />
-        </div>
+    <section className={classes.password}>
+      <div className={classes.password__container}>
+        <span className={classes.password__span}>Старый пароль</span>
+        <input type='password' className={clsx(classes.password__input, classes.password__old)} />
       </div>
-    </div>
+
+      <div className={classes.password__container}>
+        <span className={classes.password__span}>Новый пароль</span>
+        <input type='password' className={clsx(classes.password__input, classes.password__new)} />
+      </div>
+
+      <div className={classes.password__container}>
+        <span className={classes.password__span}>Повторить новый пароль</span>
+        <input type='password' className={clsx(classes.password__input, classes.password__new__repeat)} />
+      </div>
+    </section>
   );
 };
