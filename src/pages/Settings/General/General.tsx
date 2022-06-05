@@ -26,11 +26,13 @@ export const General = () => {
           </div>
           <div className={classes.general__form__container}>
             <span className={classes.general__form__span}>Описание</span>
-            <textarea className={clsx(classes.general__form__input, classes.general__form__textarea)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sint ab! Pariatur vel explicabo,
-              dolore molestias laboriosam error sit ut commodi itaque est quidem libero rem expedita
-              dignissimos architecto officiis.
-            </textarea>
+            <textarea
+              className={clsx(classes.general__form__input, classes.general__form__textarea)}
+              onChange={() => {}}
+              value={
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sint ab! Pariatur vel explicabo, dolore molestias laboriosam error sit ut commodi itaque est quidem libero rem expedita dignissimos architecto officiis.'
+              }
+            />
           </div>
           <div className={classes.general__form__container}>
             <span className={classes.general__form__span}>День рождения</span>
