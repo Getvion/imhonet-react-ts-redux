@@ -1,0 +1,65 @@
+@import '../../styles/varibles';
+
+.settings {
+  padding: 0px 10px;
+  margin: 0 auto;
+  max-width: 1320px;
+  width: 100%;
+
+  &__container {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+  }
+
+  &__content {
+    flex: 3;
+  }
+}
+
+.nav {
+  flex: 0.8;
+
+  &__item {
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+
+    &.active {
+      border-bottom: 1px solid var(#{--text-color-default});
+    }
+  }
+
+  &__link {
+    padding: 15px 0;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.buttons {
+  text-align: right;
+
+  .button {
+    margin-left: 20px;
+    cursor: pointer;
+    padding: 8px 16px;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    color: var(#{--text-color-default});
+    border: 1px solid green;
+    &:hover {
+      background-color: green;
+      color: white;
+    }
+
+    &__reject {
+      border: 1px solid red;
+
+      &:hover {
+        background-color: red;
+      }
+    }
+  }
+}

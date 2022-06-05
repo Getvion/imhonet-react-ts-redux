@@ -76,7 +76,7 @@ function App() {
           <Route path='/books' element={<Books />} />
           <Route path='/auth' element={<Auth />} />
           <Route path='/search/*' element={<Search />} />
-          <Route path='/settings' element={<Settings />} />
+          <Route path='/settings/*' element={<Settings />} />
 
           <Route path='/games/*' element={<Game />} />
           <Route path='/movies/*' element={<Movie />} />

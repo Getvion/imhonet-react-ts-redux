@@ -10,8 +10,8 @@ import { AppDispatch } from '../../../store';
 import { Description } from './Description';
 import { loadGameInfo } from '../../../features/games/loadGameInfo';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
-// import { doc, getDoc, setDoc } from 'firebase/firestore';
-// import { db } from '../../../firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 interface IGame {
   id: number;
@@ -46,7 +46,7 @@ export const Game = () => {
 
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
   const userData = useSelector(({ user }: IUserData) => user);
-  // const docRef = doc(db, 'users', userData.email);
+  const docRef = doc(db, 'users', userData.email);
 
   const onPlayLaterClick = () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
@@ -57,16 +57,19 @@ export const Game = () => {
   const onFavoriteClick = async () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
 
-    // const docSnap = await getDoc(docRef);
-    // const fetchData = docSnap.data();
-    // console.log(fetchData);
-    // setDoc(doc(db, 'users', fetchData?.email), {
-    //   ...fetchData,
-    //   favoriteGames: [{ ...gameData }],
-    // });
+    const docSnap = await getDoc(docRef);
+    const fetchData = docSnap.data();
+    if (!fetchData) return null;
 
-    // const doSnap2 = await getDoc(docRef);
-    // console.log(doSnap2.data());
+    // console.log('gameData', gameData.id);
+
+    updateDoc(doc(db, 'users', fetchData.email), {
+      // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
+      favoriteGames: [...fetchData.favoriteGames, { ...gameData }],
+    });
+
+    // const docSnap2 = await getDoc(docRef);
+    // console.log('fetchData', docSnap2.data());
   };
 
   useEffect(() => {

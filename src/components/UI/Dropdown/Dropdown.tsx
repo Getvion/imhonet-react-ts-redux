@@ -48,7 +48,7 @@ export const Dropdown = () => {
             <Link className={classes.dropdown__item} to={'/profile/favorite'}>
               {userName}
             </Link>
-            <Link className={classes.dropdown__item} to={'/settings'}>
+            <Link className={classes.dropdown__item} to={'/settings/general'}>
               Настройки
             </Link>
             <Link onClick={onSignOut} className={classes.dropdown__item} to='/auth'>
