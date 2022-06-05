@@ -11,6 +11,7 @@ import { Header } from './components';
 import { Auth, Main, Profile, Games, Movies, Shows, Books, Search, Settings } from './pages';
 import { Book, Game, Movie, Show } from './pages/DetailsPages';
 import { LoginPopupOffer } from './features/loginOffer/LoginPopupOffer';
+import { Notification } from './features/notification/Notification';
 
 function App() {
   const [shows, setShows] = useState([]);
@@ -67,6 +68,7 @@ function App() {
       <Header />
       <LoginPopupOffer />
       <div className='app__container'>
+        <Notification />
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/profile/*' element={<Profile />} />

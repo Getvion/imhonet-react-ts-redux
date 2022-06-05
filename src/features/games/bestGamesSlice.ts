@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const loadBestGames = createAsyncThunk(
   'load-best-games',
-  async (_, { extra: { axios, requests } }) => {
+  async (_, { extra: { axios, requests } }: any) => {
     return axios.get(requests.GET_BEST_GAMES(1));
   }
 );
