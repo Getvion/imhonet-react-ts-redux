@@ -22,28 +22,45 @@ export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
 
   const onRegister = async (nickname: string, regEmail: string, regPassword: string) => {
     await createUserWithEmailAndPassword(auth, regEmail, regPassword)
-      .then(({ user }) => {
+      .then(() => {
         if (!auth.currentUser) return;
 
         setDoc(doc(db, 'users', regEmail), {
-          name: nickname,
-          email: regEmail,
-          token: user.refreshToken,
-          description: '',
-          imageUrl:
-            'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+          userData: {
+            name: nickname,
+            email: regEmail,
+            description: '',
+            birthday: '',
+            country: '',
+            imageUrl:
+              'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+            socialMedia: [],
+          },
+          favoriteContent: { games: [], movies: [], shows: [], books: [] },
+          waitingContent: { games: [], movies: [], shows: [], books: [] },
+          lists: { movies: [], games: [], shows: [], books: [] },
         });
 
         updateProfile(auth.currentUser, { displayName: nickname });
+        navigate(-1);
 
         dispatch(
           setUser({
-            email: user.email,
-            name: nickname,
-            token: user.refreshToken,
+            userData: {
+              name: nickname,
+              email: regEmail,
+              description: '',
+              birthday: '',
+              country: '',
+              imageUrl:
+                'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+              socialMedia: [],
+            },
+            favoriteContent: { games: [], movies: [], shows: [], books: [] },
+            waitingContent: { games: [], movies: [], shows: [], books: [] },
+            lists: { movies: [], games: [], shows: [], books: [] },
           })
         );
-        navigate(-1);
       })
       .catch((error) => console.log(error.message));
   };
