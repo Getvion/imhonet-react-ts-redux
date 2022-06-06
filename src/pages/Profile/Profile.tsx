@@ -14,7 +14,8 @@ export const Profile = () => {
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const { description, imageUrl, name } = useFetchUser();
+  const { userData } = useFetchUser();
+  const { birthday, country, description, imageUrl, name } = userData;
 
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
@@ -30,7 +31,11 @@ export const Profile = () => {
           <img src={imageUrl} alt={name} className={classes.profile__avatar} />
           <div className={classes.profile__content}>
             <h1 className={classes.profile__username}>{name}</h1>
-            <p className={classes.profile__descr}>{description}</p>
+            <div className={classes.profile__descr}>
+              {description && <p>{description}</p>}
+              {country && <p>Страна: {country}</p>}
+              {birthday && <p>День рождения: {birthday}</p>}
+            </div>
           </div>
         </div>
         <Button text='Редактировать' onClick={() => navigate('/settings/general')} state='default' />

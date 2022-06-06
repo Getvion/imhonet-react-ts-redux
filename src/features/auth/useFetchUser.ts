@@ -6,31 +6,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './userSlice';
 
 interface IUserData {
-  user: { email: string; name: string; description: string; imageUrl: string };
+  user: {
+    userData: {
+      email: string;
+      name: string;
+      imageUrl: string;
+      description: string;
+      country: string;
+      birthday: string;
+      socialMedia: { link: string; name: string }[];
+    };
+  };
 }
 
 export const useFetchUser = () => {
   const dispatch = useDispatch();
-  const userData = useSelector((state: IUserData) => state.user);
+  const user = useSelector((state: IUserData) => state.user);
 
   useEffect(() => {
     const getData = async () => {
-      if (userData.email) {
-        const docRef = doc(db, 'users', userData.email);
+      const docRef = doc(db, 'users', user.userData.email);
+      const docSnap = await getDoc(docRef);
+      const fetchData = docSnap.data();
 
-        const docSnap = await getDoc(docRef);
-        const fetchData = docSnap.data();
-        if (fetchData) {
-          const { name, email, token, imageUrl, description } = fetchData;
-          dispatch(
-            setUser({ name: name, email: email, token: token, imageUrl: imageUrl, description: description })
-          );
-        }
-      }
+      dispatch(setUser(fetchData));
     };
 
     getData();
-  }, [dispatch, userData]);
+  }, [dispatch, user.userData.email]);
 
-  return userData;
+  return user;
 };

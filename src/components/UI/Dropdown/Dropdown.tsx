@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { removeUser } from '../../../features/auth/userSlice';
@@ -9,14 +9,12 @@ import { auth } from '../../../firebase';
 
 import classes from './Dropdown.module.scss';
 import { useAuthOnReload } from '../../../features/auth/useAuthOnReload';
-
-interface ISeletcorProps {
-  user: { name: string; email: string; token: string; imageUrl: string; description: string };
-}
+import { useFetchUser } from '../../../features/auth/useFetchUser';
 
 export const Dropdown = () => {
   const dispatch = useDispatch();
-  const userName = useSelector((state: ISeletcorProps) => state.user.name);
+
+  const { userData } = useFetchUser();
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -36,9 +34,9 @@ export const Dropdown = () => {
     <>
       {isDropdownVisible && <div className={classes.wrap} onClick={toggleDropdown}></div>}
       <div className={classes.nav__item}>
-        {userName ? (
+        {userData.name ? (
           <span onClick={toggleDropdown} className={classes.username}>
-            {userName}
+            {userData.name}
           </span>
         ) : (
           <Link to='/auth'>Войти</Link>
@@ -46,7 +44,7 @@ export const Dropdown = () => {
         {isDropdownVisible && (
           <div className={classes.dropdown} onClick={toggleDropdown}>
             <Link className={classes.dropdown__item} to={'/profile/favorite'}>
-              {userName}
+              {userData.name}
             </Link>
             <Link className={classes.dropdown__item} to={'/settings/general'}>
               Настройки
