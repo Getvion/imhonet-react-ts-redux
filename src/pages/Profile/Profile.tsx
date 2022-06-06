@@ -33,7 +33,7 @@ export const Profile = () => {
             <p className={classes.profile__descr}>{description}</p>
           </div>
         </div>
-        <Button text='Редактировать' onClick={() => navigate('/settings/general')} />
+        <Button text='Редактировать' onClick={() => navigate('/settings/general')} state='default' />
       </div>
       <div className={classes.tabs}>
         <div className={classes.tabs__list}>

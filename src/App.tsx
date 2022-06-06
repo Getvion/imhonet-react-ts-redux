@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
+// todo 1. При регистрации создавать в базе данных полный шаблон документа: имя, емейл, описание, аватарку, любимые и ожидаемые игры, любимые и ожидаемые фильмы, любимые и ожидаемые книги, любимиые и ожидаемые сериалы, токен,  соц сети, день рождения, страна,
+// todo 2. Форма с отзывами на странице карточки
+// todo 3. Список отзывов на странице с карточками
+// todo 4. Запоминать выбранную тему в localStorage
+
 //
 // import { db } from './firebase';
 // import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';

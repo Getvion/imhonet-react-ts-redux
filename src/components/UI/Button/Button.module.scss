@@ -14,4 +14,26 @@
     background-color: var(#{--text-color-default});
     color: var(#{--bg-color-default});
   }
+
+  &.accept {
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid green;
+
+    &:hover {
+      background-color: green;
+      color: white;
+    }
+  }
+
+  &.reject {
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid red;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
 }

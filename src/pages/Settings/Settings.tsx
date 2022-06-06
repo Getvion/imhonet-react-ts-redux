@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 
 import clsx from 'clsx';
 
 import classes from './Settings.module.scss';
 
 import { ResetPassword, Links, General } from './';
+import { Button } from '../../components';
 
 export const Settings = () => {
+  const navigate = useNavigate();
   const [activeLinkIndex, setActiveLinkIndex] = useState(0);
 
   const navLinks = [
@@ -45,12 +47,8 @@ export const Settings = () => {
       </div>
 
       <div className={classes.buttons}>
-        <button type='button' className={clsx(classes.button, classes.button__accept)}>
-          Сохранить
-        </button>
-        <Link to={'/profile/favorite'} className={clsx(classes.button, classes.button__reject)}>
-          Отмена
-        </Link>
+        <Button onClick={() => {}} state='accept' text='Сохранить' />
+        <Button onClick={() => navigate('/profile/favorite')} state='reject' text='Отмена' />
       </div>
     </div>
   );

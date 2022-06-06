@@ -105,8 +105,8 @@ export const Game = () => {
                 <h1 className={classes.game__title}>{name}</h1>
                 <h2 className={classes.game__original}>{name_original}</h2>
                 <div className={classes.game__add}>
-                  <Button text='Буду играть' onClick={onPlayLaterClick} />
-                  <Button text='Любимая игра' onClick={onFavoriteClick} />
+                  <Button text='Буду играть' onClick={onPlayLaterClick} state='default' />
+                  <Button text='Любимая игра' onClick={onFavoriteClick} state='default' />
                 </div>
                 <div className={classes.game__info}>
                   <h3 className={classes.game__about}>О игре</h3>

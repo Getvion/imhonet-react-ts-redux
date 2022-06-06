@@ -64,7 +64,9 @@ export const Favorite = () => {
         <section key={title} className={classes.section}>
           <div className={classes.section__top}>
             <h3 className={classes.section__title}>{title} </h3>
-            {items.length ? <Button onClick={() => console.log('hi')} text='Показать все' /> : null}
+            {items.length ? (
+              <Button onClick={() => console.log('hi')} text='Показать все' state='default' />
+            ) : null}
           </div>
           <ul className={classes.section__list}>
             {items.length ? (

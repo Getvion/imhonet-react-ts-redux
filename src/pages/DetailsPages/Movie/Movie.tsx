@@ -121,8 +121,8 @@ export const Movie = () => {
                 <h1 className={classes.movie__title}>{nameRu}</h1>
                 <h2 className={classes.movie__original}>{nameOriginal}</h2>
                 <div className={classes.movie__add}>
-                  <Button text='Буду смотреть' onClick={onWatchLaterClick} />
-                  <Button text='Любимый' onClick={onFavoriteClick} />
+                  <Button text='Буду смотреть' onClick={onWatchLaterClick} state='default' />
+                  <Button text='Любимый' onClick={onFavoriteClick} state='default' />
                 </div>
                 <div className={classes.movie__info}>
                   <h3 className={classes.movie__about}>О фильме</h3>

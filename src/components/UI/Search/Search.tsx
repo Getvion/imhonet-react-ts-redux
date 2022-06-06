@@ -29,7 +29,7 @@ export const Search = () => {
         value={inputValue}
         placeholder={'Grand Theft Auto 5'}
       />
-      <Button text='Поиск' onClick={handleSumbit} type='submit' />
+      <Button text='Поиск' onClick={handleSumbit} type='submit' state='default' />
     </form>
   );
 };

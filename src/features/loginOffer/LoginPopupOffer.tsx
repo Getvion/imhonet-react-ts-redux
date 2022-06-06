@@ -1,18 +1,22 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '../../components';
 import { setLoginOffer } from './loginOfferSlice';
 
 import classes from './LoginPopupOffer.module.scss';
 
 export const LoginPopupOffer = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isPopupShow = useSelector((state: { showLoginPopup: boolean }) => state.showLoginPopup);
 
-  const onCloseModal = () => {
+  const onCloseModal = (isNavigate: boolean) => {
     dispatch(setLoginOffer(false));
+
+    return isNavigate ? navigate('/auth') : null;
   };
 
   return (
@@ -24,12 +28,8 @@ export const LoginPopupOffer = () => {
             <span>Хотите войти?</span>
           </p>
           <div className={classes.modal__buttons}>
-            <Link to={'/auth'} onClick={onCloseModal} className={classes.modal__login}>
-              Войти
-            </Link>
-            <button onClick={onCloseModal} className={classes.modal__reject}>
-              Отмена
-            </button>
+            <Button onClick={() => onCloseModal(true)} state='accept' text='Войти' />
+            <Button onClick={() => onCloseModal(false)} state='reject' text='Отмена' />
           </div>
         </div>
       </div>
