@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 
-import { setUser } from '../../features/auth/userSlice';
+import { setEmailAndName } from '../../features/auth/userSlice';
 
 import { RegistrationForm } from './RegistrationForm';
 
@@ -22,14 +22,7 @@ export const Login: React.FC<Props> = ({ onMobileButtonClick }) => {
   const onLogin = async (nickname: string, loginEmail: string, loginPassword: string) => {
     await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then(({ user }) => {
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.refreshToken,
-            name: user.displayName,
-          })
-        );
+        dispatch(setEmailAndName({ name: user.displayName, email: user.email }));
 
         navigate(-1);
       })
