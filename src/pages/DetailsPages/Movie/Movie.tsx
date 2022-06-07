@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import classes from './Movie.module.scss';
@@ -9,7 +7,7 @@ import classes from './Movie.module.scss';
 import 'swiper/css/bundle';
 import { Button, LoadingSpinner, Ratings } from '../../../components';
 import { MovieListItem } from './MovieListItem';
-import { loadMovieInfo, loadMovieSimilar, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
+import { loadMovieInfo } from '../../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../../store';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -32,31 +30,9 @@ interface IMovie {
   genres: { genre: string }[];
 }
 
-interface IStaff {
-  nameRu: string;
-  nameEn: string;
-  description: string;
-  posterUrl: string;
-  professionKey: string;
-}
-
 interface IMovieData {
   movieInfo: {
     movieData: IMovie;
-    movieStaffData: {
-      nameRu: string;
-      nameEn: string;
-      description: string;
-      posterUrl: string;
-      professionKey: string;
-    }[];
-    movieSimilar: {
-      items: {
-        filmId: number;
-        nameRu: string;
-        posterUrlPreview: string;
-      }[];
-    };
   };
 }
 
@@ -76,8 +52,8 @@ interface IUserData {
 
 export const Movie = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { movieData, movieStaffData, movieSimilar } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
 
+  const { movieData } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
   const { userData } = useSelector(({ user }: IUserData) => user);
 
   const ratingAgeLimits = () => {
@@ -85,12 +61,6 @@ export const Movie = () => {
     if (movieData.ratingAgeLimits === 'age16') return '16+';
     if (movieData.ratingAgeLimits === 'age12') return '12+';
     return '0+';
-  };
-
-  const onSimilarMovieClick = (filmId: number) => {
-    dispatch(loadMovieInfo(filmId));
-    dispatch(loadMovieStaffInfo(filmId));
-    dispatch(loadMovieSimilar(filmId));
   };
 
   const onWatchLaterClick = async () => {
@@ -139,8 +109,6 @@ export const Movie = () => {
     const currentMovieId = window.location.href.split('/').reverse()[0];
 
     dispatch(loadMovieInfo(currentMovieId));
-    dispatch(loadMovieStaffInfo(currentMovieId));
-    dispatch(loadMovieSimilar(currentMovieId));
   }, [dispatch]);
 
   const {

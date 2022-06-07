@@ -30,14 +30,6 @@ export const GET_MOVIE_INFO_BY_ID = (filmId: number | string) => {
   return `${MOVIES_BASE}/v2.2/films/${filmId}`;
 };
 
-export const GET_MOVIE_STAFF_INFO_BY_ID = (filmId: number | string) => {
-  return `${MOVIES_BASE}/v1/staff?filmId=${filmId}`;
-};
-
-export const GET_MOVIE_SIMILAR_BY_ID = (filmId: number | string) => {
-  return `${MOVIES_BASE}/v2.2/films/${filmId}/similars`;
-};
-
 export const SEARCH_MOVIE_BY_NAME = (filmName: string) => {
   return `${MOVIES_BASE}/v2.1/films/search-by-keyword?keyword=${filmName}`;
 };
