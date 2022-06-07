@@ -11,10 +11,12 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     setNotification: (state, action) => {
-      return (state = action.payload);
+      state.text = action.payload.text;
+      state.type = action.payload.type;
+      state.isShown = true;
     },
-    closeNotification: (state, action) => {
-      state.isShown = action.payload;
+    closeNotification: (state) => {
+      state.isShown = false;
     },
   },
 });

@@ -17,9 +17,9 @@ export const Notification = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(closeNotification(false));
+      dispatch(closeNotification());
     }, 4000);
-  }, [dispatch]);
+  }, [dispatch, isShown]);
 
   return (
     <div
