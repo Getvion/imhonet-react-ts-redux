@@ -3,10 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 // !  { items: [], title: '', description: '' } - структура элемента списка
 
-// todo 1. Логин с новыми данными.
 // todo 2. Форма с отзывами на странице карточки
 // todo 3. Список отзывов на странице с карточками
-// todo 4. Запоминать выбранную тему в localStorage
 
 //
 // import { db } from './firebase';

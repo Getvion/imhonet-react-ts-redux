@@ -6,11 +6,20 @@ export const useTheme = () => {
   const theme = useSelector((state: { theme: string }) => state.theme);
   const dispatch = useDispatch();
 
+  const localTheme = localStorage.getItem('theme');
+
   const toggleTheme = () => {
     dispatch(setTheme(theme === 'light' ? 'dark' : 'light'));
   };
 
   useEffect(() => {
+    if (localTheme) dispatch(setTheme(localTheme));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+
     const root = document.querySelector(':root') as HTMLElement;
     const components = ['bg-color', 'text-color', 'shadow-color'];
 
