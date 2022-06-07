@@ -1,13 +1,34 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
 
 import { Button } from '../../components';
-import { Favorite, Lists, Waiting, Stats } from './';
+import { Lists, Stats, FavAndWait } from './';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
 
 import classes from './Profile.module.scss';
+
+interface IUserContent {
+  user: {
+    favoriteContent: { shows: {}[]; books: {}[]; games: IGame[]; movies: IMovie[] };
+    waitingContent: { shows: {}[]; books: {}[]; games: IGame[]; movies: IMovie[] };
+  };
+}
+
+interface IGame {
+  id: number;
+  name: string;
+  background_image: string;
+}
+
+interface IMovie {
+  filmId: number;
+  nameRu: string;
+  nameEn: string;
+  posterUrlPreview: string;
+}
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -17,10 +38,12 @@ export const Profile = () => {
   const { userData } = useFetchUser();
   const { birthday, country, description, imageUrl, name } = userData;
 
+  const { favoriteContent, waitingContent } = useSelector((state: IUserContent) => state.user);
+
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
-    { title: 'Списки', route: 'lists' },
     { title: 'Ожидаемое', route: 'waiting' },
+    { title: 'Списки', route: 'lists' },
     { title: 'Статистика', route: 'stats' },
   ];
 
@@ -56,9 +79,9 @@ export const Profile = () => {
           ))}
         </div>
         <Routes>
-          <Route path='favorite' element={<Favorite />} />
+          <Route path='favorite' element={<FavAndWait items={favoriteContent} />} />
           <Route path='lists' element={<Lists />} />
-          <Route path='waiting' element={<Waiting />} />
+          <Route path='waiting' element={<FavAndWait items={waitingContent} />} />
           <Route path='stats' element={<Stats />} />
         </Routes>
       </div>

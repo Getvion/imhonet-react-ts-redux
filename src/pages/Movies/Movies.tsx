@@ -12,6 +12,7 @@ import { AppDispatch } from '../../store';
 interface IMovie {
   filmId: number;
   nameRu: string;
+  nameEn: string;
   posterUrlPreview: string;
 }
 
@@ -30,11 +31,11 @@ export const Movies = () => {
           <MoviesSlider items={movies} />
           <h2 className={classes.movies__title}>Лучшие фильмы</h2>
           <div className={classes.movies__list}>
-            {movies.map(({ filmId, nameRu, posterUrlPreview }: IMovie) => (
+            {movies.map(({ filmId, nameRu, nameEn, posterUrlPreview }: IMovie) => (
               <SectionCard
                 key={filmId}
                 id={filmId}
-                name={nameRu}
+                name={nameRu || nameEn}
                 bgImage={posterUrlPreview}
                 section={'movies'}
               />

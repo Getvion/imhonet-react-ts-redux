@@ -1,0 +1,23 @@
+@import '../../styles/varibles';
+
+.section {
+  &__empty {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+
+    &__icon {
+      font-style: normal;
+      font-size: 50px;
+    }
+
+    &__text {
+      display: block;
+      font-size: $fs-big;
+    }
+  }
+}
