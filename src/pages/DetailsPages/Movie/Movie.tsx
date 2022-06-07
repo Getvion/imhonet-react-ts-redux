@@ -12,6 +12,9 @@ import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo, loadMovieSimilar, loadMovieStaffInfo } from '../../../features/movies/loadMovieInfo';
 import { AppDispatch } from '../../../store';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
+import { setNotification } from '../../../features/notification/notificationSlice';
 
 interface IMovie {
   kinopoiskId: number;
@@ -58,14 +61,24 @@ interface IMovieData {
 }
 
 interface IUserData {
-  user: { email: string; name: string };
+  user: {
+    userData: {
+      email: string;
+      name: string;
+      imageUrl: string;
+      description: string;
+      country: string;
+      birthday: string;
+      socialMedia: { link: string; name: string }[];
+    };
+  };
 }
 
 export const Movie = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { movieData, movieStaffData, movieSimilar } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
 
-  const userData = useSelector(({ user }: IUserData) => user);
+  const { userData } = useSelector(({ user }: IUserData) => user);
 
   const ratingAgeLimits = () => {
     if (movieData.ratingAgeLimits === 'age18') return '18+';
@@ -80,12 +93,46 @@ export const Movie = () => {
     dispatch(loadMovieSimilar(filmId));
   };
 
-  const onWatchLaterClick = () => {
+  const onWatchLaterClick = async () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
+
+    const docRef = doc(db, 'users', userData.email);
+    const docSnap = await getDoc(docRef);
+    const fetchData = docSnap.data();
+    if (!fetchData) return null;
+
+    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+      waitingContent: {
+        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
+        games: [...fetchData.waitingContent.games],
+        shows: [...fetchData.waitingContent.shows],
+        movies: [...fetchData.waitingContent.movies, { ...movieData }],
+        books: [...fetchData.waitingContent.books],
+      },
+    }).then(() =>
+      dispatch(setNotification({ type: 'success', text: 'Фильм успешно добавлен в список ожидаемых' }))
+    );
   };
 
-  const onFavoriteClick = () => {
+  const onFavoriteClick = async () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
+
+    const docRef = doc(db, 'users', userData.email);
+    const docSnap = await getDoc(docRef);
+    const fetchData = docSnap.data();
+    if (!fetchData) return null;
+
+    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+      favoriteContent: {
+        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
+        games: [...fetchData.favoriteContent.games],
+        shows: [...fetchData.favoriteContent.shows],
+        movies: [...fetchData.favoriteContent.movies, { ...movieData }],
+        books: [...fetchData.favoriteContent.books],
+      },
+    }).then(() =>
+      dispatch(setNotification({ type: 'success', text: 'Фильм успешно добавлена в список любимых' }))
+    );
   };
 
   useEffect(() => {
@@ -174,39 +221,6 @@ export const Movie = () => {
           <div className={classes.movie__ratings}>
             <h3 className={classes.movie__about}>Оценка</h3>
             <Ratings />
-          </div>
-
-          <div className={classes.roles}>
-            <h3 className={classes.movie__about}>Актеры и роли</h3>
-            <Swiper slidesPerView={5} spaceBetween={30} loop={false}>
-              {movieStaffData.length &&
-                movieStaffData.map((person: IStaff) => (
-                  <div key={person.nameEn}>
-                    {person.professionKey === 'ACTOR' && (
-                      <SwiperSlide className={classes.roles__person}>
-                        <img className={classes.roles__img} src={person.posterUrl} alt={person.nameRu} />
-                        <span className={classes.roles__name}>{person.nameRu}</span>
-                        <span className={classes.roles__role}>{person.description}</span>
-                      </SwiperSlide>
-                    )}
-                  </div>
-                ))}
-            </Swiper>
-          </div>
-
-          <div className={classes.similar}>
-            <h3 className={classes.movie__about}>Похожие фильмы</h3>
-            <Swiper slidesPerView={5} spaceBetween={10} loop={false}>
-              {movieSimilar.items &&
-                movieSimilar.items.map((item) => (
-                  <SwiperSlide className={classes.similar__movie} key={item.filmId}>
-                    <Link to={String(item.filmId)} onClick={() => onSimilarMovieClick(item.filmId)}>
-                      <img className={classes.similar__img} src={item.posterUrlPreview} alt={item.nameRu} />
-                      <span className={classes.similar__name}>{item.nameRu}</span>
-                    </Link>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
           </div>
         </>
       ) : (

@@ -12,6 +12,7 @@ import { loadGameInfo } from '../../../features/games/loadGameInfo';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
+import { setNotification } from '../../../features/notification/notificationSlice';
 
 interface IGame {
   id: number;
@@ -38,38 +39,65 @@ interface IGameInfo {
 }
 
 interface IUserData {
-  user: { email: string; name: string };
+  user: {
+    userData: {
+      email: string;
+      name: string;
+      imageUrl: string;
+      description: string;
+      country: string;
+      birthday: string;
+      socialMedia: { link: string; name: string }[];
+    };
+  };
 }
 
 export const Game = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
-  const userData = useSelector(({ user }: IUserData) => user);
-  const docRef = doc(db, 'users', userData.email);
+  const { userData } = useSelector(({ user }: IUserData) => user);
 
-  const onPlayLaterClick = () => {
+  const onPlayLaterClick = async () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
 
-    // при нажатии на кнопку, в добавляется эта игра в список play later
+    const docRef = doc(db, 'users', userData.email);
+    const docSnap = await getDoc(docRef);
+    const fetchData = docSnap.data();
+    if (!fetchData) return null;
+
+    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+      waitingContent: {
+        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
+        games: [...fetchData.waitingContent.games, { ...gameData }],
+        shows: [...fetchData.waitingContent.shows],
+        movies: [...fetchData.waitingContent.movies],
+        books: [...fetchData.waitingContent.books],
+      },
+    }).then(() =>
+      dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список ожидаемых' }))
+    );
   };
 
   const onFavoriteClick = async () => {
     if (!userData.name) return dispatch(setLoginOffer(true));
 
+    const docRef = doc(db, 'users', userData.email);
     const docSnap = await getDoc(docRef);
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
-    // console.log('gameData', gameData.id);
-
-    updateDoc(doc(db, 'users', fetchData.email), {
-      // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
-      favoriteGames: [...fetchData.favoriteGames, { ...gameData }],
-    });
-
-    // const docSnap2 = await getDoc(docRef);
-    // console.log('fetchData', docSnap2.data());
+    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+      favoriteContent: {
+        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
+        games: [...fetchData.favoriteContent.games, { ...gameData }],
+        shows: [...fetchData.favoriteContent.shows],
+        movies: [...fetchData.favoriteContent.movies],
+        books: [...fetchData.favoriteContent.books],
+      },
+    }).then(() =>
+      dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список любимых' }))
+    );
   };
 
   useEffect(() => {
