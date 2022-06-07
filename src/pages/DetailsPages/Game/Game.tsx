@@ -8,7 +8,7 @@ import { Button, LoadingSpinner, Ratings } from '../../../components';
 import { GameListItem } from './GameListItem';
 import { AppDispatch } from '../../../store';
 import { Description } from './Description';
-import { loadGameInfo } from '../../../features/games/loadGameInfo';
+import { loadGameInfo } from '../../../features/games/loadGameInfoSlice';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';

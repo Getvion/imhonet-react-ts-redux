@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const loadBestMovies = createAsyncThunk(
   'load-best-movies',
-  async (_, { extra: { axios, requests } }) => {
+  async (_, { extra: { axios, requests } }: any) => {
     return axios.get(requests.GET_BEST_MOVIES(1), {
       headers: {
         'X-API-KEY': requests.MOVIES_API_KEY,

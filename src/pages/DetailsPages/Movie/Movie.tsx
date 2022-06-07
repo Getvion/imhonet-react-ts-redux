@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import classes from './Movie.module.scss';
 
-import 'swiper/css/bundle';
 import { Button, LoadingSpinner, Ratings } from '../../../components';
 import { MovieListItem } from './MovieListItem';
-import { loadMovieInfo } from '../../../features/movies/loadMovieInfo';
+import { loadMovieInfo } from '../../../features/movies/loadMovieInfoSlice';
 import { AppDispatch } from '../../../store';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
