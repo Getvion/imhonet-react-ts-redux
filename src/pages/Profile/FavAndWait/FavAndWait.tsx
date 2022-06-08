@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, EmptyList, SectionCard } from '../../../components';
+import { Button, EmptyList, SectionCard, ListPopup } from '../../../components';
 
 import classes from './FavAndWait.module.scss';
 
@@ -24,15 +24,14 @@ interface IMovie {
 export const FavAndWait: React.FC<Props> = ({ items }) => {
   const { games, movies, shows, books } = items;
 
-  const [showAll, setShowAll] = useState('');
-  console.log(showAll);
+  const [showPopup, setShowPopup] = useState('');
 
   return (
     <>
       <section className={classes.section}>
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Игры </h3>
-          {games.length && <Button onClick={() => setShowAll('games')} text='Показать все' state='default' />}
+          {games.length ? <Button onClick={() => setShowPopup('games')} text='Показать все' /> : null}
         </div>
         {games.length ? (
           <ul className={classes.section__list}>
@@ -49,9 +48,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
       <section className={classes.section}>
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Фильмы </h3>
-          {movies.length ? (
-            <Button onClick={() => setShowAll('movies')} text='Показать все' state='default' />
-          ) : null}
+          {movies.length ? <Button onClick={() => setShowPopup('movies')} text='Показать все' /> : null}
         </div>
         {movies.length ? (
           <ul className={classes.section__list}>
@@ -73,9 +70,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
       <section className={classes.section}>
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Сериалы </h3>
-          {shows.length ? (
-            <Button onClick={() => setShowAll('shows')} text='Показать все' state='default' />
-          ) : null}
+          {shows.length ? <Button onClick={() => setShowPopup('shows')} text='Показать все' /> : null}
         </div>
         {shows.length ? (
           <ul className={classes.section__list}>
@@ -92,9 +87,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
       <section className={classes.section}>
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Книги </h3>
-          {books.length ? (
-            <Button onClick={() => setShowAll('books')} text='Показать все' state='default' />
-          ) : null}
+          {books.length ? <Button onClick={() => setShowPopup('games')} text='Показать все' /> : null}
         </div>
         {books.length ? (
           <ul className={classes.section__list}>
@@ -108,6 +101,13 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
           <EmptyList />
         )}
       </section>
+
+      {showPopup === 'games' && (
+        <ListPopup itemsArr={games} setShowPopup={setShowPopup} showPopup={'games'} />
+      )}
+      {showPopup === 'movies' && (
+        <ListPopup itemsArr={movies} setShowPopup={setShowPopup} showPopup={'movies'} />
+      )}
     </>
   );
 };

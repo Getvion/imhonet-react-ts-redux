@@ -70,7 +70,7 @@ export const Lists = () => {
         <section key={listName} className={classes.section}>
           <div className={classes.section__top}>
             <h3 className={classes.section__title}>{listName} </h3>
-            <Button onClick={() => console.log('hi')} text='Показать все' state='default' />
+            <Button onClick={() => console.log('hi')} text='Показать все' />
           </div>
           <ul className={classes.section__list}>
             {listItems.slice(0, 3).map(({ id, bgImage, sectoinCardName, section }) => (

@@ -7,10 +7,10 @@ interface IButton {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
   text: string;
-  state: string;
+  state?: string;
 }
 
-export const Button: React.FC<IButton> = ({ onClick, type, text, state }) => {
+export const Button: React.FC<IButton> = ({ onClick, type, text, state = 'default' }) => {
   return (
     <button
       className={clsx(classes.button, {

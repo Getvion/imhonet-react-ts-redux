@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components';
 import { setLoginOffer } from './loginOfferSlice';
 
