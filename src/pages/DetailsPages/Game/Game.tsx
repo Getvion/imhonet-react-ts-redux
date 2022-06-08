@@ -69,14 +69,32 @@ export const Game = () => {
     await updateDoc(doc(db, 'users', fetchData.userData.email), {
       waitingContent: {
         // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
-        games: [...fetchData.waitingContent.games, { ...gameData }],
+        games: [
+          ...fetchData.waitingContent.games,
+          {
+            id,
+            name,
+            name_original,
+            background_image,
+            description_raw,
+            genres,
+            released,
+            developers,
+            publishers,
+            platforms,
+            metacritic,
+            rating,
+            esrb_rating,
+            tags,
+          },
+        ],
         shows: [...fetchData.waitingContent.shows],
         movies: [...fetchData.waitingContent.movies],
         books: [...fetchData.waitingContent.books],
       },
-    }).then(() =>
-      dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список ожидаемых' }))
-    );
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра добавлена в список ожидаемых' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   const onFavoriteClick = async () => {
@@ -90,14 +108,32 @@ export const Game = () => {
     await updateDoc(doc(db, 'users', fetchData.userData.email), {
       favoriteContent: {
         // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
-        games: [...fetchData.favoriteContent.games, { ...gameData }],
+        games: [
+          ...fetchData.favoriteContent.games,
+          {
+            id,
+            name,
+            name_original,
+            background_image,
+            description_raw,
+            genres,
+            released,
+            developers,
+            publishers,
+            platforms,
+            metacritic,
+            rating,
+            esrb_rating,
+            tags,
+          },
+        ],
         shows: [...fetchData.favoriteContent.shows],
         movies: [...fetchData.favoriteContent.movies],
         books: [...fetchData.favoriteContent.books],
       },
-    }).then(() =>
-      dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список любимых' }))
-    );
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра добавлена в список любимых' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   useEffect(() => {
@@ -107,6 +143,7 @@ export const Game = () => {
   }, [dispatch]);
 
   const {
+    id,
     name,
     name_original,
     background_image,
@@ -124,7 +161,7 @@ export const Game = () => {
 
   return (
     <div className={classes.game}>
-      {gameData.id ? (
+      {id ? (
         <>
           <div className={classes.game__top}>
             <img className={classes.game__image} src={background_image} alt={name} />

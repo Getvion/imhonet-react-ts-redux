@@ -75,12 +75,28 @@ export const Movie = () => {
         // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
         games: [...fetchData.waitingContent.games],
         shows: [...fetchData.waitingContent.shows],
-        movies: [...fetchData.waitingContent.movies, { ...movieData }],
+        movies: [
+          ...fetchData.waitingContent.movies,
+          {
+            kinopoiskId,
+            posterUrl,
+            nameRu,
+            nameOriginal,
+            year,
+            countries,
+            genres,
+            ratingMpaa,
+            description,
+            filmLength,
+            ratingKinopoisk,
+            ratingImdb,
+          },
+        ],
         books: [...fetchData.waitingContent.books],
       },
-    }).then(() =>
-      dispatch(setNotification({ type: 'success', text: 'Фильм успешно добавлен в список ожидаемых' }))
-    );
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Фильм добавлен в список ожидаемых' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   const onFavoriteClick = async () => {
@@ -96,12 +112,28 @@ export const Movie = () => {
         // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
         games: [...fetchData.favoriteContent.games],
         shows: [...fetchData.favoriteContent.shows],
-        movies: [...fetchData.favoriteContent.movies, { ...movieData }],
+        movies: [
+          ...fetchData.favoriteContent.movies,
+          {
+            kinopoiskId,
+            posterUrl,
+            nameRu,
+            nameOriginal,
+            year,
+            countries,
+            genres,
+            ratingMpaa,
+            description,
+            filmLength,
+            ratingKinopoisk,
+            ratingImdb,
+          },
+        ],
         books: [...fetchData.favoriteContent.books],
       },
-    }).then(() =>
-      dispatch(setNotification({ type: 'success', text: 'Фильм успешно добавлена в список любимых' }))
-    );
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Фильм добавлен в список любимых' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   useEffect(() => {
@@ -111,6 +143,7 @@ export const Movie = () => {
   }, [dispatch]);
 
   const {
+    kinopoiskId,
     posterUrl,
     nameRu,
     nameOriginal,
@@ -126,7 +159,7 @@ export const Movie = () => {
 
   return (
     <div className={classes.movie}>
-      {movieData.kinopoiskId ? (
+      {kinopoiskId ? (
         <>
           <div className={classes.movie__top}>
             <img className={classes.movie__image} src={posterUrl} alt={nameRu} />
