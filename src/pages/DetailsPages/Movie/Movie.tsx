@@ -70,9 +70,19 @@ export const Movie = () => {
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
-    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+    const { waitingContent } = fetchData;
+
+    const isMovieAdded = waitingContent.movies.filter(
+      (movieObj: IMovie) => movieObj.kinopoiskId === movieData.kinopoiskId
+    ).length;
+
+    if (isMovieAdded)
+      return dispatch(
+        setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список ожидаемых ранее' })
+      );
+
+    await updateDoc(doc(db, 'users', userData.email), {
       waitingContent: {
-        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
         games: [...fetchData.waitingContent.games],
         shows: [...fetchData.waitingContent.shows],
         movies: [
@@ -107,9 +117,19 @@ export const Movie = () => {
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
+    const { favoriteContent } = fetchData;
+
+    const isMovieAdded = favoriteContent.movies.filter(
+      (movieObj: IMovie) => movieObj.kinopoiskId === movieData.kinopoiskId
+    ).length;
+
+    if (isMovieAdded)
+      return dispatch(
+        setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список ожидаемых ранее' })
+      );
+
     await updateDoc(doc(db, 'users', fetchData.userData.email), {
       favoriteContent: {
-        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
         games: [...fetchData.favoriteContent.games],
         shows: [...fetchData.favoriteContent.shows],
         movies: [

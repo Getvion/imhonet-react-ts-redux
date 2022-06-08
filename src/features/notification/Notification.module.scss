@@ -6,7 +6,7 @@
   right: 20px;
   padding: 10px 20px;
   border-radius: 5px;
-  color: var(#{--bg-color-default});
+  color: rgb(225, 225, 225);
   box-shadow: var(#{--shadow-color-default});
   z-index: 100;
   font-weight: $fw-normal;
@@ -17,6 +17,10 @@
 
   &__danger {
     background-color: #dc3545;
+  }
+
+  &__warning {
+    background-color: #faad14;
   }
 }
 

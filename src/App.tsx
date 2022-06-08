@@ -19,7 +19,7 @@ function App() {
     };
 
     fetchData();
-  }, [shows]);
+  }, []);
 
   return (
     <div className='app'>

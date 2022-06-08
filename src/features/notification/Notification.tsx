@@ -26,7 +26,8 @@ export const Notification = () => {
       className={clsx(classes.message, classes.animate, {
         [classes.active]: isShown,
         [classes.message__success]: type === 'success',
-        [classes.message__danger]: type === 'danger',
+        [classes.message__danger]: type === 'reject',
+        [classes.message__warning]: type === 'warning',
       })}
     >
       {text}

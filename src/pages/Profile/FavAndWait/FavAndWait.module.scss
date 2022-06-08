@@ -19,6 +19,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
+    pointer-events: none;
   }
 
   &__item {

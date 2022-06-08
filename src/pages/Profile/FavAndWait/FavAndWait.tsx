@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Button, EmptyList, SectionCard } from '../../../components';
 
@@ -24,14 +24,15 @@ interface IMovie {
 export const FavAndWait: React.FC<Props> = ({ items }) => {
   const { games, movies, shows, books } = items;
 
+  const [showAll, setShowAll] = useState('');
+  console.log(showAll);
+
   return (
     <>
       <section className={classes.section}>
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Игры </h3>
-          {games.length ? (
-            <Button onClick={() => console.log('hi')} text='Показать все' state='default' />
-          ) : null}
+          {games.length && <Button onClick={() => setShowAll('games')} text='Показать все' state='default' />}
         </div>
         {games.length ? (
           <ul className={classes.section__list}>
@@ -49,7 +50,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Фильмы </h3>
           {movies.length ? (
-            <Button onClick={() => console.log('hi')} text='Показать все' state='default' />
+            <Button onClick={() => setShowAll('movies')} text='Показать все' state='default' />
           ) : null}
         </div>
         {movies.length ? (
@@ -73,7 +74,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Сериалы </h3>
           {shows.length ? (
-            <Button onClick={() => console.log('hi')} text='Показать все' state='default' />
+            <Button onClick={() => setShowAll('shows')} text='Показать все' state='default' />
           ) : null}
         </div>
         {shows.length ? (
@@ -92,7 +93,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
         <div className={classes.section__top}>
           <h3 className={classes.section__title}>Книги </h3>
           {books.length ? (
-            <Button onClick={() => console.log('hi')} text='Показать все' state='default' />
+            <Button onClick={() => setShowAll('books')} text='Показать все' state='default' />
           ) : null}
         </div>
         {books.length ? (

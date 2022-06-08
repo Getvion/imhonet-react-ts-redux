@@ -66,9 +66,16 @@ export const Game = () => {
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
-    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+    const { waitingContent } = fetchData;
+
+    const isGameAdded = waitingContent.games.filter((gameObj: IGame) => gameObj.id === gameData.id).length;
+    if (isGameAdded)
+      return dispatch(
+        setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список ожидаемых ранее' })
+      );
+
+    await updateDoc(doc(db, 'users', userData.email), {
       waitingContent: {
-        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
         games: [
           ...fetchData.waitingContent.games,
           {
@@ -105,9 +112,16 @@ export const Game = () => {
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
-    await updateDoc(doc(db, 'users', fetchData.userData.email), {
+    const { favoriteContent } = fetchData;
+
+    const isGameAdded = favoriteContent.games.filter((gameObj: IGame) => gameObj.id === gameData.id).length;
+    if (isGameAdded)
+      return dispatch(
+        setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список любимых ранее' })
+      );
+
+    await updateDoc(doc(db, 'users', userData.email), {
       favoriteContent: {
-        // сделать проверку на повторение и если повторяется, то выводить сообщение, что элемент уже добавлен или УДАЛЯТЬ этот элемент
         games: [
           ...fetchData.favoriteContent.games,
           {
