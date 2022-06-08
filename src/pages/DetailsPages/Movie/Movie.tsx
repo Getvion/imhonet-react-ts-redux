@@ -18,6 +18,7 @@ interface IMovie {
   nameRu: string;
   nameOriginal: string;
   posterUrl: string;
+  posterUrlPreview: string;
   ratingKinopoisk: number;
   ratingImdb: number;
   year: number;
@@ -88,8 +89,9 @@ export const Movie = () => {
         movies: [
           ...fetchData.waitingContent.movies,
           {
-            kinopoiskId,
+            filmId: kinopoiskId,
             posterUrl,
+            posterUrlPreview,
             nameRu,
             nameOriginal,
             year,
@@ -135,8 +137,9 @@ export const Movie = () => {
         movies: [
           ...fetchData.favoriteContent.movies,
           {
-            kinopoiskId,
+            filmId: kinopoiskId,
             posterUrl,
+            posterUrlPreview,
             nameRu,
             nameOriginal,
             year,
@@ -165,6 +168,7 @@ export const Movie = () => {
   const {
     kinopoiskId,
     posterUrl,
+    posterUrlPreview,
     nameRu,
     nameOriginal,
     year,

@@ -28,7 +28,6 @@ interface IGame {
   description_raw: string;
   developers: { name: string }[];
   genres: { name: string }[];
-  tags: { name: string }[];
   publishers: { name: string }[];
 }
 
@@ -92,7 +91,6 @@ export const Game = () => {
             metacritic,
             rating,
             esrb_rating,
-            tags,
           },
         ],
         shows: [...fetchData.waitingContent.shows],
@@ -138,7 +136,6 @@ export const Game = () => {
             metacritic,
             rating,
             esrb_rating,
-            tags,
           },
         ],
         shows: [...fetchData.favoriteContent.shows],
@@ -170,7 +167,6 @@ export const Game = () => {
     metacritic,
     rating,
     esrb_rating,
-    tags,
   } = gameData;
 
   return (
@@ -199,7 +195,6 @@ export const Game = () => {
                       description={'Платформы'}
                       content={platforms.map((p) => `${p.platform.name} `)}
                     />
-                    <GameListItem description={'Теги'} content={tags.map((t) => `${t.name} `)} />
                   </ul>
                 </div>
               </div>
