@@ -42,15 +42,11 @@ interface IUserData {
   user: {
     userData: {
       email: string;
-      name: string;
-      imageUrl: string;
-      description: string;
-      country: string;
-      birthday: string;
-      socialMedia: { link: string; name: string }[];
     };
   };
 }
+
+// todo сделать общую функцию, которая будет вызывать другие функции по переданному параметру (для уменьшения кода)
 
 export const Game = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -59,7 +55,7 @@ export const Game = () => {
   const { userData } = useSelector(({ user }: IUserData) => user);
 
   const onPlayLaterClick = async () => {
-    if (!userData.name) return dispatch(setLoginOffer(true));
+    if (!userData.email) return dispatch(setLoginOffer(true));
 
     const docRef = doc(db, 'users', userData.email);
     const docSnap = await getDoc(docRef);
@@ -78,21 +74,7 @@ export const Game = () => {
       waitingContent: {
         games: [
           ...fetchData.waitingContent.games,
-          {
-            id,
-            name,
-            name_original,
-            background_image,
-            description_raw,
-            genres,
-            released,
-            developers,
-            publishers,
-            platforms,
-            metacritic,
-            rating,
-            esrb_rating,
-          },
+          { id: id, name: name, nameOrig: name_original, bgImg: background_image },
         ],
         shows: [...fetchData.waitingContent.shows],
         movies: [...fetchData.waitingContent.movies],
@@ -104,7 +86,7 @@ export const Game = () => {
   };
 
   const onFavoriteClick = async () => {
-    if (!userData.name) return dispatch(setLoginOffer(true));
+    if (!userData.email) return dispatch(setLoginOffer(true));
 
     const docRef = doc(db, 'users', userData.email);
     const docSnap = await getDoc(docRef);
@@ -123,21 +105,7 @@ export const Game = () => {
       favoriteContent: {
         games: [
           ...fetchData.favoriteContent.games,
-          {
-            id,
-            name,
-            name_original,
-            background_image,
-            description_raw,
-            genres,
-            released,
-            developers,
-            publishers,
-            platforms,
-            metacritic,
-            rating,
-            esrb_rating,
-          },
+          { id: id, name: name, nameOrig: name_original, bgImg: background_image },
         ],
         shows: [...fetchData.favoriteContent.shows],
         movies: [...fetchData.favoriteContent.movies],

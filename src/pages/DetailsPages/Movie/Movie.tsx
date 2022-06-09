@@ -42,12 +42,6 @@ interface IUserData {
   user: {
     userData: {
       email: string;
-      name: string;
-      imageUrl: string;
-      description: string;
-      country: string;
-      birthday: string;
-      socialMedia: { link: string; name: string }[];
     };
   };
 }
@@ -66,7 +60,7 @@ export const Movie = () => {
   };
 
   const onWatchLaterClick = async () => {
-    if (!userData.name) return dispatch(setLoginOffer(true));
+    if (!userData.email) return dispatch(setLoginOffer(true));
 
     const docRef = doc(db, 'users', userData.email);
     const docSnap = await getDoc(docRef);
@@ -90,21 +84,7 @@ export const Movie = () => {
         shows: [...fetchData.waitingContent.shows],
         movies: [
           ...fetchData.waitingContent.movies,
-          {
-            filmId: kinopoiskId,
-            posterUrl,
-            posterUrlPreview,
-            nameRu,
-            nameOriginal,
-            year,
-            countries,
-            genres,
-            ratingMpaa,
-            description,
-            filmLength,
-            ratingKinopoisk,
-            ratingImdb,
-          },
+          { id: kinopoiskId, name: nameRu, nameOrig: nameOriginal, bgImg: posterUrlPreview },
         ],
         books: [...fetchData.waitingContent.books],
       },
@@ -114,7 +94,7 @@ export const Movie = () => {
   };
 
   const onFavoriteClick = async () => {
-    if (!userData.name) return dispatch(setLoginOffer(true));
+    if (!userData.email) return dispatch(setLoginOffer(true));
 
     const docRef = doc(db, 'users', userData.email);
     const docSnap = await getDoc(docRef);
@@ -138,21 +118,7 @@ export const Movie = () => {
         shows: [...fetchData.favoriteContent.shows],
         movies: [
           ...fetchData.favoriteContent.movies,
-          {
-            filmId: kinopoiskId,
-            posterUrl,
-            posterUrlPreview,
-            nameRu,
-            nameOriginal,
-            year,
-            countries,
-            genres,
-            ratingMpaa,
-            description,
-            filmLength,
-            ratingKinopoisk,
-            ratingImdb,
-          },
+          { id: kinopoiskId, name: nameRu, nameOrig: nameOriginal, bgImg: posterUrlPreview },
         ],
         books: [...fetchData.favoriteContent.books],
       },

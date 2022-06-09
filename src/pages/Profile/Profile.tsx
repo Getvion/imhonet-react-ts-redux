@@ -12,22 +12,16 @@ import classes from './Profile.module.scss';
 
 interface IUserContent {
   user: {
-    favoriteContent: { shows: {}[]; books: {}[]; games: IGame[]; movies: IMovie[] };
-    waitingContent: { shows: {}[]; books: {}[]; games: IGame[]; movies: IMovie[] };
+    favoriteContent: { shows: IItem[]; books: IItem[]; games: IItem[]; movies: IItem[] };
+    waitingContent: { shows: IItem[]; books: IItem[]; games: IItem[]; movies: IItem[] };
   };
 }
 
-interface IGame {
+interface IItem {
   id: number;
   name: string;
-  background_image: string;
-}
-
-interface IMovie {
-  filmId: number;
-  nameRu: string;
-  nameEn: string;
-  posterUrlPreview: string;
+  nameOrig: string;
+  bgImg: string;
 }
 
 export const Profile = () => {
