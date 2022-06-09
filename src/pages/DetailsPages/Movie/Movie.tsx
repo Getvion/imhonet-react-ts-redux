@@ -9,7 +9,7 @@ import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo } from '../../../features/movies/loadMovieInfoSlice';
 import { AppDispatch } from '../../../store';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { setNotification } from '../../../features/notification/notificationSlice';
 import { setListCatalog } from '../../../features/listsCatalog/listsCatalogSlice';
@@ -59,7 +59,7 @@ export const Movie = () => {
     return '0+';
   };
 
-  const onWatchLaterClick = async () => {
+  const onAddItem = async (triggerList: string) => {
     if (!userData.email) return dispatch(setLoginOffer(true));
 
     const docRef = doc(db, 'users', userData.email);
@@ -67,16 +67,22 @@ export const Movie = () => {
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
-    const { waitingContent } = fetchData;
-
-    const isMovieAdded = waitingContent.movies.filter(
+    const { waitingContent, favoriteContent } = fetchData;
+    const waitMovieAdded = waitingContent.movies.filter(
+      (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
+    ).length;
+    const favMovieAdded = favoriteContent.movies.filter(
       (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
     ).length;
 
-    if (isMovieAdded)
-      return dispatch(
-        setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список ожидаемых ранее' })
-      );
+    if (triggerList === 'waiting') onWatchLaterClick(fetchData, waitMovieAdded);
+    if (triggerList === 'favorite') onFavoriteClick(fetchData, favMovieAdded);
+    if (triggerList === 'listCatalog') dispatch(setListCatalog(true));
+  };
+
+  const onWatchLaterClick = async (fetchData: DocumentData, waitMovieAdded: undefined) => {
+    if (waitMovieAdded)
+      return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
       waitingContent: {
@@ -93,24 +99,9 @@ export const Movie = () => {
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
-  const onFavoriteClick = async () => {
-    if (!userData.email) return dispatch(setLoginOffer(true));
-
-    const docRef = doc(db, 'users', userData.email);
-    const docSnap = await getDoc(docRef);
-    const fetchData = docSnap.data();
-    if (!fetchData) return null;
-
-    const { favoriteContent } = fetchData;
-
-    const isMovieAdded = favoriteContent.movies.filter(
-      (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
-    ).length;
-
-    if (isMovieAdded)
-      return dispatch(
-        setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список ожидаемых ранее' })
-      );
+  const onFavoriteClick = async (fetchData: DocumentData, favMovieAdded: undefined) => {
+    if (favMovieAdded)
+      return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список' }));
 
     await updateDoc(doc(db, 'users', fetchData.userData.email), {
       favoriteContent: {
@@ -160,9 +151,9 @@ export const Movie = () => {
                 <h1 className={classes.movie__title}>{nameRu}</h1>
                 <h2 className={classes.movie__original}>{nameOriginal}</h2>
                 <div className={classes.movie__add}>
-                  <Button text='Буду смотреть' onClick={onWatchLaterClick} />
-                  <Button text='Любимый' onClick={onFavoriteClick} />
-                  <Button text='+' onClick={() => dispatch(setListCatalog(true))} />
+                  <Button text='Буду смотреть' onClick={() => onAddItem('waiting')} />
+                  <Button text='Любимый' onClick={() => onAddItem('favorite')} />
+                  <Button text='+' onClick={() => onAddItem('listCatalog')} />
                 </div>
                 <div className={classes.movie__info}>
                   <h3 className={classes.movie__about}>О фильме</h3>

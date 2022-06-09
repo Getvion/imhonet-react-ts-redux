@@ -10,7 +10,7 @@ import { AppDispatch } from '../../../store';
 import { Description } from './Description';
 import { loadGameInfo } from '../../../features/games/loadGameInfoSlice';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { setNotification } from '../../../features/notification/notificationSlice';
 import { setListCatalog } from '../../../features/listsCatalog/listsCatalogSlice';
@@ -54,7 +54,7 @@ export const Game = () => {
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
   const { userData } = useSelector(({ user }: IUserData) => user);
 
-  const onPlayLaterClick = async () => {
+  const onAddItem = async (triggerList: string) => {
     if (!userData.email) return dispatch(setLoginOffer(true));
 
     const docRef = doc(db, 'users', userData.email);
@@ -62,13 +62,18 @@ export const Game = () => {
     const fetchData = docSnap.data();
     if (!fetchData) return null;
 
-    const { waitingContent } = fetchData;
+    const { waitingContent, favoriteContent } = fetchData;
+    const waitGameAdded = waitingContent.games.filter((gameObj: IGame) => gameObj.id === gameData.id).length;
+    const favGameAdded = favoriteContent.games.filter((gameObj: IGame) => gameObj.id === gameData.id).length;
 
-    const isGameAdded = waitingContent.games.filter((gameObj: IGame) => gameObj.id === gameData.id).length;
-    if (isGameAdded)
-      return dispatch(
-        setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список ожидаемых ранее' })
-      );
+    if (triggerList === 'waiting') onPlayLaterClick(fetchData, waitGameAdded);
+    if (triggerList === 'favorite') onFavoriteClick(fetchData, favGameAdded);
+    if (triggerList === 'listCatalog') dispatch(setListCatalog(true));
+  };
+
+  const onPlayLaterClick = async (fetchData: DocumentData, waitGameAdded: undefined) => {
+    if (waitGameAdded)
+      return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
       waitingContent: {
@@ -81,25 +86,13 @@ export const Game = () => {
         books: [...fetchData.waitingContent.books],
       },
     })
-      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра добавлена в список ожидаемых' })))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: ' Произошла ошибка попробуйте снвоа' })));
   };
 
-  const onFavoriteClick = async () => {
-    if (!userData.email) return dispatch(setLoginOffer(true));
-
-    const docRef = doc(db, 'users', userData.email);
-    const docSnap = await getDoc(docRef);
-    const fetchData = docSnap.data();
-    if (!fetchData) return null;
-
-    const { favoriteContent } = fetchData;
-
-    const isGameAdded = favoriteContent.games.filter((gameObj: IGame) => gameObj.id === gameData.id).length;
-    if (isGameAdded)
-      return dispatch(
-        setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список любимых ранее' })
-      );
+  const onFavoriteClick = async (fetchData: DocumentData, favGameAdded: undefined) => {
+    if (favGameAdded)
+      return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
       favoriteContent: {
@@ -112,8 +105,8 @@ export const Game = () => {
         books: [...fetchData.favoriteContent.books],
       },
     })
-      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра добавлена в список любимых' })))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' })));
   };
 
   useEffect(() => {
@@ -149,9 +142,9 @@ export const Game = () => {
                 <h1 className={classes.game__title}>{name}</h1>
                 <h2 className={classes.game__original}>{name_original}</h2>
                 <div className={classes.game__add}>
-                  <Button text='Буду играть' onClick={onPlayLaterClick} />
-                  <Button text='Любимая игра' onClick={onFavoriteClick} />
-                  <Button text='+' onClick={() => dispatch(setListCatalog(true))} />
+                  <Button text='Буду играть' onClick={() => onAddItem('waiting')} />
+                  <Button text='Любимая игра' onClick={() => onAddItem('favorite')} />
+                  <Button text='+' onClick={() => onAddItem('listCatalog')} />
                 </div>
                 <div className={classes.game__info}>
                   <h3 className={classes.game__about}>О игре</h3>
