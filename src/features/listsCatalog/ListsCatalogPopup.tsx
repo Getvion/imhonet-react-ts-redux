@@ -6,11 +6,19 @@ import { setListCatalog } from './listsCatalogSlice';
 import classes from './ListsCatalogPopup.module.scss';
 import { AuthInput, Button } from '../../components';
 
-interface ILists {
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { setNotification } from '../notification/notificationSlice';
+import { updateLists } from '../auth/userSlice';
+
+interface IUserData {
   user: {
+    userData: {
+      email: string;
+    };
     lists: {
       title: string;
-      items: {}[];
+      items: any;
     }[];
   };
 }
@@ -20,8 +28,8 @@ export const ListsCatalogPopup = () => {
 
   const dispatch = useDispatch();
 
+  const { userData, lists } = useSelector(({ user }: IUserData) => user);
   const isPopupShow = useSelector((state: { listsCatalog: boolean }) => state.listsCatalog);
-  const lists = useSelector((state: ILists) => state.user.lists);
 
   const onClosePopup = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
@@ -30,10 +38,26 @@ export const ListsCatalogPopup = () => {
     }
   };
 
-  const onFomrSubmit = (e: any) => {
+  const onFomrSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(inputValue);
+    const docRef = doc(db, 'users', userData.email);
+    const docSnap = await getDoc(docRef);
+    const fetchData = docSnap.data();
+    if (!fetchData) return null;
+
+    await updateDoc(doc(db, 'users', userData.email), {
+      lists: [...lists, { title: inputValue, items: [] }],
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно создан' })))
+      .then(async () => {
+        const docSnap = await getDoc(docRef);
+        const fetchData = docSnap.data();
+        dispatch(updateLists(fetchData?.lists));
+      })
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+
+    setInputValue('');
   };
 
   return (
@@ -45,10 +69,7 @@ export const ListsCatalogPopup = () => {
               {lists.map(({ title }) => (
                 <li key={title} className={classes.modal__catalog__item}>
                   <p className={classes.modal__title}>{title}</p>
-                  <div className={classes.modal__buttons}>
-                    <Button onClick={() => {}} text='Добавить' state='accept' />
-                    <Button onClick={() => {}} text='Удалить' state='reject' />
-                  </div>
+                  <Button onClick={() => {}} text='Добавить' state='accept' />
                 </li>
               ))}
             </ul>
@@ -59,7 +80,7 @@ export const ListsCatalogPopup = () => {
             </p>
           )}
           <form className={classes.modal__form} onSubmit={onFomrSubmit}>
-            <AuthInput onChange={(value: string) => setInputValue(value)} placeholder={'Название списка'} />
+            <AuthInput setValue={setInputValue} placeholder={'Название списка...'} value={inputValue} />
             <Button text='Cоздать' onClick={onFomrSubmit} type={'submit'} />
           </form>
         </div>

@@ -15,7 +15,6 @@ const initialState = {
   lists: [],
 };
 
-// todo сделать много разных редюсеров, которые будут обновлять отдельные части стейта, например setEmailAndName меняет только поля email и name
 const userSlice = createSlice({
   name: 'auth',
   initialState,
@@ -28,9 +27,12 @@ const userSlice = createSlice({
       state.userData.name = action.payload.name;
     },
     removeUser: () => initialState,
+    updateLists: (state, action) => {
+      state.lists = action.payload;
+    },
   },
 });
 
 export const userReducer = userSlice.reducer;
 
-export const { setUser, removeUser, setEmailAndName } = userSlice.actions;
+export const { setUser, removeUser, setEmailAndName, updateLists } = userSlice.actions;

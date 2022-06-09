@@ -44,7 +44,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 10px;
+      padding: 10px 0;
       gap: 10px;
       border-bottom: 1px solid var(#{--text-color-default});
     }
@@ -52,11 +52,6 @@
 
   &__title {
     font-weight: $fw-normal;
-  }
-
-  &__buttons {
-    display: flex;
-    gap: 10px;
   }
 
   &__empty {
