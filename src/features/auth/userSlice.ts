@@ -12,7 +12,7 @@ const initialState = {
   },
   favoriteContent: { games: [], movies: [], shows: [], books: [] },
   waitingContent: { games: [], movies: [], shows: [], books: [] },
-  lists: { movies: [], games: [], shows: [], books: [] },
+  lists: [],
 };
 
 // todo сделать много разных редюсеров, которые будут обновлять отдельные части стейта, например setEmailAndName меняет только поля email и name

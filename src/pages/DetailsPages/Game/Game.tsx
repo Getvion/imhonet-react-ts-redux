@@ -13,6 +13,7 @@ import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { setNotification } from '../../../features/notification/notificationSlice';
+import { setListCatalog } from '../../../features/listsCatalog/listsCatalogSlice';
 
 interface IGame {
   id: number;
@@ -182,6 +183,7 @@ export const Game = () => {
                 <div className={classes.game__add}>
                   <Button text='Буду играть' onClick={onPlayLaterClick} />
                   <Button text='Любимая игра' onClick={onFavoriteClick} />
+                  <Button text='+' onClick={() => dispatch(setListCatalog(true))} />
                 </div>
                 <div className={classes.game__info}>
                   <h3 className={classes.game__about}>О игре</h3>

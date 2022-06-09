@@ -3,11 +3,19 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 // !  { items: [], title: '', description: '' } - структура элемента списка
 
+//
+// todo настройки все
+// todo удаление элемента из списка
+// todo создание списков
+// todo удаление списков
+// todo для слайдеров добавить стрелочки
+// todo придумать что можно сделать с функциями добавления в любимое и ожидаемое
+//
+
 import { Header } from './components';
 import { Auth, Main, Profile, Games, Movies, Shows, Books, Search, Settings } from './pages';
 import { Book, Game, Movie, Show } from './pages/DetailsPages';
-import { LoginPopupOffer } from './features/loginOffer/LoginPopupOffer';
-import { Notification } from './features/notification/Notification';
+import { ListsCatalogPopup, LoginPopupOffer, Notification } from './features';
 
 function App() {
   const [shows, setShows] = useState([]);
@@ -25,6 +33,7 @@ function App() {
     <div className='app'>
       <Header />
       <LoginPopupOffer />
+      <ListsCatalogPopup />
       <div className='app__container'>
         <Notification />
         <Routes>

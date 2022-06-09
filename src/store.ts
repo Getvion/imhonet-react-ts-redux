@@ -12,6 +12,7 @@ import { gameInfoReducer } from './features/games/loadGameInfoSlice';
 import { searchReducer } from './features/search/searchSlice';
 import { LoginPopupOfferReducer } from './features/loginOffer/loginOfferSlice';
 import { notificationReducer } from './features/notification/notificationSlice';
+import { listsCatalogReducer } from './features/listsCatalog/listsCatalogSlice';
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     search: searchReducer,
     showLoginPopup: LoginPopupOfferReducer,
     notification: notificationReducer,
+    listsCatalog: listsCatalogReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

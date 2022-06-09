@@ -1,0 +1,79 @@
+@import '../../styles/varibles';
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease-in-out;
+  transform: translateY(-100%);
+  background-color: rgba(#000, 0.5);
+
+  &.open {
+    transform: translateY(0);
+  }
+
+  &__dialog {
+    padding: 30px;
+    max-width: 600px;
+    height: 80vh;
+    width: 100%;
+    background-color: var(--bg-color-default);
+    border-radius: 5px;
+    box-shadow: var(#{--shadow-color-default});
+  }
+
+  &__content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  &__catalog {
+    overflow: auto;
+    width: 100%;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      gap: 10px;
+      border-bottom: 1px solid var(#{--text-color-default});
+    }
+  }
+
+  &__title {
+    font-weight: $fw-normal;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__empty {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: $fs-big;
+    font-weight: $fw-normal;
+  }
+
+  &__form {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+}

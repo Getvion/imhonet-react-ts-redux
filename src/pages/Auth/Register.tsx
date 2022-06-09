@@ -38,7 +38,7 @@ export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
           },
           favoriteContent: { games: [], movies: [], shows: [], books: [] },
           waitingContent: { games: [], movies: [], shows: [], books: [] },
-          lists: { movies: [], games: [], shows: [], books: [] },
+          lists: [],
         });
 
         updateProfile(auth.currentUser, { displayName: nickname });
@@ -58,7 +58,7 @@ export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
             },
             favoriteContent: { games: [], movies: [], shows: [], books: [] },
             waitingContent: { games: [], movies: [], shows: [], books: [] },
-            lists: { movies: [], games: [], shows: [], books: [] },
+            lists: [],
           })
         );
       })

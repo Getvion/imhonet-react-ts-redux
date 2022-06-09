@@ -12,8 +12,10 @@ import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { setNotification } from '../../../features/notification/notificationSlice';
+import { setListCatalog } from '../../../features/listsCatalog/listsCatalogSlice';
 
 interface IMovie {
+  filmId: number;
   kinopoiskId: number;
   nameRu: string;
   nameOriginal: string;
@@ -74,7 +76,7 @@ export const Movie = () => {
     const { waitingContent } = fetchData;
 
     const isMovieAdded = waitingContent.movies.filter(
-      (movieObj: IMovie) => movieObj.kinopoiskId === movieData.kinopoiskId
+      (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
     ).length;
 
     if (isMovieAdded)
@@ -122,7 +124,7 @@ export const Movie = () => {
     const { favoriteContent } = fetchData;
 
     const isMovieAdded = favoriteContent.movies.filter(
-      (movieObj: IMovie) => movieObj.kinopoiskId === movieData.kinopoiskId
+      (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
     ).length;
 
     if (isMovieAdded)
@@ -194,6 +196,7 @@ export const Movie = () => {
                 <div className={classes.movie__add}>
                   <Button text='Буду смотреть' onClick={onWatchLaterClick} />
                   <Button text='Любимый' onClick={onFavoriteClick} />
+                  <Button text='+' onClick={() => dispatch(setListCatalog(true))} />
                 </div>
                 <div className={classes.movie__info}>
                   <h3 className={classes.movie__about}>О фильме</h3>
