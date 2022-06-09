@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './AuthInput.module.scss';
 
 interface InputProps {
   type?: string;
   placeholder: string;
-  onChange: Function;
+  setValue: Function;
+  value: string;
 }
 
-export const AuthInput: React.FC<InputProps> = ({ type, placeholder, onChange }) => {
-  const [value, setValue] = useState('');
-
-  const onChangeHandler = (value: string) => {
-    setValue(value);
-    onChange(value);
-  };
-
+export const AuthInput: React.FC<InputProps> = ({ type, placeholder, setValue, value }) => {
   return (
     <input
       value={value}
-      onChange={(e) => onChangeHandler(e.target.value)}
+      onChange={(e) => setValue(e.target.value)}
       required
       type={type ? type : 'text'}
       className={classes.input}

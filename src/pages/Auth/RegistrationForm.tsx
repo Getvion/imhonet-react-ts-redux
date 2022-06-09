@@ -32,10 +32,10 @@ export const RegistrationForm: React.FC<Props> = ({
     <form className={classes.forms__form} onSubmit={(e) => onSubmitButtonClick(e)}>
       <fieldset className={classes.forms__fieldset}>
         {isRegistration && (
-          <AuthInput placeholder='Никнейм' onChange={(value: string) => setNicknameValue(value)} />
+          <AuthInput placeholder='Никнейм' setValue={setNicknameValue} value={nicknameValue} />
         )}
-        <AuthInput placeholder='Емейл' type='email' onChange={(value: string) => setEmailValue(value)} />
-        <AuthInput placeholder='Пароль' type='password' onChange={(val: string) => setPasswordValue(val)} />
+        <AuthInput placeholder='Емейл' type='email' setValue={setEmailValue} value={emailValue} />
+        <AuthInput placeholder='Пароль' type='password' setValue={setPasswordValue} value={passwordValue} />
       </fieldset>
       <div className={classes.forms__buttons}>
         <button
