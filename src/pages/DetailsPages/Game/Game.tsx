@@ -47,8 +47,6 @@ interface IUserData {
   };
 }
 
-// todo сделать общую функцию, которая будет вызывать другие функции по переданному параметру (для уменьшения кода)
-
 export const Game = () => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -111,7 +109,13 @@ export const Game = () => {
   };
 
   const onAddCustomList = () => {
-    const catalogListObj = { name: name, nameOrig: name_original, bgImg: background_image, id: id };
+    const catalogListObj = {
+      name: name,
+      nameOrig: name_original,
+      bgImg: background_image,
+      id: id,
+      section: 'games',
+    };
     dispatch(setCatalogListData(catalogListObj));
     dispatch(setCatalogListOpen(true));
   };

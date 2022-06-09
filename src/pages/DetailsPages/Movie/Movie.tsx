@@ -120,7 +120,14 @@ export const Movie = () => {
   };
 
   const onAddCustomList = () => {
-    const catalogListObj = { name: nameRu, nameOrig: nameOriginal, bgImg: posterUrlPreview, id: kinopoiskId };
+    const catalogListObj = {
+      name: nameRu,
+      nameOrig: nameOriginal,
+      bgImg: posterUrlPreview,
+      id: kinopoiskId,
+      section: 'movies',
+    };
+
     dispatch(setCatalogListData(catalogListObj));
     dispatch(setCatalogListOpen(true));
   };

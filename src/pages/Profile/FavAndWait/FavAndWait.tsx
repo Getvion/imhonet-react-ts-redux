@@ -13,6 +13,7 @@ interface IItem {
   name: string;
   nameOrig: string;
   bgImg: string;
+  section?: string;
 }
 
 export const FavAndWait: React.FC<Props> = ({ items }) => {

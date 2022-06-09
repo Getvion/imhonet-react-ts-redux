@@ -24,7 +24,14 @@ interface ILists {
 }
 
 interface IListsCatalog {
-  listsCatalog: { isOpen: boolean; name: string; bgImg: string; id: number; nameOrig: string };
+  listsCatalog: {
+    isOpen: boolean;
+    name: string;
+    bgImg: string;
+    id: number;
+    nameOrig: string;
+    section: string;
+  };
 }
 
 export const ListsCatalogPopup = () => {
@@ -33,7 +40,9 @@ export const ListsCatalogPopup = () => {
   const dispatch = useDispatch();
 
   const { userData, lists } = useSelector(({ user }: IUserData) => user);
-  const { isOpen, name, bgImg, id, nameOrig } = useSelector((state: IListsCatalog) => state.listsCatalog);
+  const { isOpen, name, bgImg, id, nameOrig, section } = useSelector(
+    (state: IListsCatalog) => state.listsCatalog
+  );
 
   const onClosePopup = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
@@ -47,7 +56,7 @@ export const ListsCatalogPopup = () => {
       if (list.title === title) {
         return {
           ...list,
-          items: [...list.items, { id, name, nameOrig, bgImg }],
+          items: [...list.items, { id, name, nameOrig, bgImg, section }],
         };
       }
 

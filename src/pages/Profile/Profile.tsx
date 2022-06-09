@@ -14,6 +14,7 @@ interface IUserContent {
   user: {
     favoriteContent: { shows: IItem[]; books: IItem[]; games: IItem[]; movies: IItem[] };
     waitingContent: { shows: IItem[]; books: IItem[]; games: IItem[]; movies: IItem[] };
+    lists: { items: IItem[]; title: string; description: string }[];
   };
 }
 
@@ -22,6 +23,7 @@ interface IItem {
   name: string;
   nameOrig: string;
   bgImg: string;
+  section: string;
 }
 
 export const Profile = () => {
@@ -32,7 +34,7 @@ export const Profile = () => {
   const { userData } = useFetchUser();
   const { birthday, country, description, imageUrl, name } = userData;
 
-  const { favoriteContent, waitingContent } = useSelector((state: IUserContent) => state.user);
+  const { favoriteContent, waitingContent, lists } = useSelector((state: IUserContent) => state.user);
 
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
@@ -74,7 +76,7 @@ export const Profile = () => {
         </div>
         <Routes>
           <Route path='favorite' element={<FavAndWait items={favoriteContent} />} />
-          <Route path='lists' element={<Lists />} />
+          <Route path='lists' element={<Lists lists={lists} />} />
           <Route path='waiting' element={<FavAndWait items={waitingContent} />} />
           <Route path='stats' element={<Stats />} />
         </Routes>

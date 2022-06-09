@@ -6,7 +6,7 @@ const initialState = {
   bgImg: '',
   id: 0,
   nameOrig: '',
-  descrtiption: '',
+  section: '',
 };
 
 const listsCatalogSlice = createSlice({
@@ -21,6 +21,7 @@ const listsCatalogSlice = createSlice({
       state.id = payload.id;
       state.name = payload.name;
       state.nameOrig = payload.nameOrig;
+      state.section = payload.section;
     },
   },
 });
