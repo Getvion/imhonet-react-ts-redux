@@ -19,8 +19,15 @@ interface IMovie {
 }
 
 export const ListPopup: React.FC<PopupProps> = ({ itemsArr, setShowPopup, showPopup }) => {
+  const onPopupClose = (e: any) => {
+    const isOutsideClick = e.target.classList.contains(classes.modal);
+    if (isOutsideClick) {
+      setShowPopup('');
+    }
+  };
+
   return (
-    <div className={classes.modal} onClick={() => setShowPopup('')}>
+    <div className={classes.modal} onClick={onPopupClose}>
       <div className={classes.modal__dialog}>
         {showPopup === 'games' && <GamesContent itemsArr={itemsArr} />}
         {showPopup === 'movies' && <MoviesContent itemsArr={itemsArr} />}
