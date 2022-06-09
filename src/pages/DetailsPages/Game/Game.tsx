@@ -10,10 +10,11 @@ import { AppDispatch } from '../../../store';
 import { Description } from './Description';
 import { loadGameInfo } from '../../../features/games/loadGameInfoSlice';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
+import { setNotification } from '../../../features/notification/notificationSlice';
+import { setCatalogListData, setCatalogListOpen } from '../../../features/listsCatalog/listsCatalogSlice';
+
 import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import { setNotification } from '../../../features/notification/notificationSlice';
-import { setListCatalog } from '../../../features/listsCatalog/listsCatalogSlice';
 
 interface IGame {
   id: number;
@@ -68,7 +69,7 @@ export const Game = () => {
 
     if (triggerList === 'waiting') onPlayLaterClick(fetchData, waitGameAdded);
     if (triggerList === 'favorite') onFavoriteClick(fetchData, favGameAdded);
-    if (triggerList === 'listCatalog') dispatch(setListCatalog(true));
+    if (triggerList === 'listCatalog') onAddCustomList();
   };
 
   const onPlayLaterClick = async (fetchData: DocumentData, waitGameAdded: undefined) => {
@@ -107,6 +108,12 @@ export const Game = () => {
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' })));
+  };
+
+  const onAddCustomList = () => {
+    const catalogListObj = { name: name, nameOrig: name_original, bgImg: background_image, id: id };
+    dispatch(setCatalogListData(catalogListObj));
+    dispatch(setCatalogListOpen(true));
   };
 
   useEffect(() => {

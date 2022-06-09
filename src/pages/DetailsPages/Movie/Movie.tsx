@@ -9,10 +9,11 @@ import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo } from '../../../features/movies/loadMovieInfoSlice';
 import { AppDispatch } from '../../../store';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
+import { setNotification } from '../../../features/notification/notificationSlice';
+import { setCatalogListData, setCatalogListOpen } from '../../../features/listsCatalog/listsCatalogSlice';
+
 import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import { setNotification } from '../../../features/notification/notificationSlice';
-import { setListCatalog } from '../../../features/listsCatalog/listsCatalogSlice';
 
 interface IMovie {
   filmId: number;
@@ -77,7 +78,7 @@ export const Movie = () => {
 
     if (triggerList === 'waiting') onWatchLaterClick(fetchData, waitMovieAdded);
     if (triggerList === 'favorite') onFavoriteClick(fetchData, favMovieAdded);
-    if (triggerList === 'listCatalog') dispatch(setListCatalog(true));
+    if (triggerList === 'listCatalog') onAddCustomList();
   };
 
   const onWatchLaterClick = async (fetchData: DocumentData, waitMovieAdded: undefined) => {
@@ -116,6 +117,12 @@ export const Movie = () => {
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Фильм добавлен в список любимых' })))
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+  };
+
+  const onAddCustomList = () => {
+    const catalogListObj = { name: nameRu, nameOrig: nameOriginal, bgImg: posterUrlPreview, id: kinopoiskId };
+    dispatch(setCatalogListData(catalogListObj));
+    dispatch(setCatalogListOpen(true));
   };
 
   useEffect(() => {

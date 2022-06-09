@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { setListCatalog } from './listsCatalogSlice';
+import { setCatalogListOpen } from './listsCatalogSlice';
 
 import classes from './ListsCatalogPopup.module.scss';
 import { AuthInput, Button } from '../../components';
@@ -13,14 +13,18 @@ import { updateLists } from '../auth/userSlice';
 
 interface IUserData {
   user: {
-    userData: {
-      email: string;
-    };
-    lists: {
-      title: string;
-      items: any;
-    }[];
+    userData: { email: string };
+    lists: ILists[];
   };
+}
+
+interface ILists {
+  title: string;
+  items: {}[];
+}
+
+interface IListsCatalog {
+  listsCatalog: { isOpen: boolean; name: string; bgImg: string; id: number; nameOrig: string };
 }
 
 export const ListsCatalogPopup = () => {
@@ -29,13 +33,37 @@ export const ListsCatalogPopup = () => {
   const dispatch = useDispatch();
 
   const { userData, lists } = useSelector(({ user }: IUserData) => user);
-  const isPopupShow = useSelector((state: { listsCatalog: boolean }) => state.listsCatalog);
+  const { isOpen, name, bgImg, id, nameOrig } = useSelector((state: IListsCatalog) => state.listsCatalog);
 
   const onClosePopup = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
     if (isOutsideClick) {
-      dispatch(setListCatalog(false));
+      dispatch(setCatalogListOpen(false));
     }
+  };
+
+  const onAddElementToList = async (title: string) => {
+    const newArr = lists.map((list: ILists) => {
+      if (list.title === title) {
+        return {
+          ...list,
+          items: [...list.items, { id, name, nameOrig, bgImg }],
+        };
+      }
+
+      return list;
+    });
+
+    const docRef = doc(db, 'users', userData.email);
+    const docSnap = await getDoc(docRef);
+    const fetchData = docSnap.data();
+    if (!fetchData) return null;
+
+    await updateDoc(doc(db, 'users', userData.email), {
+      lists: newArr,
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Успешно добавлено в список' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   const onFomrSubmit = async (e: any) => {
@@ -61,7 +89,7 @@ export const ListsCatalogPopup = () => {
   };
 
   return (
-    <div className={clsx(classes.modal, { [classes.open]: isPopupShow })} onClick={onClosePopup}>
+    <div className={clsx(classes.modal, { [classes.open]: isOpen })} onClick={onClosePopup}>
       <div className={classes.modal__dialog}>
         <div className={classes.modal__content}>
           {lists.length ? (
@@ -69,7 +97,7 @@ export const ListsCatalogPopup = () => {
               {lists.map(({ title }) => (
                 <li key={title} className={classes.modal__catalog__item}>
                   <p className={classes.modal__title}>{title}</p>
-                  <Button onClick={() => {}} text='Добавить' state='accept' />
+                  <Button onClick={() => onAddElementToList(title)} text='Добавить' state='accept' />
                 </li>
               ))}
             </ul>
