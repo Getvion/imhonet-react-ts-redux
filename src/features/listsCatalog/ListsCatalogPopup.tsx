@@ -20,7 +20,7 @@ interface IUserData {
 
 interface ILists {
   title: string;
-  items: {}[];
+  items: { name: string; bgImg: string; id: number; nameOrig: string; section: string }[];
 }
 
 interface IListsCatalog {
@@ -54,7 +54,14 @@ export const ListsCatalogPopup = () => {
   const onAddElementToList = async (title: string) => {
     const newArr = lists.map((list: ILists) => {
       if (list.title === title) {
-        return { ...list, items: [...list.items, { id, name, nameOrig, bgImg, section }] };
+        const isAlreadyAdded = list.items.find((item) => item.name === name);
+
+        if (isAlreadyAdded) {
+          dispatch(setNotification({ type: 'warning', text: 'Уже был добавлен ранее в этот список' }));
+        } else {
+          dispatch(setNotification({ type: 'success', text: 'Успешно добавлено в список' }));
+          return { ...list, items: [...list.items, { id, name, nameOrig, bgImg, section }] };
+        }
       }
 
       return list;
@@ -63,13 +70,15 @@ export const ListsCatalogPopup = () => {
     dispatch(updateLists(newArr));
     await updateDoc(doc(db, 'users', userData.email), {
       lists: newArr,
-    })
-      .then(() => dispatch(setNotification({ type: 'success', text: 'Успешно добавлено в список' })))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+    }).catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   const onFomrSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (inputValue === '') {
+      return dispatch(setNotification({ type: 'warning', text: 'Сначала дайте название списку' }));
+    }
 
     const docRef = doc(db, 'users', userData.email);
 
