@@ -15,11 +15,10 @@ interface IItem {
   name: string;
   nameOrig: string;
   bgImg: string;
-  section?: string;
+  section: string;
 }
 
 export const ListPopup: React.FC<PopupProps> = ({ itemsArr, setShowPopup, showPopup }) => {
-  console.log(itemsArr);
   const onPopupClose = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
     if (isOutsideClick) {
@@ -31,13 +30,13 @@ export const ListPopup: React.FC<PopupProps> = ({ itemsArr, setShowPopup, showPo
     <div className={classes.modal} onClick={onPopupClose}>
       <div className={classes.modal__dialog}>
         <div className={classes.modal__content}>
-          {itemsArr.map((item: IItem) => (
+          {itemsArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
             <SectionCard
-              key={item.id}
-              id={item.id}
-              bgImage={item.bgImg}
-              name={item.name || item.nameOrig}
-              section={item.section ? item.section : showPopup}
+              key={id}
+              id={id}
+              bgImage={bgImg}
+              name={name || nameOrig}
+              section={section || showPopup}
             />
           ))}
         </div>

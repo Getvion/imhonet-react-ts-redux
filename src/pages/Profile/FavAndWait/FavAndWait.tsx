@@ -65,7 +65,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
             ))}
           </ul>
         ) : (
-          <EmptyList />
+          <EmptyList text='Вы пока ничего не добавили в список' />
         )}
       </section>
       <section className={classes.section}>
@@ -82,7 +82,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
             ))}
           </ul>
         ) : (
-          <EmptyList />
+          <EmptyList text='Вы пока ничего не добавили в список' />
         )}
       </section>
       <section className={classes.section}>
@@ -99,7 +99,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
             ))}
           </ul>
         ) : (
-          <EmptyList />
+          <EmptyList text='Вы пока ничего не добавили в список' />
         )}
       </section>
       <section className={classes.section}>
@@ -116,7 +116,7 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
             ))}
           </ul>
         ) : (
-          <EmptyList />
+          <EmptyList text='Вы пока ничего не добавили в список' />
         )}
       </section>
 
