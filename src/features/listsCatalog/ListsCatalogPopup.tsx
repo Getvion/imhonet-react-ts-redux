@@ -40,34 +40,27 @@ export const ListsCatalogPopup = () => {
   const dispatch = useDispatch();
 
   const { userData, lists } = useSelector(({ user }: IUserData) => user);
-  const { isOpen, name, bgImg, id, nameOrig, section } = useSelector(
-    (state: IListsCatalog) => state.listsCatalog
-  );
+  const listsCatalog = useSelector((state: IListsCatalog) => state.listsCatalog);
+  const { isOpen, name, bgImg, id, nameOrig, section } = listsCatalog;
 
   const onClosePopup = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
     if (isOutsideClick) {
       dispatch(setCatalogListOpen(false));
+      setInputValue('');
     }
   };
 
   const onAddElementToList = async (title: string) => {
     const newArr = lists.map((list: ILists) => {
       if (list.title === title) {
-        return {
-          ...list,
-          items: [...list.items, { id, name, nameOrig, bgImg, section }],
-        };
+        return { ...list, items: [...list.items, { id, name, nameOrig, bgImg, section }] };
       }
 
       return list;
     });
 
-    const docRef = doc(db, 'users', userData.email);
-    const docSnap = await getDoc(docRef);
-    const fetchData = docSnap.data();
-    if (!fetchData) return null;
-
+    dispatch(updateLists(newArr));
     await updateDoc(doc(db, 'users', userData.email), {
       lists: newArr,
     })
@@ -79,22 +72,18 @@ export const ListsCatalogPopup = () => {
     e.preventDefault();
 
     const docRef = doc(db, 'users', userData.email);
-    const docSnap = await getDoc(docRef);
-    const fetchData = docSnap.data();
-    if (!fetchData) return null;
 
     await updateDoc(doc(db, 'users', userData.email), {
       lists: [...lists, { title: inputValue, items: [] }],
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно создан' })))
+      .then(() => setInputValue(''))
       .then(async () => {
         const docSnap = await getDoc(docRef);
         const fetchData = docSnap.data();
         dispatch(updateLists(fetchData?.lists));
       })
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
-
-    setInputValue('');
   };
 
   return (
