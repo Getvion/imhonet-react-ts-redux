@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, EmptyList, ListPopup, SectionCard } from '../../../components';
+import { EmptyList, ListButtons, ListPopup, SectionCard } from '../../../components';
 
 import classes from './Lists.module.scss';
 
@@ -19,13 +19,6 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
   const [showPopup, setShowPopup] = useState('');
   const [popupArray, setPopupArray] = useState<any>([]);
 
-  const onButtonClick = (title: string) => {
-    const foundArray = lists.find((list) => list.title === title)?.items;
-    setPopupArray(foundArray);
-
-    setShowPopup('true');
-  };
-
   return (
     <div className={classes.lists}>
       {lists.length ? (
@@ -34,7 +27,7 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
             <section key={title} className={classes.section}>
               <div className={classes.section__top}>
                 <h3 className={classes.section__title}>{title} </h3>
-                <Button onClick={() => onButtonClick(title)} text='Показать все' />
+                <ListButtons title={title} setPopupArray={setPopupArray} setShowPopup={setShowPopup} />
               </div>
               {items.length ? (
                 <ul className={classes.section__list}>
@@ -47,7 +40,6 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
               ) : (
                 <EmptyList text='Вы пока ничего не добавили в список' />
               )}
-              {/* tut sozdaem popup s contentom */}
               {showPopup && (
                 <ListPopup itemsArr={popupArray} setShowPopup={setShowPopup} showPopup={showPopup} />
               )}

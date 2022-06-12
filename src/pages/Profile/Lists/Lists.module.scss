@@ -33,6 +33,10 @@
   &__item {
     margin-top: 10px;
 
+    & > a > h3 {
+      display: none;
+    }
+
     &:not(:nth-child(1)) {
       transform: translateX(-60%);
     }

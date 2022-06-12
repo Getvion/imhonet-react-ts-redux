@@ -1,0 +1,47 @@
+@import '../../styles/varibles';
+
+.section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+
+  &:hover {
+    button:nth-child(1) {
+      opacity: 1;
+    }
+  }
+
+  & > button:nth-child(1) {
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+}
+
+.delete {
+  position: absolute;
+  top: 0px;
+  left: -20%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  z-index: 100;
+  background-color: var(#{--bg-color-default});
+  box-shadow: var(#{--shadow-color-default});
+
+  &__text {
+    text-align: center;
+    span {
+      font-weight: $fw-normal;
+    }
+  }
+
+  &__buttons {
+    button + button {
+      margin-left: 20px;
+    }
+  }
+}
