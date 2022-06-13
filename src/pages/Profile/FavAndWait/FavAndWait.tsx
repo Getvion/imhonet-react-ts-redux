@@ -121,10 +121,10 @@ export const FavAndWait: React.FC<Props> = ({ items }) => {
       </section>
 
       {showPopup === 'games' && (
-        <ListPopup itemsArr={games} setShowPopup={setShowPopup} showPopup={'games'} />
+        <ListPopup itemsArr={games} title={'Игры'} setShowPopup={setShowPopup} showPopup={'games'} />
       )}
       {showPopup === 'movies' && (
-        <ListPopup itemsArr={movies} setShowPopup={setShowPopup} showPopup={'movies'} />
+        <ListPopup itemsArr={movies} title={'Фильмы'} setShowPopup={setShowPopup} showPopup={'movies'} />
       )}
     </>
   );

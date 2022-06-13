@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { EmptyList, ListButtons, ListPopup, SectionCard } from '../../../components';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Button, EmptyList, ListButtons, ListPopup, SectionCard } from '../../../components';
+import { updateLists } from '../../../features/auth/userSlice';
+import { setNotification } from '../../../features/notification/notificationSlice';
+import { db } from '../../../firebase';
 
 import classes from './Lists.module.scss';
 
@@ -15,19 +21,50 @@ interface IItem {
   section: string;
 }
 
+interface IUserData {
+  user: {
+    userData: { email: string };
+    lists: ILists[];
+  };
+}
+
 export const Lists: React.FC<ILists> = ({ lists }) => {
+  const dispatch = useDispatch();
+
   const [showPopup, setShowPopup] = useState('');
   const [popupArray, setPopupArray] = useState<any>([]);
+
+  const { userData } = useSelector(({ user }: IUserData) => user);
+
+  const onShowList = (title: string) => {
+    const foundArray = lists.find((list) => list.title === title)?.items;
+    setPopupArray(foundArray);
+    setShowPopup('true');
+  };
+
+  const onDeleteLIst = async (titleToRemove: string) => {
+    const filteredArr = lists.filter((list) => list.title !== titleToRemove);
+
+    await updateDoc(doc(db, 'users', userData.email), {
+      lists: filteredArr,
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
+      .then(() => dispatch(updateLists(filteredArr)))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+  };
 
   return (
     <div className={classes.lists}>
       {lists.length ? (
         <>
-          {lists.map(({ items, title }) => (
+          {lists.map(({ items, title, description }) => (
             <section key={title} className={classes.section}>
               <div className={classes.section__top}>
                 <h3 className={classes.section__title}>{title} </h3>
-                <ListButtons title={title} setPopupArray={setPopupArray} setShowPopup={setShowPopup} />
+                <div className={classes.section__buttons}>
+                  <ListButtons title={title} deleteButtonText='Удалить список' onDelete={onDeleteLIst} />
+                  <Button onClick={() => onShowList(title)} text='Показать все' />
+                </div>
               </div>
               {items.length ? (
                 <ul className={classes.section__list}>
@@ -41,7 +78,13 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
                 <EmptyList text='Вы пока ничего не добавили в список' />
               )}
               {showPopup && (
-                <ListPopup itemsArr={popupArray} setShowPopup={setShowPopup} showPopup={showPopup} />
+                <ListPopup
+                  itemsArr={popupArray}
+                  title={title}
+                  descr={description}
+                  setShowPopup={setShowPopup}
+                  showPopup={showPopup}
+                />
               )}
             </section>
           ))}

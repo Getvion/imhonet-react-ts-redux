@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { SectionCard } from '../SectionCard/SectionCard';
-import { Button } from '../UI/Button/Button';
+import { doc, updateDoc } from 'firebase/firestore';
+import { updateLists } from '../../features/auth/userSlice';
+import { setNotification } from '../../features/notification/notificationSlice';
+import { db } from '../../firebase';
+
+import { ListButtons, SectionCard } from '../index';
 
 import classes from './ListPopup.module.scss';
 
-interface PopupProps {
+interface IProps {
   showPopup: string;
   setShowPopup: Function;
   itemsArr: any;
@@ -21,8 +26,22 @@ interface IItem {
   section: string;
 }
 
-export const ListPopup: React.FC<PopupProps> = ({ itemsArr, setShowPopup, showPopup, title, descr }) => {
-  // const [filteredArr, setFilteredArr] = useState(itemsArr);
+interface ILists {
+  lists: { items: IItem[]; title: string; description: string }[];
+}
+
+interface IUserData {
+  user: {
+    userData: { email: string };
+    lists: ILists[];
+  };
+}
+
+export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, showPopup, title, descr }) => {
+  const dispatch = useDispatch();
+
+  const [filteredArr, setFilteredArr] = useState(itemsArr);
+  const { userData, lists } = useSelector(({ user }: IUserData) => user);
 
   const onPopupClose = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
@@ -31,12 +50,22 @@ export const ListPopup: React.FC<PopupProps> = ({ itemsArr, setShowPopup, showPo
     }
   };
 
-  // const onDeleteItemFromList = (nameToDelete: string) => {
-  //   const filteredArr = itemsArr.filter((item: IItem) => item.name !== nameToDelete);
+  const onDeleteItemFromList = (nameToDelete: string) => {
+    const filteredArrByName = itemsArr.filter((item: IItem) => item.name !== nameToDelete);
+    console.log(filteredArrByName);
+    console.log(lists);
+  };
 
-  //   setFilteredArr(filteredArr);
-  //   // после удаления надо пушить все обратно в lists
-  // };
+  const onDeleteLIst = async (titleToRemove: string) => {
+    // const filteredArr = lists.filter((list) => list.title !== titleToRemove);
+    // setIsConfirmPopupShow(false);
+    // await updateDoc(doc(db, 'users', userData.email), {
+    // lists: filteredArr,
+    // })
+    // .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
+    // .then(() => dispatch(updateLists(filteredArr)))
+    // .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+  };
 
   return (
     <div className={classes.modal} onClick={onPopupClose}>
@@ -47,17 +76,17 @@ export const ListPopup: React.FC<PopupProps> = ({ itemsArr, setShowPopup, showPo
         </div>
         <div className={classes.modal__content}>
           {itemsArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
-            <div className={classes.modal__element}>
-              <SectionCard
-                key={id}
-                id={id}
-                bgImage={bgImg}
-                name={name || nameOrig}
-                section={section || showPopup}
-              />
-              {/* <div className={classes.modal__delete}>
-                <Button onClick={() => onDeleteItemFromList(name)} text='Удалить' state='reject' />
-              </div> */}
+            <div className={classes.modal__element} key={id}>
+              <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section || showPopup} />
+
+              <div className={classes.modal__delete}>
+                <ListButtons
+                  title={name}
+                  deleteButtonText='Удалить'
+                  onDelete={onDeleteItemFromList}
+                  openFrom={'popup'}
+                />
+              </div>
             </div>
           ))}
         </div>

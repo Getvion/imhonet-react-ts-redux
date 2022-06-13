@@ -65,9 +65,9 @@
     top: 310px;
     transition: all 0.3s ease;
     border-radius: 6px;
+    z-index: 100;
 
-    button {
-      z-index: 100;
+    & > div > button {
       opacity: 0;
       pointer-events: none;
     }
