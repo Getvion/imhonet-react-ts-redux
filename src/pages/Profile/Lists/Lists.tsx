@@ -33,12 +33,14 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
 
   const [showPopup, setShowPopup] = useState('');
   const [popupArray, setPopupArray] = useState<any>([]);
+  const [popupTitle, setPopupTitle] = useState('');
 
   const { userData } = useSelector(({ user }: IUserData) => user);
 
   const onShowList = (title: string) => {
     const foundArray = lists.find((list) => list.title === title)?.items;
     setPopupArray(foundArray);
+    setPopupTitle(title);
     setShowPopup('true');
   };
 
@@ -61,10 +63,12 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
             <section key={title} className={classes.section}>
               <div className={classes.section__top}>
                 <h3 className={classes.section__title}>{title} </h3>
-                <div className={classes.section__buttons}>
-                  <ListButtons title={title} deleteButtonText='Удалить список' onDelete={onDeleteLIst} />
-                  <Button onClick={() => onShowList(title)} text='Показать все' />
-                </div>
+                {items.length ? (
+                  <div className={classes.section__buttons}>
+                    <ListButtons title={title} deleteButtonText='Удалить список' onDelete={onDeleteLIst} />
+                    <Button onClick={() => onShowList(title)} text='Показать все' />
+                  </div>
+                ) : null}
               </div>
               {items.length ? (
                 <ul className={classes.section__list}>
@@ -80,7 +84,7 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
               {showPopup && (
                 <ListPopup
                   itemsArr={popupArray}
-                  title={title}
+                  title={popupTitle}
                   descr={description}
                   setShowPopup={setShowPopup}
                   showPopup={showPopup}

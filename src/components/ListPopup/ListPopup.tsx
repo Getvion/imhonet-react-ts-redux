@@ -26,14 +26,16 @@ interface IItem {
   section: string;
 }
 
-interface ILists {
-  lists: { items: IItem[]; title: string; description: string }[];
+interface IList {
+  title: string;
+  description: string;
+  items: { items: IItem[]; title: string; description: string }[];
 }
 
 interface IUserData {
   user: {
     userData: { email: string };
-    lists: ILists[];
+    lists: IList[];
   };
 }
 
@@ -41,6 +43,7 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, showPopup,
   const dispatch = useDispatch();
 
   const [filteredArr, setFilteredArr] = useState(itemsArr);
+
   const { userData, lists } = useSelector(({ user }: IUserData) => user);
 
   const onPopupClose = (e: any) => {
@@ -50,21 +53,24 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, showPopup,
     }
   };
 
-  const onDeleteItemFromList = (nameToDelete: string) => {
+  const onDeleteItemFromList = async (nameToDelete: string) => {
     const filteredArrByName = itemsArr.filter((item: IItem) => item.name !== nameToDelete);
-    console.log(filteredArrByName);
-    console.log(lists);
-  };
 
-  const onDeleteLIst = async (titleToRemove: string) => {
-    // const filteredArr = lists.filter((list) => list.title !== titleToRemove);
-    // setIsConfirmPopupShow(false);
-    // await updateDoc(doc(db, 'users', userData.email), {
-    // lists: filteredArr,
-    // })
-    // .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
-    // .then(() => dispatch(updateLists(filteredArr)))
-    // .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+    const newList = lists.map((list) => {
+      if (list.title === title) {
+        return { ...list, items: filteredArrByName };
+      }
+      return list;
+    });
+
+    setFilteredArr(filteredArrByName);
+
+    await updateDoc(doc(db, 'users', userData.email), {
+      lists: newList,
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
+      .then(() => dispatch(updateLists(newList)))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   return (
@@ -75,7 +81,7 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, showPopup,
           {descr ? <span className={classes.modal__descr}>{descr}</span> : null}
         </div>
         <div className={classes.modal__content}>
-          {itemsArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
+          {filteredArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
             <div className={classes.modal__element} key={id}>
               <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section || showPopup} />
 
