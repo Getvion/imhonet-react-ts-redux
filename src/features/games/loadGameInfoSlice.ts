@@ -9,8 +9,6 @@ export const loadGameInfo = createAsyncThunk(
 
 const initialState = {
   gameData: {},
-  gameStaffData: [],
-  gameSimilar: {},
 };
 
 const gameInfo = createSlice({

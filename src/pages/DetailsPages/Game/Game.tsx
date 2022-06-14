@@ -48,6 +48,22 @@ interface IUserData {
 }
 
 export const Game = () => {
+  //! новая структура данных для фаворитов и ожидаемых
+  // todo  favoriteContent = [
+  // todo   {
+  // todo     title: 'games',
+  // todo     items: [
+  // todo       {
+  // todo         id: 1,
+  // todo         name: 'gta v',
+  // todo         nameOrig: 'gta v',
+  // todo         section: 'games',
+  // todo         bgImg: 'https://...',
+  // todo       },
+  // todo     ],
+  // todo   },
+  // todo ];
+
   const dispatch = useDispatch<AppDispatch>();
 
   const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);

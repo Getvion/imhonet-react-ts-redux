@@ -19,6 +19,22 @@ interface IItem {
 export const FavAndWait: React.FC<Props> = ({ items }) => {
   const { games, movies, shows, books } = items;
 
+  //! новая структура данных для фаворитов и ожидаемых
+  // todo  favoriteContent = [
+  // todo   {
+  // todo     title: 'games',
+  // todo     items: [
+  // todo       {
+  // todo         id: 1,
+  // todo         name: 'gta v',
+  // todo         nameOrig: 'gta v',
+  // todo         section: 'games',
+  // todo         bgImg: 'https://...',
+  // todo       },
+  // todo     ],
+  // todo   },
+  // todo ];
+
   // const sectionsArray = Object.entries(items);
   // const sectionsTitle = ['Сериалы', 'Игры', 'Фильмы', 'Книги'];
 
