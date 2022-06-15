@@ -36,8 +36,18 @@ export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
               'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
             socialMedia: [],
           },
-          favoriteContent: { games: [], movies: [], shows: [], books: [] },
-          waitingContent: { games: [], movies: [], shows: [], books: [] },
+          favoriteContent: [
+            { sectionName: 'games', title: 'Игры', items: [] },
+            { sectionName: 'movies', title: 'Фильмы', items: [] },
+            { sectionName: 'shows', title: 'Серилы', items: [] },
+            { sectionName: 'books', title: 'Книги', items: [] },
+          ],
+          waitingContent: [
+            { sectionName: 'games', title: 'Игры', items: [] },
+            { sectionName: 'movies', title: 'Фильмы', items: [] },
+            { sectionName: 'shows', title: 'Серилы', items: [] },
+            { sectionName: 'books', title: 'Книги', items: [] },
+          ],
           lists: [],
         });
 
