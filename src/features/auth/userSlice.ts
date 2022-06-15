@@ -30,9 +30,22 @@ const userSlice = createSlice({
     updateLists: (state, action) => {
       state.lists = action.payload;
     },
+    updateFavoriteContent: (state, action) => {
+      state.favoriteContent = action.payload;
+    },
+    updateWaitingContent: (state, action) => {
+      state.waitingContent = action.payload;
+    },
   },
 });
 
 export const userReducer = userSlice.reducer;
 
-export const { setUser, removeUser, setEmailAndName, updateLists } = userSlice.actions;
+export const {
+  setUser,
+  removeUser,
+  setEmailAndName,
+  updateLists,
+  updateFavoriteContent,
+  updateWaitingContent,
+} = userSlice.actions;

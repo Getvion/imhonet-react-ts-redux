@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { doc, updateDoc } from 'firebase/firestore';
-import { updateLists } from '../../features/auth/userSlice';
-import { setNotification } from '../../features/notification/notificationSlice';
-import { db } from '../../firebase';
 
 import { ListButtons, SectionCard } from '../index';
 
 import classes from './ListPopup.module.scss';
 
 interface IProps {
-  showPopup: string;
   setShowPopup: Function;
-  itemsArr: any;
+  itemsArr: IItem[];
   title: string;
   descr?: string;
+  onDeleteItem: Function;
 }
 
 interface IItem {
@@ -26,51 +20,21 @@ interface IItem {
   section: string;
 }
 
-interface IList {
-  title: string;
-  description: string;
-  items: { items: IItem[]; title: string; description: string }[];
-}
-
-interface IUserData {
-  user: {
-    userData: { email: string };
-    lists: IList[];
-  };
-}
-
-export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, showPopup, title, descr }) => {
-  const dispatch = useDispatch();
-
+export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, descr, onDeleteItem }) => {
   const [filteredArr, setFilteredArr] = useState(itemsArr);
-
-  const { userData, lists } = useSelector(({ user }: IUserData) => user);
 
   const onPopupClose = (e: any) => {
     const isOutsideClick = e.target.classList.contains(classes.modal);
     if (isOutsideClick) {
-      setShowPopup('');
+      setShowPopup(false);
     }
   };
 
   const onDeleteItemFromList = async (nameToDelete: string) => {
     const filteredArrByName = itemsArr.filter((item: IItem) => item.name !== nameToDelete);
-
-    const newList = lists.map((list) => {
-      if (list.title === title) {
-        return { ...list, items: filteredArrByName };
-      }
-      return list;
-    });
-
+    onDeleteItem(filteredArrByName, title);
     setFilteredArr(filteredArrByName);
-
-    await updateDoc(doc(db, 'users', userData.email), {
-      lists: newList,
-    })
-      .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
-      .then(() => dispatch(updateLists(newList)))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+    setShowPopup(false);
   };
 
   return (
@@ -83,7 +47,7 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, showPopup,
         <div className={classes.modal__content}>
           {filteredArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
             <div className={classes.modal__element} key={id}>
-              <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section || showPopup} />
+              <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section} />
 
               <div className={classes.modal__delete}>
                 <ListButtons

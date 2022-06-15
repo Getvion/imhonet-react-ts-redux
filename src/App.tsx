@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
 //
+// todo унифицировать входящие данные
 // todo добавить поле описание для списков
 // todo настройки все
 // todo добавить индикаторы загрузки в профиль и в страницы элементов
@@ -43,8 +44,8 @@ function App() {
           <Route path='/search/*' element={<Search />} />
           <Route path='/settings/*' element={<Settings />} />
 
-          <Route path='/games/*' element={<Game />} />
-          <Route path='/movies/*' element={<Movie />} />
+          <Route path='/games/*' element={<Game sectionName={'games'} />} />
+          <Route path='/movies/*' element={<Movie sectionName={'movies'} />} />
           <Route path='/shows/*' element={<Show />} />
           <Route path='/books/*' element={<Book />} />
         </Routes>
