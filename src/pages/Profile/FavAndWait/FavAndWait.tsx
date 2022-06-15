@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, EmptyList, SectionCard, ListPopup } from '../../../components';
+import { updateFavoriteContent, updateWaitingContent } from '../../../features/auth/userSlice';
+import { setNotification } from '../../../features/notification/notificationSlice';
+import { db } from '../../../firebase';
 
 import classes from './FavAndWait.module.scss';
 
-interface Props {
-  items: { games: IItem[]; movies: IItem[]; shows: any; books: any };
+interface IProps {
+  itemsArr: { title: string; items: IItem[] }[];
+  dbSection: string;
+}
+
+interface IUserData {
+  user: {
+    userData: { email: string };
+    lists: { items: IItem[]; title: string; description: string }[];
+    favoriteContent: [];
+    waitingContent: [];
+  };
 }
 
 interface IItem {
@@ -13,135 +28,83 @@ interface IItem {
   name: string;
   nameOrig: string;
   bgImg: string;
-  section?: string;
+  section: string;
 }
 
-export const FavAndWait: React.FC<Props> = ({ items }) => {
-  const { games, movies, shows, books } = items;
+export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
+  const dispatch = useDispatch();
 
-  //! новая структура данных для фаворитов и ожидаемых
-  // todo  favoriteContent = [
-  // todo   {
-  // todo     title: 'games',
-  // todo     items: [
-  // todo       {
-  // todo         id: 1,
-  // todo         name: 'gta v',
-  // todo         nameOrig: 'gta v',
-  // todo         section: 'games',
-  // todo         bgImg: 'https://...',
-  // todo       },
-  // todo     ],
-  // todo   },
-  // todo ];
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupArray, setPopupArray] = useState<any>([]);
+  const [popupTitle, setPopupTitle] = useState('');
 
-  // const sectionsArray = Object.entries(items);
-  // const sectionsTitle = ['Сериалы', 'Игры', 'Фильмы', 'Книги'];
+  const { userData, favoriteContent, waitingContent } = useSelector(({ user }: IUserData) => user);
 
-  const [showPopup, setShowPopup] = useState('');
+  const onShowList = (title: string) => {
+    const foundArray = itemsArr.find((item) => item.title === title)?.items;
+    setPopupArray(foundArray);
+    setPopupTitle(title);
+    setShowPopup(true);
+  };
+
+  const onDeleteContent = (contentType: { title: string }[], listTitle: string, filteredArr: IItem[]) => {
+    return contentType.map((element) => {
+      if (element.title === listTitle) {
+        return { ...element, items: filteredArr };
+      }
+      return element;
+    });
+  };
+
+  const onDeleteItem = async (filteredArr: IItem[], listTitle: string) => {
+    if (dbSection === 'favoriteContent') {
+      const newList = onDeleteContent(favoriteContent, listTitle, filteredArr);
+
+      await updateDoc(doc(db, 'users', userData.email), {
+        favoriteContent: newList,
+      })
+        .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
+        .then(() => dispatch(updateFavoriteContent(newList)));
+    } else {
+      const newList = onDeleteContent(waitingContent, listTitle, filteredArr);
+
+      await updateDoc(doc(db, 'users', userData.email), {
+        waitingContent: newList,
+      })
+        .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
+        .then(() => dispatch(updateWaitingContent(newList)));
+    }
+  };
 
   return (
     <>
-      {/* {sectionsArray.map((section, index) => (
-        // концепт, надо менять структуру всего документа на такую:
-        // items: [{title: "Игры", items: [], section: "games"}, {title: "Фильмы", items: [], section: "movies"}]
-        // тогда не надо будет ничего переводить в другие типы данных и просто двойным циклом отобразить все
-        <section className={classes.section} key={section[0]}>
+      {itemsArr.map(({ title, items }) => (
+        <section className={classes.section} key={title}>
           <div className={classes.section__top}>
-            <h3 className={classes.section__title}>{sectionsTitle[index]} </h3>
-            {section[1].length ? (
-              <Button onClick={() => setShowPopup(section[0])} text='Показать все' />
-            ) : null}
+            <h3 className={classes.section__title}>{title}</h3>
+            {items.length ? <Button onClick={() => onShowList(title)} text='Показать все' /> : null}
           </div>
-          {section[1].length ? (
+          {items.length ? (
             <ul className={classes.section__list}>
-              {section[1].slice(0, 4).map(({ id, bgImg, name }: IItem) => (
+              {items.slice(0, 4).map(({ id, bgImg, name, section }: IItem) => (
                 <li key={id} className={classes.section__item}>
-                  <SectionCard id={id} bgImage={bgImg} name={name} section={section[0]} />
+                  <SectionCard id={id} bgImage={bgImg} name={name} section={section} />
                 </li>
               ))}
             </ul>
           ) : (
-            <EmptyList />
+            <EmptyList text={'Вы не добавили ничего в список'} />
+          )}
+          {showPopup && (
+            <ListPopup
+              setShowPopup={setShowPopup}
+              itemsArr={popupArray}
+              title={popupTitle}
+              onDeleteItem={onDeleteItem}
+            />
           )}
         </section>
-      ))} */}
-
-      <section className={classes.section}>
-        <div className={classes.section__top}>
-          <h3 className={classes.section__title}>Игры </h3>
-          {games.length ? <Button onClick={() => setShowPopup('games')} text='Показать все' /> : null}
-        </div>
-        {games.length ? (
-          <ul className={classes.section__list}>
-            {games.slice(0, 4).map(({ id, bgImg, name }: IItem) => (
-              <li key={id} className={classes.section__item}>
-                <SectionCard id={id} bgImage={bgImg} name={name} section={'games'} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <EmptyList text='Вы пока ничего не добавили в список' />
-        )}
-      </section>
-      <section className={classes.section}>
-        <div className={classes.section__top}>
-          <h3 className={classes.section__title}>Фильмы </h3>
-          {movies.length ? <Button onClick={() => setShowPopup('movies')} text='Показать все' /> : null}
-        </div>
-        {movies.length ? (
-          <ul className={classes.section__list}>
-            {movies.slice(0, 4).map(({ id, nameOrig, name, bgImg }: IItem) => (
-              <li key={id} className={classes.section__item}>
-                <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={'movies'} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <EmptyList text='Вы пока ничего не добавили в список' />
-        )}
-      </section>
-      <section className={classes.section}>
-        <div className={classes.section__top}>
-          <h3 className={classes.section__title}>Сериалы </h3>
-          {shows.length ? <Button onClick={() => setShowPopup('shows')} text='Показать все' /> : null}
-        </div>
-        {shows.length ? (
-          <ul className={classes.section__list}>
-            {shows.slice(0, 4).map(({ id, bgImg, name }: IItem) => (
-              <li key={id} className={classes.section__item}>
-                <SectionCard id={id} bgImage={bgImg} name={name} section={'games'} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <EmptyList text='Вы пока ничего не добавили в список' />
-        )}
-      </section>
-      <section className={classes.section}>
-        <div className={classes.section__top}>
-          <h3 className={classes.section__title}>Книги </h3>
-          {books.length ? <Button onClick={() => setShowPopup('games')} text='Показать все' /> : null}
-        </div>
-        {books.length ? (
-          <ul className={classes.section__list}>
-            {books.slice(0, 4).map(({ id, bgImg, name }: IItem) => (
-              <li key={id} className={classes.section__item}>
-                <SectionCard id={id} bgImage={bgImg} name={name} section={'games'} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <EmptyList text='Вы пока ничего не добавили в список' />
-        )}
-      </section>
-
-      {showPopup === 'games' && (
-        <ListPopup itemsArr={games} title={'Игры'} setShowPopup={setShowPopup} showPopup={'games'} />
-      )}
-      {showPopup === 'movies' && (
-        <ListPopup itemsArr={movies} title={'Фильмы'} setShowPopup={setShowPopup} showPopup={'movies'} />
-      )}
+      ))}
     </>
   );
 };

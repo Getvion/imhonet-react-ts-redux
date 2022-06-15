@@ -31,7 +31,7 @@ interface IUserData {
 export const Lists: React.FC<ILists> = ({ lists }) => {
   const dispatch = useDispatch();
 
-  const [showPopup, setShowPopup] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const [popupArray, setPopupArray] = useState<any>([]);
   const [popupTitle, setPopupTitle] = useState('');
 
@@ -41,10 +41,10 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
     const foundArray = lists.find((list) => list.title === title)?.items;
     setPopupArray(foundArray);
     setPopupTitle(title);
-    setShowPopup('true');
+    setShowPopup(true);
   };
 
-  const onDeleteLIst = async (titleToRemove: string) => {
+  const onDeleteList = async (titleToRemove: string) => {
     const filteredArr = lists.filter((list) => list.title !== titleToRemove);
 
     await updateDoc(doc(db, 'users', userData.email), {
@@ -52,6 +52,22 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
       .then(() => dispatch(updateLists(filteredArr)))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+  };
+
+  const onDeleteItem = async (filteredArr: IItem[], listTitle: string) => {
+    const newList = lists.map((list) => {
+      if (list.title === listTitle) {
+        return { ...list, items: filteredArr };
+      }
+      return list;
+    });
+
+    await updateDoc(doc(db, 'users', userData.email), {
+      lists: newList,
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
+      .then(() => dispatch(updateLists(newList)))
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
@@ -65,7 +81,7 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
                 <h3 className={classes.section__title}>{title} </h3>
                 {items.length ? (
                   <div className={classes.section__buttons}>
-                    <ListButtons title={title} deleteButtonText='Удалить список' onDelete={onDeleteLIst} />
+                    <ListButtons title={title} deleteButtonText='Удалить список' onDelete={onDeleteList} />
                     <Button onClick={() => onShowList(title)} text='Показать все' />
                   </div>
                 ) : null}
@@ -87,7 +103,7 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
                   title={popupTitle}
                   descr={description}
                   setShowPopup={setShowPopup}
-                  showPopup={showPopup}
+                  onDeleteItem={onDeleteItem}
                 />
               )}
             </section>

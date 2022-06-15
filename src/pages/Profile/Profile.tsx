@@ -12,8 +12,8 @@ import classes from './Profile.module.scss';
 
 interface IUserContent {
   user: {
-    favoriteContent: { shows: IItem[]; books: IItem[]; games: IItem[]; movies: IItem[] };
-    waitingContent: { shows: IItem[]; books: IItem[]; games: IItem[]; movies: IItem[] };
+    favoriteContent: { title: string; items: IItem[] }[];
+    waitingContent: { title: string; items: IItem[] }[];
     lists: { items: IItem[]; title: string; description: string }[];
   };
 }
@@ -75,9 +75,15 @@ export const Profile = () => {
           ))}
         </div>
         <Routes>
-          <Route path='favorite' element={<FavAndWait items={favoriteContent} />} />
+          <Route
+            path='favorite'
+            element={<FavAndWait itemsArr={favoriteContent} dbSection={'favoriteContent'} />}
+          />
           <Route path='lists' element={<Lists lists={lists} />} />
-          <Route path='waiting' element={<FavAndWait items={waitingContent} />} />
+          <Route
+            path='waiting'
+            element={<FavAndWait itemsArr={waitingContent} dbSection={'waitingContent'} />}
+          />
           <Route path='stats' element={<Stats />} />
         </Routes>
       </div>
