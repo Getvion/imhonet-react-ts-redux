@@ -12,9 +12,12 @@ import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { setNotification } from '../../../features/notification/notificationSlice';
 import { setCatalogListData, setCatalogListOpen } from '../../../features/listsCatalog/listsCatalogSlice';
 
-import { doc, DocumentData, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
+interface IProps {
+  sectionName: string;
+}
 interface IMovie {
   filmId: number;
   kinopoiskId: number;
@@ -47,7 +50,12 @@ interface IUserData {
   };
 }
 
-export const Movie = () => {
+interface IAdd {
+  title: string;
+  items: { id: number; name: string; nameOrig: string; bgImg: string; section: string }[];
+}
+
+export const Movie: React.FC<IProps> = ({ sectionName }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { movieData } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
@@ -69,51 +77,55 @@ export const Movie = () => {
     if (!fetchData) return null;
 
     const { waitingContent, favoriteContent } = fetchData;
-    const waitMovieAdded = waitingContent.movies.filter(
-      (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
-    ).length;
-    const favMovieAdded = favoriteContent.movies.filter(
-      (movieObj: IMovie) => movieObj.filmId === movieData.kinopoiskId
-    ).length;
-
-    if (triggerList === 'waiting') onWatchLaterClick(fetchData, waitMovieAdded);
-    if (triggerList === 'favorite') onFavoriteClick(fetchData, favMovieAdded);
+    if (triggerList === 'waiting') onWatchLaterClick(waitingContent);
+    if (triggerList === 'favorite') onFavoriteClick(favoriteContent);
     if (triggerList === 'listCatalog') onAddCustomList();
   };
 
-  const onWatchLaterClick = async (fetchData: DocumentData, waitMovieAdded: undefined) => {
-    if (waitMovieAdded)
+  const addContent = (contentType: IAdd[]) => {
+    return contentType.map((element: IAdd) => {
+      if (element.title === sectionName) {
+        return {
+          ...element,
+          items: [
+            ...element.items,
+            {
+              id: kinopoiskId,
+              name: nameRu,
+              nameOrig: nameOriginal,
+              bgImg: posterUrlPreview,
+              section: sectionName,
+            },
+          ],
+        };
+      }
+      return element;
+    });
+  };
+
+  const onWatchLaterClick = async (waitingContent: IAdd[]) => {
+    const findWaitSection = waitingContent.find((item: IAdd) => item.title === sectionName);
+    const waitMovieAdded = findWaitSection?.items.find((item: { id: number }) => item.id === kinopoiskId);
+
+    if (waitMovieAdded?.id)
       return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
-      waitingContent: {
-        games: [...fetchData.waitingContent.games],
-        shows: [...fetchData.waitingContent.shows],
-        movies: [
-          ...fetchData.waitingContent.movies,
-          { id: kinopoiskId, name: nameRu, nameOrig: nameOriginal, bgImg: posterUrlPreview },
-        ],
-        books: [...fetchData.waitingContent.books],
-      },
+      waitingContent: addContent(waitingContent),
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Фильм добавлен в список ожидаемых' })))
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
-  const onFavoriteClick = async (fetchData: DocumentData, favMovieAdded: undefined) => {
-    if (favMovieAdded)
+  const onFavoriteClick = async (favoriteContent: IAdd[]) => {
+    const findFavSection = favoriteContent.find((item: IAdd) => item.title === sectionName);
+    const FavMovieAdded = findFavSection?.items.find((item: { id: number }) => item.id === kinopoiskId);
+
+    if (FavMovieAdded?.id)
       return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список' }));
 
-    await updateDoc(doc(db, 'users', fetchData.userData.email), {
-      favoriteContent: {
-        games: [...fetchData.favoriteContent.games],
-        shows: [...fetchData.favoriteContent.shows],
-        movies: [
-          ...fetchData.favoriteContent.movies,
-          { id: kinopoiskId, name: nameRu, nameOrig: nameOriginal, bgImg: posterUrlPreview },
-        ],
-        books: [...fetchData.favoriteContent.books],
-      },
+    await updateDoc(doc(db, 'users', userData.email), {
+      favoriteContent: addContent(favoriteContent),
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Фильм добавлен в список любимых' })))
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));

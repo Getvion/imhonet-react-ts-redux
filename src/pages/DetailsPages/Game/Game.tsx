@@ -77,7 +77,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
     if (triggerList === 'listCatalog') onAddCustomList();
   };
 
-  const AddContent = (contentType: IAdd[]) => {
+  const addContent = (contentType: IAdd[]) => {
     return contentType.map((element: IAdd) => {
       if (element.title === sectionName) {
         return {
@@ -101,7 +101,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
     }
 
     await updateDoc(doc(db, 'users', userData.email), {
-      waitingContent: AddContent(waitingContent),
+      waitingContent: addContent(waitingContent),
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
       .catch(() => dispatch(setNotification({ type: 'reject', text: ' Произошла ошибка попробуйте снвоа' })));
@@ -115,7 +115,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
       return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
-      favoriteContent: AddContent(favoriteContent),
+      favoriteContent: addContent(favoriteContent),
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
       .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' })));
