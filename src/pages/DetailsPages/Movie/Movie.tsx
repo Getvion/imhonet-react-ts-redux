@@ -52,6 +52,7 @@ interface IUserData {
 
 interface IAdd {
   title: string;
+  sectionName: string;
   items: { id: number; name: string; nameOrig: string; bgImg: string; section: string }[];
 }
 
@@ -84,7 +85,7 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
 
   const addContent = (contentType: IAdd[]) => {
     return contentType.map((element: IAdd) => {
-      if (element.title === sectionName) {
+      if (element.sectionName === sectionName) {
         return {
           ...element,
           items: [
@@ -104,7 +105,7 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const onWatchLaterClick = async (waitingContent: IAdd[]) => {
-    const findWaitSection = waitingContent.find((item: IAdd) => item.title === sectionName);
+    const findWaitSection = waitingContent.find((item: IAdd) => item.sectionName === sectionName);
     const waitMovieAdded = findWaitSection?.items.find((item: { id: number }) => item.id === kinopoiskId);
 
     if (waitMovieAdded?.id)
@@ -118,10 +119,10 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const onFavoriteClick = async (favoriteContent: IAdd[]) => {
-    const findFavSection = favoriteContent.find((item: IAdd) => item.title === sectionName);
-    const FavMovieAdded = findFavSection?.items.find((item: { id: number }) => item.id === kinopoiskId);
+    const findFavSection = favoriteContent.find((item: IAdd) => item.sectionName === sectionName);
+    const favMovieAdded = findFavSection?.items.find((item: { id: number }) => item.id === kinopoiskId);
 
-    if (FavMovieAdded?.id)
+    if (favMovieAdded?.id)
       return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли этот фильм в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {

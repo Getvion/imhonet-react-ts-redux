@@ -10,8 +10,8 @@ const initialState = {
     imageUrl: '',
     socialMedia: [],
   },
-  favoriteContent: { games: [], movies: [], shows: [], books: [] },
-  waitingContent: { games: [], movies: [], shows: [], books: [] },
+  favoriteContent: [],
+  waitingContent: [],
   lists: [],
 };
 

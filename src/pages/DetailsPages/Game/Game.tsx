@@ -53,6 +53,7 @@ interface IUserData {
 
 interface IAdd {
   title: string;
+  sectionName: string;
   items: { id: number; name: string; nameOrig: string; bgImg: string; section: string }[];
 }
 
@@ -79,7 +80,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
 
   const addContent = (contentType: IAdd[]) => {
     return contentType.map((element: IAdd) => {
-      if (element.title === sectionName) {
+      if (element.sectionName === sectionName) {
         return {
           ...element,
           items: [
@@ -93,7 +94,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const onPlayLaterClick = async (waitingContent: IAdd[]) => {
-    const findWaitSection = waitingContent.find((item: IAdd) => item.title === sectionName);
+    const findWaitSection = waitingContent.find((item: IAdd) => item.sectionName === sectionName);
     const waitGameAdded = findWaitSection?.items.find((item: { id: number }) => item.id === id);
 
     if (waitGameAdded?.id) {
@@ -108,10 +109,10 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const onFavoriteClick = async (favoriteContent: IAdd[]) => {
-    const findFavoriteSection = favoriteContent.find((item: IAdd) => item.title === sectionName);
+    const findFavoriteSection = favoriteContent.find((item: IAdd) => item.sectionName === sectionName);
     const favGameAdded = findFavoriteSection?.items.find((item: { id: number }) => item.id === id);
 
-    if (favGameAdded)
+    if (favGameAdded?.id)
       return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
