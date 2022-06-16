@@ -3,8 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
 //
-// todo унифицировать входящие данные
-// todo добавить поле описание для списков
 // todo настройки все
 // todo добавить индикаторы загрузки в профиль и в страницы элементов
 //

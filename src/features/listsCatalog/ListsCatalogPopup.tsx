@@ -73,7 +73,7 @@ export const ListsCatalogPopup = () => {
     }).catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
-  const onFomrSubmit = async (e: any) => {
+  const onFormSubmit = async (e: any) => {
     e.preventDefault();
 
     if (inputValue === '') {
@@ -114,9 +114,9 @@ export const ListsCatalogPopup = () => {
               Cкорее сделайте это с помощью формы ниже!
             </p>
           )}
-          <form className={classes.modal__form} onSubmit={onFomrSubmit}>
+          <form className={classes.modal__form} onSubmit={onFormSubmit}>
             <AuthInput setValue={setInputValue} placeholder={'Название списка...'} value={inputValue} />
-            <Button text='Cоздать' onClick={onFomrSubmit} type={'submit'} />
+            <Button text='Cоздать' onClick={onFormSubmit} type={'submit'} />
           </form>
         </div>
       </div>

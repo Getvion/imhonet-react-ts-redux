@@ -8,7 +8,6 @@ interface IProps {
   setShowPopup: Function;
   itemsArr: IItem[];
   title: string;
-  descr?: string;
   onDeleteItem: Function;
 }
 
@@ -20,7 +19,7 @@ interface IItem {
   section: string;
 }
 
-export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, descr, onDeleteItem }) => {
+export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, onDeleteItem }) => {
   const [filteredArr, setFilteredArr] = useState(itemsArr);
 
   const onPopupClose = (e: any) => {
@@ -40,10 +39,7 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, des
   return (
     <div className={classes.modal} onClick={onPopupClose}>
       <div className={classes.modal__dialog}>
-        <div className={classes.modal__text}>
-          <h3 className={classes.modal__title}>{title}</h3>
-          {descr ? <span className={classes.modal__descr}>{descr}</span> : null}
-        </div>
+        <h3 className={classes.modal__title}>{title}</h3>
         <div className={classes.modal__content}>
           {filteredArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
             <div className={classes.modal__element} key={id}>

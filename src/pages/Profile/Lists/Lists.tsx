@@ -75,7 +75,7 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
     <div className={classes.lists}>
       {lists.length ? (
         <>
-          {lists.map(({ items, title, description }) => (
+          {lists.map(({ items, title }) => (
             <section key={title} className={classes.section}>
               <div className={classes.section__top}>
                 <h3 className={classes.section__title}>{title} </h3>
@@ -101,7 +101,6 @@ export const Lists: React.FC<ILists> = ({ lists }) => {
                 <ListPopup
                   itemsArr={popupArray}
                   title={popupTitle}
-                  descr={description}
                   setShowPopup={setShowPopup}
                   onDeleteItem={onDeleteItem}
                 />

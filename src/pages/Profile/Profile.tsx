@@ -40,7 +40,7 @@ export const Profile = () => {
     { title: 'Избранные', route: 'favorite' },
     { title: 'Ожидаемое', route: 'waiting' },
     { title: 'Списки', route: 'lists' },
-    { title: 'Статистика', route: 'stats' },
+    // { title: 'Статистика', route: 'stats' },
   ];
 
   return (
