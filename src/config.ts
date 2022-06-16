@@ -10,7 +10,7 @@ export const GET_BEST_GAMES = (pageNumber: number | string) => {
 };
 
 export const GET_GAME_INFO_BY_ID = (gameId: number | string) => {
-  return `${GAMES_BASE}/games/${gameId}?${GAMES_API_KEY}`;
+  return `${GAMES_BASE}/games/${gameId}?${GAMES_API_KEY}1`;
 };
 
 export const SEARCH_GAME_BY_NAME = (gameQuery: string) => {

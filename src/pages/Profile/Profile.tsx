@@ -3,7 +3,7 @@ import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 
-import { Button } from '../../components';
+import { Button, LoadingSpinner } from '../../components';
 import { Lists, Stats, FavAndWait } from './';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
@@ -47,7 +47,11 @@ export const Profile = () => {
     <div className={classes.profile}>
       <div className={classes.profile__info}>
         <div className={classes.profile__info_container}>
-          <img src={imageUrl} alt={name} className={classes.profile__avatar} />
+          {imageUrl ? (
+            <img src={imageUrl} alt={name} className={classes.profile__avatar} />
+          ) : (
+            <LoadingSpinner />
+          )}
           <div className={classes.profile__content}>
             <h1 className={classes.profile__username}>{name}</h1>
             <div className={classes.profile__descr}>
