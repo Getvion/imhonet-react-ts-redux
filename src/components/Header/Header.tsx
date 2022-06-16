@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { useDispatch } from 'react-redux';
 
 import { ThemeSwitcher } from '../../features/theme/ThemeSwitcher';
+import { emptyGameState } from '../../features/games/loadGameInfoSlice';
+import { emptyMovieState } from '../../features/movies/loadMovieInfoSlice';
+
+import { useWindowDimensions } from '../../hooks';
 
 import { Dropdown } from '../UI/Dropdown/Dropdown';
 import { Search } from '../UI/Search/Search';
 
 import classes from './Header.module.scss';
-import { useWindowDimensions } from '../../hooks';
 
 export const Header = () => {
+  const dispatch = useDispatch();
+
   const [currentPage, setCurrentPage] = useState(10);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
@@ -28,10 +34,16 @@ export const Header = () => {
     setIsMenuVisible(false);
   };
 
+  const onLogoClick = () => {
+    setCurrentPage(-1);
+    dispatch(emptyMovieState());
+    dispatch(emptyGameState());
+  };
+
   return (
     <header className={classes.header}>
       <div className={classes.container}>
-        <Link to='/' className={classes.logo} onClick={() => setCurrentPage(-1)}>
+        <Link to='/' className={classes.logo} onClick={onLogoClick}>
           IMHONET
         </Link>
         {windowWidth > 600 ? <Search /> : null}

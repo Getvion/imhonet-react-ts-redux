@@ -18,7 +18,9 @@ const initialState = {
 const movieInfo = createSlice({
   name: 'movieInfo',
   initialState,
-  reducers: {},
+  reducers: {
+    emptyMovieState: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(loadMovieInfo.fulfilled, (state, action) => {
       state.movieData = action.payload.data;
@@ -27,3 +29,4 @@ const movieInfo = createSlice({
 });
 
 export const movieInfoReducer = movieInfo.reducer;
+export const { emptyMovieState } = movieInfo.actions;

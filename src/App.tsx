@@ -4,7 +4,7 @@ import axios from 'axios';
 
 //
 // todo настройки все
-// todo добавить индикаторы загрузки в профиль и в страницы элементов
+// todo Придумать систему для отметок контента,
 //
 
 import { Header } from './components';

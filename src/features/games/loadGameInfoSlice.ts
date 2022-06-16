@@ -14,7 +14,9 @@ const initialState = {
 const gameInfo = createSlice({
   name: 'movieInfo',
   initialState,
-  reducers: {},
+  reducers: {
+    emptyGameState: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(loadGameInfo.fulfilled, (state, action) => {
       state.gameData = action.payload.data;
@@ -23,3 +25,4 @@ const gameInfo = createSlice({
 });
 
 export const gameInfoReducer = gameInfo.reducer;
+export const { emptyGameState } = gameInfo.actions;
