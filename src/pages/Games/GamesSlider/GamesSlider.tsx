@@ -39,7 +39,7 @@ export const GamesSlider: React.FC<Game> = ({ items }) => {
       loop={true}
       autoplay={true}
       onSlideChange={onSlideChange}
-      style={{ borderRadius: '20px' }}
+      className={classes.slides}
     >
       {items.map((item) => (
         <SwiperSlide className={classes.slide__inner} key={item.id}>

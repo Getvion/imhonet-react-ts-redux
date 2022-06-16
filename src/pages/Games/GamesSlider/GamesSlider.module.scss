@@ -1,5 +1,9 @@
 @import '../../../styles/varibles';
 
+.slides {
+  border-radius: 20px;
+}
+
 .slide {
   &__inner {
     cursor: pointer;
@@ -32,6 +36,10 @@
   &__name {
     font-size: 48px;
     font-weight: $fw-normal;
+
+    @media (max-width: 580px) {
+      font-size: 30px;
+    }
   }
 
   &__description {
@@ -68,9 +76,14 @@
   &__screens {
     position: absolute;
     bottom: 100px;
-    right: 50px;
+    right: 20px;
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
+
+    @media (max-width: 580px) {
+      justify-content: center;
+    }
 
     &_img {
       max-width: 100px;
