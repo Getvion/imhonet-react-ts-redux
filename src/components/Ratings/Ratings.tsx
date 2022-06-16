@@ -6,19 +6,22 @@ import recomendedImg from './img/recomended.png';
 import mehImg from './img/meh.png';
 import skipImg from './img/skip.png';
 
-import classes from './Ratings.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
 
+import classes from './Ratings.module.scss';
+
 interface IUserData {
-  user: { email: string; name: string };
+  user: {
+    userData: { email: string; name: string };
+  };
 }
 
 export const Ratings = () => {
   const dispatch = useDispatch();
   const [selectedRating, setSelectedRating] = useState(-1);
 
-  const userData = useSelector(({ user }: IUserData) => user);
+  const { userData } = useSelector(({ user }: IUserData) => user);
 
   const ratingsData = [
     { img: exceptionalImg, title: 'Великолепно', count: 0 },
@@ -35,16 +38,16 @@ export const Ratings = () => {
 
   return (
     <section className={classes.stat}>
-      {ratingsData.map((obj, index) => (
+      {ratingsData.map(({ title, count, img }, index) => (
         <div
-          key={obj.title}
+          key={title}
           className={clsx(classes.stat__item, { [classes.active]: selectedRating === index })}
           onClick={() => onSelectRating(index)}
         >
-          <img className={classes.stat__icon} src={obj.img} alt={obj.title} />
+          <img className={classes.stat__icon} src={img} alt={title} />
           <div className={classes.buttons__label}>
-            <span className={classes.buttons__text}>{obj.title}</span>
-            <span className={classes.buttons__count}>{obj.count}</span>
+            <span className={classes.buttons__text}>{title}</span>
+            <span className={classes.buttons__count}>{count}</span>
           </div>
         </div>
       ))}

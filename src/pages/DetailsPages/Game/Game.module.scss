@@ -16,16 +16,23 @@
     gap: 20px;
     height: 100%;
     border-radius: 20px;
+
+    @media (max-width: 730px) {
+      flex-direction: column;
+    }
   }
 
   &__image {
     height: 100%;
     border-radius: 10px;
     min-height: 400px;
-    max-height: 300px;
     width: 100%;
     max-width: 300px;
     object-fit: cover;
+
+    @media (max-width: 730px) {
+      max-width: 100%;
+    }
   }
 
   &__title_wrapper {
@@ -51,14 +58,12 @@
 
   &__add {
     margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 
     button {
       padding: 10px 15px;
-      margin-right: 10px;
-
-      &:active {
-        transform: scale(0.97);
-      }
     }
   }
 
@@ -68,6 +73,11 @@
     font-weight: $fw-normal;
     display: flex;
     gap: 20px;
+
+    @media (max-width: 810px) {
+      flex-direction: column;
+      margin-top: 20px;
+    }
   }
 
   &__grade {
