@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-
 import clsx from 'clsx';
-
-import classes from './Settings.module.scss';
 
 import { ResetPassword, Links, General } from './';
 import { Button } from '../../components';
 
+import classes from './Settings.module.scss';
+
 export const Settings = () => {
   const navigate = useNavigate();
+
   const [activeLinkIndex, setActiveLinkIndex] = useState(0);
 
   const navLinks = [
