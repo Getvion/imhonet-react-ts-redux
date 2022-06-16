@@ -1,10 +1,8 @@
 import React from 'react';
+import clsx from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css';
-
 import classes from './MoviesSlider.module.scss';
-import clsx from 'clsx';
 
 interface Movie {
   items: {

@@ -18,7 +18,8 @@ interface IMovie {
 
 export const Movies = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const movies = useSelector((state: any) => state?.bestMovies.moviesList.films);
+
+  const bestMovies = useSelector((state: any) => state?.bestMovies.moviesList.films);
 
   useEffect(() => {
     dispatch(loadBestMovies());
@@ -26,12 +27,12 @@ export const Movies = () => {
 
   return (
     <div className={classes.movies}>
-      {movies ? (
+      {bestMovies ? (
         <>
-          <MoviesSlider items={movies} />
+          <MoviesSlider items={bestMovies} />
           <h2 className={classes.movies__title}>Лучшие фильмы</h2>
           <div className={classes.movies__list}>
-            {movies.map(({ filmId, nameRu, nameEn, posterUrlPreview }: IMovie) => (
+            {bestMovies.map(({ filmId, nameRu, nameEn, posterUrlPreview }: IMovie) => (
               <SectionCard
                 key={filmId}
                 id={filmId}
