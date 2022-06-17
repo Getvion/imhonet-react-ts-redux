@@ -1,33 +1,30 @@
 @import '../../../styles/varibles';
 
-.wrap {
-  position: fixed;
-  min-width: 100vw;
-  min-height: 100vh;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  background-color: transparent;
-}
-
 .nav__item {
   list-style: none;
   position: relative;
   cursor: pointer;
+
+  &:hover {
+    .dropdown {
+      display: flex;
+    }
+  }
 }
 
 .username {
   white-space: nowrap;
+  padding: 10px 15px;
 }
 
 .dropdown {
-  left: -20px;
-  top: 25px;
+  left: -5px;
+  // top: -8px;
+  top: 0;
   position: absolute;
   background-color: var(#{--bg-color-default});
   box-shadow: var(#{--shadow-color-default});
-  transition: all 0.15s ease;
-  display: flex;
+  display: none;
   flex-direction: column;
   border-radius: 4px;
   cursor: pointer;
