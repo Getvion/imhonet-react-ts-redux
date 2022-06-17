@@ -185,49 +185,63 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
                 <div className={classes.movie__info}>
                   <h3 className={classes.movie__about}>О фильме</h3>
                   <ul className={classes.movie__list}>
-                    <MovieListItem description={'Год производства'} content={year} />
-                    <MovieListItem
-                      description={'Страна'}
-                      content={countries.map((c, i) =>
-                        i === countries.length - 1 ? c.country : `${c.country}, `
-                      )}
-                    />
-                    <MovieListItem
-                      description={'Жанр'}
-                      content={genres.map((g, i) => (i === genres.length - 1 ? g.genre : `${g.genre}, `))}
-                    />
+                    {year && <MovieListItem description={'Год производства'} content={year} />}
+                    {countries.length && (
+                      <MovieListItem
+                        description={'Страна'}
+                        content={countries.map((c, i) =>
+                          i === countries.length - 1 ? c.country : `${c.country}, `
+                        )}
+                      />
+                    )}
+                    {genres.length && (
+                      <MovieListItem
+                        description={'Жанр'}
+                        content={genres.map((g, i) => (i === genres.length - 1 ? g.genre : `${g.genre}, `))}
+                      />
+                    )}
                     <MovieListItem description={'Возраст'} content={ratingAgeLimits()} />
-                    <MovieListItem description={'Возраст MRAA'} content={ratingMpaa.toUpperCase()} />
-                    <MovieListItem description={'Продолжительность'} content={`${filmLength} мин`} />
+                    {ratingMpaa && (
+                      <MovieListItem description={'Возраст MRAA'} content={ratingMpaa.toUpperCase()} />
+                    )}
+                    {filmLength && (
+                      <MovieListItem description={'Продолжительность'} content={`${filmLength} мин`} />
+                    )}
                   </ul>
                 </div>
               </div>
               <div className={classes.movie__grades}>
-                <span
-                  className={clsx(classes.movie__grade, {
-                    [classes.green]: ratingKinopoisk >= 7,
-                    [classes.yellow]: ratingKinopoisk >= 4 && ratingKinopoisk < 7,
-                    [classes.red]: ratingKinopoisk < 4,
-                  })}
-                >
-                  {ratingKinopoisk}
-                </span>
-                <span
-                  className={clsx(classes.movie__grade, {
-                    [classes.green]: ratingImdb >= 7,
-                    [classes.yellow]: ratingImdb >= 4 && ratingImdb < 7,
-                    [classes.red]: ratingImdb < 4,
-                  })}
-                >
-                  {ratingImdb}
-                </span>
+                {ratingKinopoisk && (
+                  <span
+                    className={clsx(classes.movie__grade, {
+                      [classes.green]: ratingKinopoisk >= 7,
+                      [classes.yellow]: ratingKinopoisk >= 4 && ratingKinopoisk < 7,
+                      [classes.red]: ratingKinopoisk < 4,
+                    })}
+                  >
+                    {ratingKinopoisk}
+                  </span>
+                )}
+                {ratingImdb && (
+                  <span
+                    className={clsx(classes.movie__grade, {
+                      [classes.green]: ratingImdb >= 7,
+                      [classes.yellow]: ratingImdb >= 4 && ratingImdb < 7,
+                      [classes.red]: ratingImdb < 4,
+                    })}
+                  >
+                    {ratingImdb}
+                  </span>
+                )}
               </div>
             </div>
           </div>
-          <div className={classes.movie__descr}>
-            <h3 className={classes.movie__about}>Описание</h3>
-            <p className={classes.movie__descr_text}>{description}</p>
-          </div>
+          {description && (
+            <div className={classes.movie__descr}>
+              <h3 className={classes.movie__about}>Описание</h3>
+              <p className={classes.movie__descr_text}>{description}</p>
+            </div>
+          )}
 
           <div className={classes.movie__ratings}>
             <h3 className={classes.movie__about}>Оценка</h3>
