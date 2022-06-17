@@ -38,9 +38,7 @@ interface IGame {
 }
 
 interface IGameInfo {
-  gameInfo: {
-    gameData: IGame;
-  };
+  gameInfo: IGame;
 }
 
 interface IUserData {
@@ -60,7 +58,7 @@ interface IAdd {
 export const Game: React.FC<IProps> = ({ sectionName }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { gameData } = useSelector(({ gameInfo }: IGameInfo) => gameInfo);
+  const { gameInfo } = useSelector((state: IGameInfo) => state);
   const { userData } = useSelector(({ user }: IUserData) => user);
 
   const onAddItem = async (triggerList: string) => {
@@ -154,7 +152,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
     metacritic,
     rating,
     esrb_rating,
-  } = gameData;
+  } = gameInfo;
 
   return (
     <div className={classes.game}>

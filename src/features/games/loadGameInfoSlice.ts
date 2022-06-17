@@ -7,19 +7,15 @@ export const loadGameInfo = createAsyncThunk(
   }
 );
 
-const initialState = {
-  gameData: {},
-};
-
 const gameInfo = createSlice({
   name: 'movieInfo',
-  initialState,
+  initialState: {},
   reducers: {
-    emptyGameState: () => initialState,
+    emptyGameState: () => {},
   },
   extraReducers: (builder) => {
-    builder.addCase(loadGameInfo.fulfilled, (state, action) => {
-      state.gameData = action.payload.data;
+    builder.addCase(loadGameInfo.fulfilled, (_, action) => {
+      return action.payload.data;
     });
   },
 });
