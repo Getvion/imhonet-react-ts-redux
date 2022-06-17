@@ -11,19 +11,15 @@ export const loadMovieInfo = createAsyncThunk(
   }
 );
 
-const initialState = {
-  movieData: {},
-};
-
 const movieInfo = createSlice({
   name: 'movieInfo',
-  initialState,
+  initialState: {},
   reducers: {
-    emptyMovieState: () => initialState,
+    emptyMovieState: () => {},
   },
   extraReducers: (builder) => {
     builder.addCase(loadMovieInfo.fulfilled, (state, action) => {
-      state.movieData = action.payload.data;
+      return action.payload.data;
     });
   },
 });

@@ -37,9 +37,7 @@ interface IMovie {
 }
 
 interface IMovieData {
-  movieInfo: {
-    movieData: IMovie;
-  };
+  movieInfo: IMovie;
 }
 
 interface IUserData {
@@ -59,13 +57,13 @@ interface IAdd {
 export const Movie: React.FC<IProps> = ({ sectionName }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { movieData } = useSelector(({ movieInfo }: IMovieData) => movieInfo);
+  const { movieInfo } = useSelector((state: IMovieData) => state);
   const { userData } = useSelector(({ user }: IUserData) => user);
 
   const ratingAgeLimits = () => {
-    if (movieData.ratingAgeLimits === 'age18') return '18+';
-    if (movieData.ratingAgeLimits === 'age16') return '16+';
-    if (movieData.ratingAgeLimits === 'age12') return '12+';
+    if (movieInfo.ratingAgeLimits === 'age18') return '18+';
+    if (movieInfo.ratingAgeLimits === 'age16') return '16+';
+    if (movieInfo.ratingAgeLimits === 'age12') return '12+';
     return '0+';
   };
 
@@ -147,6 +145,7 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
 
   useEffect(() => {
     const currentMovieId = window.location.href.split('/').reverse()[0];
+    console.log(currentMovieId);
 
     dispatch(loadMovieInfo(currentMovieId));
   }, [dispatch]);
@@ -165,7 +164,7 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
     filmLength,
     ratingKinopoisk,
     ratingImdb,
-  } = movieData;
+  } = movieInfo;
 
   return (
     <div className={classes.movie}>
