@@ -2,14 +2,14 @@ import React from 'react';
 
 import classes from './AuthInput.module.scss';
 
-interface InputProps {
+interface IProps {
   type?: string;
   placeholder: string;
   setValue: Function;
   value: string;
 }
 
-export const AuthInput: React.FC<InputProps> = ({ type, placeholder, setValue, value }) => {
+export const AuthInput: React.FC<IProps> = ({ type, placeholder, setValue, value }) => {
   return (
     <input
       value={value}

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './Game.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
+import { IAdd, IUserData } from '../../../intefaces';
 import { GameListItem } from './GameListItem';
 import { AppDispatch } from '../../../store';
 import { Description } from './Description';
@@ -39,20 +40,6 @@ interface IGame {
 
 interface IGameInfo {
   gameInfo: IGame;
-}
-
-interface IUserData {
-  user: {
-    userData: {
-      email: string;
-    };
-  };
-}
-
-interface IAdd {
-  title: string;
-  sectionName: string;
-  items: { id: number; name: string; nameOrig: string; bgImg: string; section: string }[];
 }
 
 export const Game: React.FC<IProps> = ({ sectionName }) => {

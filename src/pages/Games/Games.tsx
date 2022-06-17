@@ -11,17 +11,26 @@ import { AppDispatch } from '../../store';
 
 interface IGame {
   id: number;
+  background_image: string;
+  metacritic: number;
+  rating: number;
   name: string;
   released: string;
-  background_image: string;
-  rating: number;
-  metacritic: number;
   genres: { id: number; name: string }[];
+  short_screenshots: { id: number; image: string }[];
+}
+
+interface IBestGames {
+  bestGames: {
+    gamesList: {
+      results: IGame[];
+    };
+  };
 }
 
 export const Games = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const bestGames = useSelector((state: any) => state?.bestGames.gamesList.results);
+  const bestGames = useSelector((state: IBestGames) => state.bestGames.gamesList.results);
 
   useEffect(() => {
     dispatch(loadBestGames());

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import classes from './Game.module.scss';
 
-interface Props {
+interface IProps {
   description: string;
 }
 
-export const Description: React.FC<Props> = ({ description }) => {
+export const Description: React.FC<IProps> = ({ description }) => {
   const [isShowFull, setIsShowFull] = useState(false);
 
   const slicedDescription = description.slice(0, 290);

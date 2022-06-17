@@ -8,27 +8,13 @@ import { setNotification } from '../../../features/notification/notificationSlic
 import { db } from '../../../firebase';
 
 import classes from './Lists.module.scss';
+import { IItem, IUserData } from '../../../intefaces';
 
-interface ILists {
+interface IProps {
   lists: { items: IItem[]; title: string; description: string }[];
 }
 
-interface IItem {
-  id: number;
-  name: string;
-  nameOrig: string;
-  bgImg: string;
-  section: string;
-}
-
-interface IUserData {
-  user: {
-    userData: { email: string };
-    lists: ILists[];
-  };
-}
-
-export const Lists: React.FC<ILists> = ({ lists }) => {
+export const Lists: React.FC<IProps> = ({ lists }) => {
   const dispatch = useDispatch();
 
   const [showPopup, setShowPopup] = useState(false);

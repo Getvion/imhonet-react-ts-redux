@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { ListButtons, SectionCard } from '../index';
+import { IItem } from '../../intefaces';
 
 import classes from './ListPopup.module.scss';
 
@@ -9,14 +10,6 @@ interface IProps {
   itemsArr: IItem[];
   title: string;
   onDeleteItem: Function;
-}
-
-interface IItem {
-  id: number;
-  name: string;
-  nameOrig: string;
-  bgImg: string;
-  section: string;
 }
 
 export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, onDeleteItem }) => {

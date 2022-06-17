@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './Movie.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
+import { IAdd, IUserData } from '../../../intefaces';
 import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo } from '../../../features/movies/loadMovieInfoSlice';
 import { AppDispatch } from '../../../store';
@@ -38,20 +39,6 @@ interface IMovie {
 
 interface IMovieData {
   movieInfo: IMovie;
-}
-
-interface IUserData {
-  user: {
-    userData: {
-      email: string;
-    };
-  };
-}
-
-interface IAdd {
-  title: string;
-  sectionName: string;
-  items: { id: number; name: string; nameOrig: string; bgImg: string; section: string }[];
 }
 
 export const Movie: React.FC<IProps> = ({ sectionName }) => {

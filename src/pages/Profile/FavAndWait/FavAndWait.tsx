@@ -3,6 +3,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, EmptyList, SectionCard, ListPopup } from '../../../components';
+import { IItem, IUserData } from '../../../intefaces';
 import { updateFavoriteContent, updateWaitingContent } from '../../../features/auth/userSlice';
 import { setNotification } from '../../../features/notification/notificationSlice';
 import { db } from '../../../firebase';
@@ -12,23 +13,6 @@ import classes from './FavAndWait.module.scss';
 interface IProps {
   itemsArr: { title: string; items: IItem[] }[];
   dbSection: string;
-}
-
-interface IUserData {
-  user: {
-    userData: { email: string };
-    lists: { items: IItem[]; title: string; description: string }[];
-    favoriteContent: [];
-    waitingContent: [];
-  };
-}
-
-interface IItem {
-  id: number;
-  name: string;
-  nameOrig: string;
-  bgImg: string;
-  section: string;
 }
 
 export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {

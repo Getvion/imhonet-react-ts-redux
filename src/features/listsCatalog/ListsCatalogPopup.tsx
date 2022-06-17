@@ -5,6 +5,7 @@ import { setCatalogListOpen } from './listsCatalogSlice';
 
 import classes from './ListsCatalogPopup.module.scss';
 import { AuthInput, Button } from '../../components';
+import { IItem } from '../../intefaces';
 
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -20,7 +21,7 @@ interface IUserData {
 
 interface ILists {
   title: string;
-  items: { name: string; bgImg: string; id: number; nameOrig: string; section: string }[];
+  items: IItem[];
 }
 
 interface IListsCatalog {

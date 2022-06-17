@@ -12,11 +12,11 @@ import { RegistrationForm } from './RegistrationForm';
 
 import classes from './Auth.module.scss';
 
-interface Props {
+interface IProps {
   onMobileButtonClick: () => void;
 }
 
-export const Register: React.FC<Props> = ({ onMobileButtonClick }) => {
+export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

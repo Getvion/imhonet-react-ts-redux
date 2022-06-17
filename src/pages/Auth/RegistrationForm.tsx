@@ -3,7 +3,7 @@ import { AuthInput } from '../../components';
 
 import classes from './Auth.module.scss';
 
-interface Props {
+interface IProps {
   onMobileButtonClick: () => void;
   text: string;
   buttonText: string;
@@ -11,7 +11,7 @@ interface Props {
   onSubmitForm: any;
 }
 
-export const RegistrationForm: React.FC<Props> = ({
+export const RegistrationForm: React.FC<IProps> = ({
   onMobileButtonClick,
   text,
   buttonText,

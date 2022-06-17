@@ -3,14 +3,14 @@ import clsx from 'clsx';
 
 import classes from './Button.module.scss';
 
-interface IButton {
+interface IProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
   text: string;
   state?: string;
 }
 
-export const Button: React.FC<IButton> = ({ onClick, type, text, state = 'default' }) => {
+export const Button: React.FC<IProps> = ({ onClick, type, text, state = 'default' }) => {
   return (
     <button
       className={clsx(classes.button, {

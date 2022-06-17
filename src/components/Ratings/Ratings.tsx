@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
+
+import { IUserData } from '../../intefaces';
+import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
 
 import exceptionalImg from './img/exceptional.png';
 import recomendedImg from './img/recomended.png';
 import mehImg from './img/meh.png';
 import skipImg from './img/skip.png';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
-
 import classes from './Ratings.module.scss';
-
-interface IUserData {
-  user: {
-    userData: { email: string; name: string };
-  };
-}
 
 export const Ratings = () => {
   const dispatch = useDispatch();

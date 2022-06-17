@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import classes from './SectionCard.module.scss';
 
-interface SectionCardProps {
+interface IProps {
   name: string;
   bgImage: string;
   id: number;
   section: string;
 }
 
-export const SectionCard: React.FC<SectionCardProps> = ({ name, bgImage, id, section }) => {
+export const SectionCard: React.FC<IProps> = ({ name, bgImage, id, section }) => {
   return (
     <Link to={`/${section}/${id}`} className={classes.card}>
       <div className={classes.card__img__wrapper}>

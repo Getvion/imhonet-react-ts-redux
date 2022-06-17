@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import classes from './MoviesSlider.module.scss';
 
-interface Movie {
+interface IProps {
   items: {
     filmId: number;
     nameRu: string;
@@ -16,7 +16,7 @@ interface Movie {
   }[];
 }
 
-export const MoviesSlider: React.FC<Movie> = ({ items }) => {
+export const MoviesSlider: React.FC<IProps> = ({ items }) => {
   return (
     <Swiper slidesPerView={1} loop={true} autoplay={true} className={classes.slider}>
       {items.map((item) => (

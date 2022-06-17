@@ -6,7 +6,7 @@ import 'swiper/css';
 
 import classes from './GamesSlider.module.scss';
 
-interface Game {
+interface IProps {
   items: {
     id: number;
     background_image: string;
@@ -19,7 +19,7 @@ interface Game {
   }[];
 }
 
-export const GamesSlider: React.FC<Game> = ({ items }) => {
+export const GamesSlider: React.FC<IProps> = ({ items }) => {
   const [slideImageUrl, setSlideImageUrl] = useState('');
   const [activeSlide, setActiveSlide] = useState(0);
 

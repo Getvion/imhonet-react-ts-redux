@@ -1,30 +1,15 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
 import { useSelector } from 'react-redux';
+import clsx from 'clsx';
 
 import { Button, LoadingSpinner } from '../../components';
 import { Lists, Stats, FavAndWait } from './';
+import { IUserData } from '../../intefaces';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
 
 import classes from './Profile.module.scss';
-
-interface IUserContent {
-  user: {
-    favoriteContent: { title: string; items: IItem[] }[];
-    waitingContent: { title: string; items: IItem[] }[];
-    lists: { items: IItem[]; title: string; description: string }[];
-  };
-}
-
-interface IItem {
-  id: number;
-  name: string;
-  nameOrig: string;
-  bgImg: string;
-  section: string;
-}
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -34,7 +19,7 @@ export const Profile = () => {
   const { userData } = useFetchUser();
   const { birthday, country, description, imageUrl, name } = userData;
 
-  const { favoriteContent, waitingContent, lists } = useSelector((state: IUserContent) => state.user);
+  const { favoriteContent, waitingContent, lists } = useSelector((state: IUserData) => state.user);
 
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
