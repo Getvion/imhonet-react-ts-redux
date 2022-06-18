@@ -1,22 +1,50 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ResetPassword, Links, General } from './';
 import { Button } from '../../components';
+import { IUserData } from '../../intefaces';
 
 import classes from './Settings.module.scss';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { setNotification } from '../../features/notification/notificationSlice';
 
 export const Settings = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userData } = useSelector((state: IUserData) => state.user);
+  const { name, imageUrl, country, description, email } = userData;
 
   const [activeLinkIndex, setActiveLinkIndex] = useState(0);
+  const [generalData, setGeneralData] = useState(userData);
 
   const navLinks = [
-    { href: 'general', text: 'Основные (в разработке)' },
+    { href: 'general', text: 'Основные' },
     { href: 'password', text: 'Смена пароля (в разработке)' },
-    { href: 'social-links', text: 'Сcылки (в разраотке)' },
+    { href: 'social-links', text: 'Сcылки (в разработке)' },
   ];
+
+  const onApplyChanges = async () => {
+    const newUserData = {
+      ...userData,
+      name: generalData.name,
+      description: description,
+      country: generalData.country,
+      imageUrl: generalData.imageUrl,
+    };
+
+    const docRef = doc(db, 'users', email);
+    await updateDoc(docRef, {
+      userData: newUserData,
+    })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Данные обновллены' })))
+      .then(() => navigate('/profile/favorite'))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+  };
 
   return (
     <div className={classes.settings}>
@@ -39,7 +67,18 @@ export const Settings = () => {
 
         <div className={classes.settings__content}>
           <Routes>
-            <Route path='general' element={<General />} />
+            <Route
+              path='general'
+              element={
+                <General
+                  name={name}
+                  imageUrl={imageUrl}
+                  country={country}
+                  description={description}
+                  setGeneralData={setGeneralData}
+                />
+              }
+            />
             <Route path='password' element={<ResetPassword />} />
             <Route path='social-links' element={<Links />} />
           </Routes>
@@ -47,7 +86,7 @@ export const Settings = () => {
       </div>
 
       <div className={classes.buttons}>
-        <Button onClick={() => {}} state='accept' text='Сохранить' />
+        <Button onClick={() => onApplyChanges()} state='accept' text='Сохранить' />
         <Button onClick={() => navigate('/profile/favorite')} state='reject' text='Отмена' />
       </div>
     </div>
