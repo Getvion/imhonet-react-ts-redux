@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './Movie.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
-import { IAdd, IUserData } from '../../../intefaces';
+import { IAdd, IMovieData, IUserData } from '../../../intefaces';
 import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo } from '../../../features/movies/loadMovieInfoSlice';
 import { AppDispatch } from '../../../store';
@@ -18,27 +18,6 @@ import { db } from '../../../firebase';
 
 interface IProps {
   sectionName: string;
-}
-interface IMovie {
-  filmId: number;
-  kinopoiskId: number;
-  nameRu: string;
-  nameOriginal: string;
-  posterUrl: string;
-  posterUrlPreview: string;
-  ratingKinopoisk: number;
-  ratingImdb: number;
-  year: number;
-  filmLength: number;
-  description: string;
-  ratingMpaa: string;
-  ratingAgeLimits: string;
-  countries: { country: string }[];
-  genres: { genre: string }[];
-}
-
-interface IMovieData {
-  movieInfo: IMovie;
 }
 
 export const Movie: React.FC<IProps> = ({ sectionName }) => {

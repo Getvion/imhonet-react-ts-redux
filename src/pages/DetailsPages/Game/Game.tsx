@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import classes from './Game.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
-import { IAdd, IUserData } from '../../../intefaces';
+import { IAdd, IGameInfo, IUserData } from '../../../intefaces';
 import { GameListItem } from './GameListItem';
 import { AppDispatch } from '../../../store';
 import { Description } from './Description';
@@ -19,27 +19,6 @@ import { db } from '../../../firebase';
 
 interface IProps {
   sectionName: string;
-}
-
-interface IGame {
-  id: number;
-  slug: string;
-  name: string;
-  name_original: string;
-  metacritic: number;
-  released: string;
-  background_image: string;
-  rating: number;
-  esrb_rating: { name: string };
-  platforms: { platform: { name: string } }[];
-  description_raw: string;
-  developers: { name: string }[];
-  genres: { name: string }[];
-  publishers: { name: string }[];
-}
-
-interface IGameInfo {
-  gameInfo: IGame;
 }
 
 export const Game: React.FC<IProps> = ({ sectionName }) => {

@@ -13,7 +13,6 @@ interface IUserData {
       imageUrl: string;
       description: string;
       country: string;
-      birthday: string;
       socialMedia: { link: string; name: string }[];
     };
   };

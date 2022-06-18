@@ -32,7 +32,7 @@ export const Settings = () => {
     const newUserData = {
       ...userData,
       name: generalData.name,
-      description: description,
+      description: generalData.description,
       country: generalData.country,
       imageUrl: generalData.imageUrl,
     };

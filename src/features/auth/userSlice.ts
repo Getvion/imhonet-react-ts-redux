@@ -5,7 +5,6 @@ const initialState = {
     name: '',
     email: '',
     description: '',
-    birthday: '',
     county: '',
     imageUrl: '',
     socialMedia: [],

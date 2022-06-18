@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCatalogListOpen } from './listsCatalogSlice';
 
 import classes from './ListsCatalogPopup.module.scss';
-import { AuthInput, Button } from '../../components';
+import { Input, Button } from '../../components';
 import { IItem } from '../../intefaces';
 
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -116,7 +116,7 @@ export const ListsCatalogPopup = () => {
             </p>
           )}
           <form className={classes.modal__form} onSubmit={onFormSubmit}>
-            <AuthInput setValue={setInputValue} placeholder={'Название списка...'} value={inputValue} />
+            <Input setValue={setInputValue} placeholder={'Название списка...'} value={inputValue} />
             <Button text='Cоздать' onClick={onFormSubmit} type={'submit'} />
           </form>
         </div>
