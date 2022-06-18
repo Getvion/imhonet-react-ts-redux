@@ -17,7 +17,7 @@ export const Profile = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const { userData } = useFetchUser();
-  const { birthday, country, description, imageUrl, name } = userData;
+  const { country, description, imageUrl, name } = userData;
 
   const { favoriteContent, waitingContent, lists } = useSelector((state: IUserData) => state.user);
 
@@ -42,7 +42,6 @@ export const Profile = () => {
             <div className={classes.profile__descr}>
               {description && <p>{description}</p>}
               {country && <p>Страна: {country}</p>}
-              {birthday && <p>День рождения: {birthday}</p>}
             </div>
           </div>
         </div>

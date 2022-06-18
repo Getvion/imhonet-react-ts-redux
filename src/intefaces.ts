@@ -15,7 +15,7 @@ export interface IItem {
 // userData
 export interface IUserData {
   user: {
-    userData: { email: string; name: string };
+    userData: { email: string; name: string; imageUrl: string; country: string; description: string };
     lists: { items: IItem[]; title: string; description: string }[];
     favoriteContent: { title: string; items: IItem[] }[];
     waitingContent: { title: string; items: IItem[] }[];
