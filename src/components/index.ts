@@ -9,4 +9,4 @@ export { ListButtons } from './ListButtons/ListButtons';
 export { Dropdown } from './UI/Dropdown/Dropdown';
 export { Search } from './UI/Search/Search';
 export { Button } from './UI/Button/Button';
-export { AuthInput } from './UI/AuthInput/AuthInput';
+export { Input } from './UI/Input/Input';

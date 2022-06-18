@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './AuthInput.module.scss';
+import classes from './Input.module.scss';
 
 interface IProps {
   type?: string;
@@ -9,13 +9,13 @@ interface IProps {
   value: string;
 }
 
-export const AuthInput: React.FC<IProps> = ({ type, placeholder, setValue, value }) => {
+export const Input: React.FC<IProps> = ({ type = 'text', placeholder, setValue, value }) => {
   return (
     <input
       value={value}
       onChange={(e) => setValue(e.target.value)}
       required
-      type={type ? type : 'text'}
+      type={type}
       className={classes.input}
       placeholder={placeholder}
     />

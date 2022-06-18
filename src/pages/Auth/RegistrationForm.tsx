@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthInput } from '../../components';
+import { Input } from '../../components';
 
 import classes from './Auth.module.scss';
 
@@ -31,11 +31,9 @@ export const RegistrationForm: React.FC<IProps> = ({
   return (
     <form className={classes.forms__form} onSubmit={(e) => onSubmitButtonClick(e)}>
       <fieldset className={classes.forms__fieldset}>
-        {isRegistration && (
-          <AuthInput placeholder='Никнейм' setValue={setNicknameValue} value={nicknameValue} />
-        )}
-        <AuthInput placeholder='Емейл' type='email' setValue={setEmailValue} value={emailValue} />
-        <AuthInput placeholder='Пароль' type='password' setValue={setPasswordValue} value={passwordValue} />
+        {isRegistration && <Input placeholder='Никнейм' setValue={setNicknameValue} value={nicknameValue} />}
+        <Input placeholder='Емейл' type='email' setValue={setEmailValue} value={emailValue} />
+        <Input placeholder='Пароль' type='password' setValue={setPasswordValue} value={passwordValue} />
       </fieldset>
       <div className={classes.forms__buttons}>
         <button
