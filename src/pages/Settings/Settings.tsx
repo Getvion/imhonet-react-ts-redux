@@ -9,8 +9,9 @@ import { IUserData } from '../../intefaces';
 
 import classes from './Settings.module.scss';
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { setNotification } from '../../features/notification/notificationSlice';
+import { updateProfile } from 'firebase/auth';
 
 export const Settings = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ export const Settings = () => {
   ];
 
   const onApplyChanges = async () => {
+    if (!generalData.name) return dispatch(setNotification({ type: 'reject', text: 'Сначала укажите имя' }));
+
     const newUserData = {
       ...userData,
       name: generalData.name,
@@ -36,6 +39,9 @@ export const Settings = () => {
       country: generalData.country,
       imageUrl: generalData.imageUrl,
     };
+
+    if (!auth.currentUser) return;
+    updateProfile(auth.currentUser, { displayName: newUserData.name });
 
     const docRef = doc(db, 'users', email);
     await updateDoc(docRef, {
@@ -86,7 +92,7 @@ export const Settings = () => {
       </div>
 
       <div className={classes.buttons}>
-        <Button onClick={() => onApplyChanges()} state='accept' text='Сохранить' />
+        <Button onClick={onApplyChanges} state='accept' text='Сохранить' />
         <Button onClick={() => navigate('/profile/favorite')} state='reject' text='Отмена' />
       </div>
     </div>
