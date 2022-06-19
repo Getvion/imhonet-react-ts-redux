@@ -67,8 +67,8 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
                 <h3 className={classes.section__title}>{title} </h3>
                 {items.length ? (
                   <div className={classes.section__buttons}>
-                    <ListButtons title={title} deleteButtonText='Удалить список' onDelete={onDeleteList} />
-                    <Button onClick={() => onShowList(title)} text='Показать все' />
+                    <ListButtons title={title} deleteButtonText='Удалить' onDelete={onDeleteList} />
+                    <Button onClick={() => onShowList(title)} text='Все' />
                   </div>
                 ) : null}
               </div>

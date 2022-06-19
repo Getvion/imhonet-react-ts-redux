@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, EmptyList, SectionCard, ListPopup } from '../../../components';
+import { Button, SectionCard, ListPopup } from '../../../components';
 import { IItem, IUserData } from '../../../intefaces';
 import { updateFavoriteContent, updateWaitingContent } from '../../../features/auth/userSlice';
 import { setNotification } from '../../../features/notification/notificationSlice';
@@ -63,31 +63,31 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
   return (
     <>
       {itemsArr.map(({ title, items }) => (
-        <section className={classes.section} key={title}>
-          <div className={classes.section__top}>
-            <h3 className={classes.section__title}>{title}</h3>
-            {items.length ? <Button onClick={() => onShowList(title)} text='Показать все' /> : null}
-          </div>
+        <>
           {items.length ? (
-            <ul className={classes.section__list}>
-              {items.slice(0, 4).map(({ id, bgImg, name, section }: IItem) => (
-                <li key={id} className={classes.section__item}>
-                  <SectionCard id={id} bgImage={bgImg} name={name} section={section} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <EmptyList text={'Вы не добавили ничего в список'} />
-          )}
-          {showPopup && (
-            <ListPopup
-              setShowPopup={setShowPopup}
-              itemsArr={popupArray}
-              title={popupTitle}
-              onDeleteItem={onDeleteItem}
-            />
-          )}
-        </section>
+            <section className={classes.section} key={title}>
+              <div className={classes.section__top}>
+                <h3 className={classes.section__title}>{title}</h3>
+                <Button onClick={() => onShowList(title)} text='Все' />
+              </div>
+              <ul className={classes.section__list}>
+                {items.slice(0, 4).map(({ id, bgImg, name, section }: IItem) => (
+                  <li key={id} className={classes.section__item}>
+                    <SectionCard id={id} bgImage={bgImg} name={name} section={section} />
+                  </li>
+                ))}
+              </ul>
+              {showPopup && (
+                <ListPopup
+                  setShowPopup={setShowPopup}
+                  itemsArr={popupArray}
+                  title={popupTitle}
+                  onDeleteItem={onDeleteItem}
+                />
+              )}
+            </section>
+          ) : null}
+        </>
       ))}
     </>
   );
