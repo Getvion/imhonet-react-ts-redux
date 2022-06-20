@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateProfile } from 'firebase/auth';
+import { doc, updateDoc } from 'firebase/firestore';
 
 import { ResetPassword, Links, General } from './';
 import { Button } from '../../components';
 import { IUserData } from '../../intefaces';
-
-import classes from './Settings.module.scss';
-import { doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 import { setNotification } from '../../features/notification/notificationSlice';
-import { updateProfile } from 'firebase/auth';
+
+import classes from './Settings.module.scss';
 
 export const Settings = () => {
   const navigate = useNavigate();

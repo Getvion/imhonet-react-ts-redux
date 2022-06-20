@@ -1,38 +1,6 @@
 @import '../../../styles/varibles';
 
 .general {
-  &__img {
-    max-width: 150px;
-    height: auto;
-    border-radius: 50%;
-    object-fit: contain;
-
-    &__wrapper {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-  }
-
-  &__upload {
-    padding: 8px 10px;
-    transition: all 0.3s ease;
-    border: 1px solid var(#{--text-color-default});
-    background-color: var(#{--bg-color-default});
-    color: var(#{--text-olor-default});
-    border-radius: 6px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(#{--text-color-default});
-      color: var(#{--bg-color-default});
-    }
-
-    &__field {
-      display: none;
-    }
-  }
-
   &__form {
     &__container {
       display: flex;
