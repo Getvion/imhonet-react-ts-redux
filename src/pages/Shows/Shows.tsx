@@ -1,5 +1,3 @@
 import React from 'react';
 
-export const Shows = () => {
-  return <div>Shows</div>;
-};
+export const Shows = () => <div>Shows</div>;

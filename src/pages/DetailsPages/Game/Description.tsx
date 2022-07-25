@@ -14,10 +14,12 @@ export const Description: React.FC<IProps> = ({ description }) => {
   return (
     <div className={classes.game__descr}>
       <h3 className={classes.game__about}>Описание</h3>
-      <p className={classes.game__descr_text}>{isShowFull ? description : `${slicedDescription}...`}</p>
-      <span className={classes.game__descr_show} onClick={() => setIsShowFull(!isShowFull)}>
+      <p className={classes.game__descr_text}>
+        {isShowFull ? description : `${slicedDescription}...`}
+      </p>
+      <button className={classes.game__descr_show} onClick={() => setIsShowFull(!isShowFull)}>
         {isShowFull ? 'показать меньше' : 'показать больше'}
-      </span>
+      </button>
     </div>
   );
 };

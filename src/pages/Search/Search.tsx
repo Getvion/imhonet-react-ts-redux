@@ -42,7 +42,7 @@ export const Search = () => {
 
   const searchTabs = [
     { title: 'Игры', route: 'games' },
-    { title: 'Фильмы', route: 'movies' },
+    { title: 'Фильмы', route: 'movies' }
     // { title: 'Сериалы', route: 'shows' }, { title: 'Книги', route: 'books' },
   ];
 
@@ -68,7 +68,7 @@ export const Search = () => {
               {games.isLoaded ? (
                 <>
                   {games.gamesSearch.results.map(({ id, name, background_image }) => (
-                    <SectionCard key={id} name={name} id={id} bgImage={background_image} section={'games'} />
+                    <SectionCard key={id} name={name} id={id} bgImage={background_image} section='games' />
                   ))}
                 </>
               ) : (
@@ -89,7 +89,7 @@ export const Search = () => {
                       name={nameRu || nameEn}
                       bgImage={posterUrlPreview}
                       id={filmId}
-                      section={'movies'}
+                      section='movies'
                     />
                   ))}
                 </>

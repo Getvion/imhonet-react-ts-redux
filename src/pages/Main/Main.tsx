@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -48,15 +48,10 @@ export const Main = () => {
         <h2 className={classes.category__title}>Лучшие Фильмы</h2>
         <div className={classes.cards}>
           {bestMovies ? (
-            <Swiper slidesPerView={slidesToView} loop={true}>
+            <Swiper slidesPerView={slidesToView} loop>
               {bestMovies.map(({ filmId, nameEn, nameRu, posterUrlPreview }) => (
                 <SwiperSlide key={filmId} className={classes.card}>
-                  <SectionCard
-                    name={nameRu || nameEn}
-                    bgImage={posterUrlPreview}
-                    section={'movies'}
-                    id={filmId}
-                  />
+                  <SectionCard name={nameRu || nameEn} bgImage={posterUrlPreview} section='movies' id={filmId} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -69,10 +64,10 @@ export const Main = () => {
         <h2 className={classes.category__title}>Лучшие Игры</h2>
         <div className={classes.cards}>
           {bestGames ? (
-            <Swiper slidesPerView={slidesToView} loop={true}>
+            <Swiper slidesPerView={slidesToView} loop>
               {bestGames.map(({ id, name, background_image }) => (
                 <SwiperSlide key={id} className={classes.card}>
-                  <SectionCard name={name} bgImage={background_image} section={'games'} id={id} />
+                  <SectionCard name={name} bgImage={background_image} section='games' id={id} />
                 </SwiperSlide>
               ))}
             </Swiper>

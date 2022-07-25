@@ -6,8 +6,8 @@ export const ThemeSwitcher = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div onClick={toggleTheme}>
+    <button onClick={toggleTheme}>
       {theme === 'light' ? <GlobalSvgSelector id='moon' /> : <GlobalSvgSelector id='sun' />}
-    </div>
+    </button>
   );
 };

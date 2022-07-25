@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth, db } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../firebase';
 
 import { setUser } from '../../features/auth/userSlice';
 
@@ -33,21 +33,21 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
             country: '',
             imageUrl:
               'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
-            socialMedia: [],
+            socialMedia: []
           },
           favoriteContent: [
             { sectionName: 'games', title: 'Игры', items: [] },
             { sectionName: 'movies', title: 'Фильмы', items: [] },
             { sectionName: 'shows', title: 'Серилы', items: [] },
-            { sectionName: 'books', title: 'Книги', items: [] },
+            { sectionName: 'books', title: 'Книги', items: [] }
           ],
           waitingContent: [
             { sectionName: 'games', title: 'Игры', items: [] },
             { sectionName: 'movies', title: 'Фильмы', items: [] },
             { sectionName: 'shows', title: 'Серилы', items: [] },
-            { sectionName: 'books', title: 'Книги', items: [] },
+            { sectionName: 'books', title: 'Книги', items: [] }
           ],
-          lists: [],
+          lists: []
         });
 
         updateProfile(auth.currentUser, { displayName: nickname });
@@ -62,11 +62,11 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
               country: '',
               imageUrl:
                 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
-              socialMedia: [],
+              socialMedia: []
             },
             favoriteContent: { games: [], movies: [], shows: [], books: [] },
             waitingContent: { games: [], movies: [], shows: [], books: [] },
-            lists: [],
+            lists: []
           })
         );
       })
@@ -80,7 +80,7 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
         onMobileButtonClick={onMobileButtonClick}
         text='Войти'
         buttonText='Зарегистрироваться'
-        isRegistration={true}
+        isRegistration
         onSubmitForm={onRegister}
       />
     </div>

@@ -4,8 +4,8 @@ const LoginPopupOfferSlice = createSlice({
   name: 'login-popup-offer',
   initialState: false,
   reducers: {
-    setLoginOffer: (_, action) => action.payload,
-  },
+    setLoginOffer: (_, action) => action.payload
+  }
 });
 
 export const LoginPopupOfferReducer = LoginPopupOfferSlice.reducer;

@@ -22,7 +22,7 @@ export const Ratings = () => {
     { img: exceptionalImg, title: 'Великолепно', count: 0 },
     { img: recomendedImg, title: 'Рекомендую', count: 0 },
     { img: mehImg, title: 'Так себе', count: 0 },
-    { img: skipImg, title: 'Пропуск', count: 0 },
+    { img: skipImg, title: 'Пропуск', count: 0 }
   ];
 
   const onSelectRating = (index: number) => {
@@ -34,17 +34,17 @@ export const Ratings = () => {
   return (
     <section className={classes.stat}>
       {ratingsData.map(({ title, count, img }, index) => (
-        <div
+        <button
           key={title}
           className={clsx(classes.stat__item, { [classes.active]: selectedRating === index })}
           onClick={() => onSelectRating(index)}
         >
           <img className={classes.stat__icon} src={img} alt={title} />
-          <div className={classes.buttons__label}>
+          <span className={classes.buttons__label}>
             <span className={classes.buttons__text}>{title}</span>
             <span className={classes.buttons__count}>{count}</span>
-          </div>
-        </div>
+          </span>
+        </button>
       ))}
     </section>
   );

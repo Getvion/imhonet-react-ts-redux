@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Input } from '../../';
+import { Button, Input } from '../..';
 import { setSearch } from '../../../features/search/searchSlice';
 
 import classes from './Search.module.scss';
@@ -24,7 +24,7 @@ export const Search = () => {
   return (
     <form className={classes.form} onSubmit={handleSumbit}>
       <Input
-        placeholder={'Grand Theft Auto 5'}
+        placeholder='Grand Theft Auto 5'
         value={inputValue}
         setValue={(value: string) => setInputValue(value)}
       />

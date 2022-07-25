@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
@@ -5,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 
-import { ResetPassword, Links, General } from './';
+import { ResetPassword, Links, General } from '.';
 import { Button } from '../../components';
 import { IUserData } from '../../intefaces';
 import { auth, db } from '../../firebase';
@@ -26,7 +28,7 @@ export const Settings = () => {
   const navLinks = [
     { href: 'general', text: 'Основные' },
     { href: 'password', text: 'Смена пароля (в разработке)' },
-    { href: 'social-links', text: 'Сcылки (в разработке)' },
+    { href: 'social-links', text: 'Сcылки (в разработке)' }
   ];
 
   const onApplyChanges = async () => {
@@ -37,7 +39,7 @@ export const Settings = () => {
       name: generalData.name,
       description: generalData.description,
       country: generalData.country,
-      imageUrl: generalData.imageUrl,
+      imageUrl: generalData.imageUrl
     };
 
     if (!auth.currentUser) return;
@@ -45,7 +47,7 @@ export const Settings = () => {
 
     const docRef = doc(db, 'users', email);
     await updateDoc(docRef, {
-      userData: newUserData,
+      userData: newUserData
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Данные обновллены' })))
       .then(() => navigate('/profile/favorite'))

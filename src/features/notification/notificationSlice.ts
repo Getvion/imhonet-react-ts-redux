@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   type: '',
   isShown: false,
-  text: '',
+  text: ''
 };
 
 const notificationSlice = createSlice({
@@ -17,8 +17,8 @@ const notificationSlice = createSlice({
     },
     closeNotification: (state) => {
       state.isShown = false;
-    },
-  },
+    }
+  }
 });
 
 export const notificationReducer = notificationSlice.reducer;

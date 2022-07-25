@@ -1,44 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, list } from 'firebase/storage';
+import clsx from 'clsx';
 
 import { storage } from '../../firebase';
 import { IUserData } from '../../intefaces';
 import { Button } from '../UI/Button/Button';
 import { GlobalSvgSelector } from '../../assets/icons/GlobalSvgSelector';
-import clsx from 'clsx';
 
 import classes from './UploadAvatar.module.scss';
 
-export const UploadAvatar = () => {
+interface IProps {
+  newImageUrl: string;
+  setNewImageUrl: Function;
+}
+
+export const UploadAvatar: React.FC<IProps> = ({ newImageUrl, setNewImageUrl }) => {
+  console.log(newImageUrl, setNewImageUrl);
+
   const [isImageAdded, setIsImageAdded] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState<string>();
 
-  // const [imageUrls, setImageUrls] = useState<any>([]);
-
   const { imageUrl, name, email } = useSelector((state: IUserData) => state.user.userData);
 
-  //  func for upload image to the database
   const onUploadImage = () => {
     if (!selectedFile) return;
 
+    // todo удалить date now оставлять стандартное название файла.
     const imageRef = ref(storage, `images/${email}-avatar-${Date.now()}`);
-    // const imageRef = ref(storage, `images/${selectedFile.name}-${Date.now()}`);
     uploadBytes(imageRef, selectedFile).then(() => console.log('Успешно загружено'));
+
+    const imagesListRef = ref(storage, 'images/');
+
+    // todo создать папку для каждого пользователя внутри images
+    // todo удалили все фото из папки
+    // todo добавили новое фото в папку
+    //   fetch all images from database
+    list(imagesListRef).then((response) => {
+      console.log(response);
+
+      // response.items.forEach((item) => {
+      //   console.log(item);
+
+      //   getDownloadURL(item).then((url) => {
+      //     console.log(url);
+      //   });
+      // });
+    });
   };
-
-  // const imagesListRef = ref(storage, 'images/');
-
-  //   fetch all images from database
-  //   listAll(imagesListRef).then((response) => {
-  //     response.items.forEach((item) => {
-  //       getDownloadURL(item).then((url) => {
-  //         setImageUrls((prev: any) => [...prev, url]);
-  //       });
-  //     });
-  //   })
 
   const onSelectFile = (e: any) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -63,7 +74,7 @@ export const UploadAvatar = () => {
         onMouseLeave={() => setIsHover(false)}
         onMouseEnter={() => setIsHover(true)}
       >
-        <img src={preview ? preview : imageUrl} alt={name} className={classes.img} />
+        <img src={preview || imageUrl} alt={name} className={classes.img} />
         <span className={clsx(classes.img__svg, { [classes.visible]: isHover })}>
           <GlobalSvgSelector id='edit' />
         </span>

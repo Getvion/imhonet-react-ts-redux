@@ -34,7 +34,7 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
     const filteredArr = lists.filter((list) => list.title !== titleToRemove);
 
     await updateDoc(doc(db, 'users', userData.email), {
-      lists: filteredArr,
+      lists: filteredArr
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
       .then(() => dispatch(updateLists(filteredArr)))
@@ -50,7 +50,7 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
     });
 
     await updateDoc(doc(db, 'users', userData.email), {
-      lists: newList,
+      lists: newList
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
       .then(() => dispatch(updateLists(newList)))

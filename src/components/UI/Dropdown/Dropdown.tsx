@@ -1,9 +1,10 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { signOut } from 'firebase/auth';
 import { removeUser } from '../../../features/auth/userSlice';
 
-import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase';
 
 import { useAuthOnReload } from '../../../features/auth/useAuthOnReload';
@@ -32,7 +33,7 @@ export const Dropdown = () => {
             <Link to='/profile/favorite' className={classes.dropdown__item}>
               {userData.name}
             </Link>
-            <Link className={classes.dropdown__item} to={'/settings/general'}>
+            <Link className={classes.dropdown__item} to='/settings/general'>
               Настройки
             </Link>
             <Link onClick={onSignOut} className={classes.dropdown__item} to='/auth'>

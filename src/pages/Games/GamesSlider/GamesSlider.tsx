@@ -34,20 +34,10 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
   };
 
   return (
-    <Swiper
-      slidesPerView={1}
-      loop={true}
-      autoplay={true}
-      onSlideChange={onSlideChange}
-      className={classes.slides}
-    >
+    <Swiper slidesPerView={1} loop autoplay onSlideChange={onSlideChange} className={classes.slides}>
       {items.map((item) => (
         <SwiperSlide className={classes.slide__inner} key={item.id}>
-          <img
-            className={classes.slide__img}
-            src={slideImageUrl ? slideImageUrl : item.background_image}
-            alt='slide'
-          />
+          <img className={classes.slide__img} src={slideImageUrl || item.background_image} alt='slide' />
           <div className={classes.slide__content}>
             <h2 className={classes.slide__name}>{item.name}</h2>
             <div className={classes.slide__reviews}>
@@ -55,7 +45,7 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
                 className={clsx(classes.slide__review, {
                   [classes.green]: item.metacritic >= 80,
                   [classes.yellow]: item.metacritic < 80 && item.metacritic > 60,
-                  [classes.red]: item.metacritic < 60,
+                  [classes.red]: item.metacritic < 60
                 })}
               >
                 {item.metacritic}
@@ -64,7 +54,7 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
                 className={clsx(classes.slide__review, {
                   [classes.green]: item.rating >= 4,
                   [classes.yellow]: item.rating < 4 && item.rating > 3,
-                  [classes.red]: item.rating < 2,
+                  [classes.red]: item.rating < 2
                 })}
               >
                 {item.rating}
@@ -82,15 +72,14 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
           </div>
           <div className={classes.slide__screens}>
             {item.short_screenshots.slice(0, 5).map((img, index) => (
-              <img
-                onClick={(event) => onImageSelect(event, index)}
-                className={clsx(classes.slide__screens_img, {
-                  [classes.active]: index === activeSlide,
-                })}
-                key={img.id}
-                src={img.image}
-                alt={item.name}
-              />
+              <button onClick={(event) => onImageSelect(event, index)}>
+                <img
+                  className={clsx(classes.slide__screens_img, { [classes.active]: index === activeSlide })}
+                  key={img.id}
+                  src={img.image}
+                  alt={item.name}
+                />
+              </button>
             ))}
           </div>
         </SwiperSlide>

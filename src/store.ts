@@ -32,7 +32,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       thunk: {
         extraArgument: {
-          axios: axios,
+          axios,
           requests,
         },
       },

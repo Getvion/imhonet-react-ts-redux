@@ -27,7 +27,7 @@ export const Notification = () => {
         [classes.active]: isShown,
         [classes.message__success]: type === 'success',
         [classes.message__danger]: type === 'reject',
-        [classes.message__warning]: type === 'warning',
+        [classes.message__warning]: type === 'warning'
       })}
     >
       {text}

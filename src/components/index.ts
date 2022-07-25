@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 export { Header } from './Header/Header';
 export { LoadingSpinner } from './LoadingSpinner/LoadingSpinner';
 export { SectionCard } from './SectionCard/SectionCard';

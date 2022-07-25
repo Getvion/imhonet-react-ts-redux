@@ -1,11 +1,12 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { useEffect } from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
 import { MoviesSlider } from './MoviesSlider/MoviesSlider';
 import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Movies.module.scss';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { loadBestMovies } from '../../features/movies/bestMoviesSlice';
 import { AppDispatch } from '../../store';
 
@@ -38,7 +39,7 @@ export const Movies = () => {
                 id={filmId}
                 name={nameRu || nameEn}
                 bgImage={posterUrlPreview}
-                section={'movies'}
+                section='movies'
               />
             ))}
           </div>

@@ -10,17 +10,15 @@ interface IProps {
   state?: string;
 }
 
-export const Button: React.FC<IProps> = ({ onClick, type, text, state }) => {
-  return (
-    <button
-      className={clsx(classes.button, {
-        [classes.accept]: state === 'accept',
-        [classes.reject]: state === 'reject',
-      })}
-      onClick={onClick}
-      type={type}
-    >
-      {text}
-    </button>
-  );
-};
+export const Button: React.FC<IProps> = ({ onClick, type = 'button', text, state }) => (
+  <button
+    className={clsx(classes.button, {
+      [classes.accept]: state === 'accept',
+      [classes.reject]: state === 'reject'
+    })}
+    onClick={onClick}
+    type={type}
+  >
+    {text}
+  </button>
+);

@@ -31,21 +31,20 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
     setShowPopup(true);
   };
 
-  const onDeleteContent = (contentType: { title: string }[], listTitle: string, filteredArr: IItem[]) => {
-    return contentType.map((element) => {
+  const onDeleteContent = (contentType: { title: string }[], listTitle: string, filteredArr: IItem[]) =>
+    contentType.map((element) => {
       if (element.title === listTitle) {
         return { ...element, items: filteredArr };
       }
       return element;
     });
-  };
 
   const onDeleteItem = async (filteredArr: IItem[], listTitle: string) => {
     if (dbSection === 'favoriteContent') {
       const newList = onDeleteContent(favoriteContent, listTitle, filteredArr);
 
       await updateDoc(doc(db, 'users', userData.email), {
-        favoriteContent: newList,
+        favoriteContent: newList
       })
         .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
         .then(() => dispatch(updateFavoriteContent(newList)));
@@ -53,7 +52,7 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
       const newList = onDeleteContent(waitingContent, listTitle, filteredArr);
 
       await updateDoc(doc(db, 'users', userData.email), {
-        waitingContent: newList,
+        waitingContent: newList
       })
         .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
         .then(() => dispatch(updateWaitingContent(newList)));
@@ -63,7 +62,7 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
   return (
     <>
       {itemsArr.map(({ title, items }) => (
-        <>
+        <div key={title}>
           {items.length ? (
             <section className={classes.section} key={title}>
               <div className={classes.section__top}>
@@ -87,7 +86,7 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
               )}
             </section>
           ) : null}
-        </>
+        </div>
       ))}
     </>
   );

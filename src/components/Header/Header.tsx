@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -24,7 +27,7 @@ export const Header = () => {
 
   const navArr = [
     { text: 'Игры', link: 'games' },
-    { text: 'Фильмы', link: 'movies' },
+    { text: 'Фильмы', link: 'movies' }
     // { text: 'Сериалы', link: 'shows' },
     // { text: 'Книги', link: 'books' },
   ];
@@ -48,18 +51,18 @@ export const Header = () => {
         </Link>
         {windowWidth > 600 ? <Search /> : null}
         <Dropdown />
-        <div
+        <button
           className={clsx(classes.burger__button, { [classes.visible]: isMenuVisible })}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <span className={classes.burger__line}></span>
-          <span className={classes.burger__line}></span>
-          <span className={classes.burger__line}></span>
-        </div>
+          <span className={classes.burger__line} />
+          <span className={classes.burger__line} />
+          <span className={classes.burger__line} />
+        </button>
         <div
           onClick={() => setIsMenuVisible(!isMenuVisible)}
           className={clsx(classes.nav__fade, { [classes.visible]: isMenuVisible })}
-        ></div>
+        />
         <nav className={clsx(classes.nav, { [classes.visible]: isMenuVisible })}>
           {windowWidth < 600 ? <Search /> : null}
           <ul className={classes.nav__list}>
@@ -68,7 +71,11 @@ export const Header = () => {
                 key={obj.text}
                 className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}
               >
-                <Link to={`/${obj.link}`} onClick={() => onLinkClick(index)} className={classes.nav__link}>
+                <Link
+                  to={`/${obj.link}`}
+                  onClick={() => onLinkClick(index)}
+                  className={classes.nav__link}
+                >
                   {obj.text}
                 </Link>
               </li>

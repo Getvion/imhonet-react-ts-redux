@@ -14,7 +14,6 @@ export const useTheme = () => {
 
   useEffect(() => {
     if (localTheme) dispatch(setTheme(localTheme));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

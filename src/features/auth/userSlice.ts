@@ -7,11 +7,11 @@ const initialState = {
     description: '',
     county: '',
     imageUrl: '',
-    socialMedia: [],
+    socialMedia: []
   },
   favoriteContent: [],
   waitingContent: [],
-  lists: [],
+  lists: []
 };
 
 const userSlice = createSlice({
@@ -19,7 +19,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return (state = action.payload);
+      state = action.payload;
     },
     setEmailAndName: (state, action) => {
       state.userData.email = action.payload.email;
@@ -34,17 +34,11 @@ const userSlice = createSlice({
     },
     updateWaitingContent: (state, action) => {
       state.waitingContent = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const userReducer = userSlice.reducer;
 
-export const {
-  setUser,
-  removeUser,
-  setEmailAndName,
-  updateLists,
-  updateFavoriteContent,
-  updateWaitingContent,
-} = userSlice.actions;
+export const { setUser, removeUser, setEmailAndName, updateLists, updateFavoriteContent, updateWaitingContent } =
+  userSlice.actions;

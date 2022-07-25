@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
 import { Button, LoadingSpinner } from '../../components';
-import { Lists, Stats, FavAndWait } from './';
+import { Lists, Stats, FavAndWait } from '.';
 import { IUserData } from '../../intefaces';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
@@ -24,7 +24,7 @@ export const Profile = () => {
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
     { title: 'Ожидаемое', route: 'waiting' },
-    { title: 'Списки', route: 'lists' },
+    { title: 'Списки', route: 'lists' }
     // { title: 'Статистика', route: 'stats' },
   ];
 
@@ -32,11 +32,7 @@ export const Profile = () => {
     <div className={classes.profile}>
       <div className={classes.profile__info}>
         <div className={classes.profile__info_container}>
-          {imageUrl ? (
-            <img src={imageUrl} alt={name} className={classes.profile__avatar} />
-          ) : (
-            <LoadingSpinner />
-          )}
+          {imageUrl ? <img src={imageUrl} alt={name} className={classes.profile__avatar} /> : <LoadingSpinner />}
           <div className={classes.profile__content}>
             <h1 className={classes.profile__username}>{name}</h1>
             <div className={classes.profile__descr}>
@@ -55,7 +51,7 @@ export const Profile = () => {
               to={item.route}
               onClick={() => setActiveTabIndex(index)}
               className={clsx(classes.tabs__title, {
-                [classes.active]: activeTabIndex === index,
+                [classes.active]: activeTabIndex === index
               })}
             >
               {item.title}
@@ -63,15 +59,9 @@ export const Profile = () => {
           ))}
         </div>
         <Routes>
-          <Route
-            path='favorite'
-            element={<FavAndWait itemsArr={favoriteContent} dbSection={'favoriteContent'} />}
-          />
+          <Route path='favorite' element={<FavAndWait itemsArr={favoriteContent} dbSection='favoriteContent' />} />
           <Route path='lists' element={<Lists lists={lists} />} />
-          <Route
-            path='waiting'
-            element={<FavAndWait itemsArr={waitingContent} dbSection={'waitingContent'} />}
-          />
+          <Route path='waiting' element={<FavAndWait itemsArr={waitingContent} dbSection='waitingContent' />} />
           <Route path='stats' element={<Stats />} />
         </Routes>
       </div>

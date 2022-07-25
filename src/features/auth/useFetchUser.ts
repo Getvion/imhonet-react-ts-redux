@@ -1,8 +1,8 @@
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { db } from '../../firebase';
 import { setUser } from './userSlice';
 
 interface IUserData {

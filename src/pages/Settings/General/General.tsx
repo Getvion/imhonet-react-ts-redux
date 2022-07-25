@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { Input, UploadAvatar } from '../../../components';
 
@@ -15,20 +18,20 @@ export const General: React.FC<IProps> = ({ name, imageUrl, country, description
   const [nicknameValue, setNicknameValue] = useState(name);
   const [descriptionValue, setDescriptionValue] = useState(description);
   const [counryValue, setCounryValue] = useState(country);
-  const [imageValue, setImageValue] = useState(imageUrl);
+  const [newImageUrl, setNewImageUrl] = useState(imageUrl);
 
   const onBlurElement = () => {
     setGeneralData({
       name: nicknameValue,
       description: descriptionValue,
       country: counryValue,
-      imageUrl: imageValue,
+      imageUrl: newImageUrl
     });
   };
 
   return (
     <section className={classes.general}>
-      <UploadAvatar />
+      <UploadAvatar newImageUrl={newImageUrl} setNewImageUrl={setNewImageUrl} />
       <div className={classes.general__form} onClick={() => {}}>
         <label className={classes.general__form__container} onBlur={onBlurElement}>
           <span className={classes.general__form__span}>Никнейм</span>
@@ -36,11 +39,7 @@ export const General: React.FC<IProps> = ({ name, imageUrl, country, description
         </label>
         <label className={classes.general__form__container} onBlur={onBlurElement}>
           <span className={classes.general__form__span}>Описание </span>
-          <Input
-            placeholder=''
-            setValue={(value: string) => setDescriptionValue(value)}
-            value={descriptionValue}
-          />
+          <Input placeholder='' setValue={(value: string) => setDescriptionValue(value)} value={descriptionValue} />
         </label>
         <label className={classes.general__form__container} onBlur={onBlurElement}>
           <span className={classes.general__form__span}>Страна</span>
