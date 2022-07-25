@@ -1,6 +1,6 @@
 @import '../../styles/varibles';
 
-.stat {
+.ratings {
   display: flex;
   justify-content: space-evenly;
   gap: 20px;
@@ -10,6 +10,9 @@
   }
 
   &__item {
+    background-color: transparent;
+    color: inherit;
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;

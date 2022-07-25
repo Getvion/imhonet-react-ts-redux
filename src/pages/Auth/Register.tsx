@@ -31,8 +31,7 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
             email: regEmail,
             description: '',
             country: '',
-            imageUrl:
-              'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+            imageUrl: 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
             socialMedia: []
           },
           favoriteContent: [
@@ -51,7 +50,7 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
         });
 
         updateProfile(auth.currentUser, { displayName: nickname });
-        navigate(-1);
+        navigate('/');
 
         dispatch(
           setUser({
@@ -60,8 +59,7 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
               email: regEmail,
               description: '',
               country: '',
-              imageUrl:
-                'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+              imageUrl: 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
               socialMedia: []
             },
             favoriteContent: { games: [], movies: [], shows: [], books: [] },
@@ -70,6 +68,7 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
           })
         );
       })
+      // eslint-disable-next-line no-console
       .catch((error) => console.log(error.message));
   };
 

@@ -32,14 +32,14 @@ export const Ratings = () => {
   };
 
   return (
-    <section className={classes.stat}>
+    <section className={classes.ratings}>
       {ratingsData.map(({ title, count, img }, index) => (
         <button
           key={title}
-          className={clsx(classes.stat__item, { [classes.active]: selectedRating === index })}
+          className={clsx(classes.ratings__item, { [classes.active]: selectedRating === index })}
           onClick={() => onSelectRating(index)}
         >
-          <img className={classes.stat__icon} src={img} alt={title} />
+          <img className={classes.ratings__icon} src={img} alt={title} />
           <span className={classes.buttons__label}>
             <span className={classes.buttons__text}>{title}</span>
             <span className={classes.buttons__count}>{count}</span>

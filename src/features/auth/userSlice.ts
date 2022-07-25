@@ -18,9 +18,8 @@ const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state = action.payload;
-    },
+    // eslint-disable-next-line no-return-assign
+    setUser: (state, action) => (state = action.payload),
     setEmailAndName: (state, action) => {
       state.userData.email = action.payload.email;
       state.userData.name = action.payload.name;

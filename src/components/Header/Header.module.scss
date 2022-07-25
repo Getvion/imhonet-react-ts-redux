@@ -59,6 +59,9 @@
 }
 
 .burger__button {
+  border: none;
+  color: inherit;
+  background-color: transparent;
   z-index: 1;
   position: relative;
   display: flex;

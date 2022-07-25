@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
@@ -26,9 +24,9 @@ export const Settings = () => {
   const [generalData, setGeneralData] = useState(userData);
 
   const navLinks = [
-    { href: 'general', text: 'Основные' },
-    { href: 'password', text: 'Смена пароля (в разработке)' },
-    { href: 'social-links', text: 'Сcылки (в разработке)' }
+    { href: 'general', text: 'Основные' }
+    // { href: 'password', text: 'Смена пароля (в разработке)' },
+    // { href: 'social-links', text: 'Сcылки (в разработке)' }
   ];
 
   const onApplyChanges = async () => {
@@ -60,12 +58,8 @@ export const Settings = () => {
         <nav className={classes.nav}>
           <ul className={classes.nav__list}>
             {navLinks.map((link, index) => (
-              <li
-                key={link.href}
-                className={clsx(classes.nav__item, { [classes.active]: activeLinkIndex === index })}
-                onClick={() => setActiveLinkIndex(index)}
-              >
-                <Link className={classes.nav__link} to={link.href}>
+              <li key={link.href} className={clsx(classes.nav__item, { [classes.active]: activeLinkIndex === index })}>
+                <Link className={classes.nav__link} to={link.href} onClick={() => setActiveLinkIndex(index)}>
                   {link.text}
                 </Link>
               </li>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ref, uploadBytes, list } from 'firebase/storage';
+import { ref, list, deleteObject, uploadBytes, getDownloadURL } from 'firebase/storage';
 import clsx from 'clsx';
 
 import { storage } from '../../firebase';
@@ -11,13 +11,10 @@ import { GlobalSvgSelector } from '../../assets/icons/GlobalSvgSelector';
 import classes from './UploadAvatar.module.scss';
 
 interface IProps {
-  newImageUrl: string;
   setNewImageUrl: Function;
 }
 
-export const UploadAvatar: React.FC<IProps> = ({ newImageUrl, setNewImageUrl }) => {
-  console.log(newImageUrl, setNewImageUrl);
-
+export const UploadAvatar: React.FC<IProps> = ({ setNewImageUrl }) => {
   const [isImageAdded, setIsImageAdded] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
@@ -28,26 +25,24 @@ export const UploadAvatar: React.FC<IProps> = ({ newImageUrl, setNewImageUrl }) 
   const onUploadImage = () => {
     if (!selectedFile) return;
 
-    // todo удалить date now оставлять стандартное название файла.
-    const imageRef = ref(storage, `images/${email}-avatar-${Date.now()}`);
-    uploadBytes(imageRef, selectedFile).then(() => console.log('Успешно загружено'));
-
-    const imagesListRef = ref(storage, 'images/');
-
-    // todo создать папку для каждого пользователя внутри images
-    // todo удалили все фото из папки
-    // todo добавили новое фото в папку
-    //   fetch all images from database
+    const imagesListRef = ref(storage, `images/${email}`);
+    // delete all images in the user folder
     list(imagesListRef).then((response) => {
-      console.log(response);
+      response.items.forEach((item) => {
+        deleteObject(ref(storage, item.fullPath));
+      });
+    });
 
-      // response.items.forEach((item) => {
-      //   console.log(item);
+    const imageRef = ref(storage, `images/${email}/${Date.now()}`);
+    uploadBytes(imageRef, selectedFile);
 
-      //   getDownloadURL(item).then((url) => {
-      //     console.log(url);
-      //   });
-      // });
+    // fetch all images from database
+    list(imagesListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setNewImageUrl(url);
+        });
+      });
     });
   };
 

@@ -126,7 +126,6 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
 
   useEffect(() => {
     const currentMovieId = window.location.href.split('/').reverse()[0];
-    console.log(currentMovieId);
 
     dispatch(loadMovieInfo(currentMovieId));
   }, [dispatch]);

@@ -23,10 +23,10 @@ export const Login: React.FC<IProps> = ({ onMobileButtonClick }) => {
     await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then(({ user }) => {
         dispatch(setEmailAndName({ name: user.displayName, email: user.email }));
-
-        navigate(-1);
+        navigate('/');
       })
-      .catch((error) => console.log(error.message));
+      // eslint-disable-next-line no-console
+      .catch((error) => console.log(error));
   };
 
   return (

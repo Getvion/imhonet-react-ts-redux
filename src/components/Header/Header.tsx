@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -59,23 +56,13 @@ export const Header = () => {
           <span className={classes.burger__line} />
           <span className={classes.burger__line} />
         </button>
-        <div
-          onClick={() => setIsMenuVisible(!isMenuVisible)}
-          className={clsx(classes.nav__fade, { [classes.visible]: isMenuVisible })}
-        />
+        <div className={clsx(classes.nav__fade, { [classes.visible]: isMenuVisible })} />
         <nav className={clsx(classes.nav, { [classes.visible]: isMenuVisible })}>
           {windowWidth < 600 ? <Search /> : null}
           <ul className={classes.nav__list}>
             {navArr.map((obj, index) => (
-              <li
-                key={obj.text}
-                className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}
-              >
-                <Link
-                  to={`/${obj.link}`}
-                  onClick={() => onLinkClick(index)}
-                  className={classes.nav__link}
-                >
+              <li key={obj.text} className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}>
+                <Link to={`/${obj.link}`} onClick={() => onLinkClick(index)} className={classes.nav__link}>
                   {obj.text}
                 </Link>
               </li>
