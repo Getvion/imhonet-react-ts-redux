@@ -1,12 +1,10 @@
-@import '../../../styles/varibles';
-
 input {
   background-color: transparent;
   border: 0;
   outline: 0;
 
   &::placeholder {
-    font-size: $fs-sm;
+    font-size: 14px;
     color: #ccc;
   }
 }

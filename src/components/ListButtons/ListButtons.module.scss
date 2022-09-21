@@ -1,5 +1,3 @@
-@import '../../styles/varibles';
-
 .delete__container {
   &.open__from__popup {
     & .delete {
@@ -26,7 +24,7 @@
   &__text {
     text-align: center;
     span {
-      font-weight: $fw-normal;
+      font-weight: 600;
     }
   }
 

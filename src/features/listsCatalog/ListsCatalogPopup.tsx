@@ -61,9 +61,7 @@ export const ListsCatalogPopup = () => {
         const isAlreadyAdded = list.items.find((item) => item.name === name);
 
         if (isAlreadyAdded) {
-          dispatch(
-            setNotification({ type: 'warning', text: 'Уже был добавлен ранее в этот список' })
-          );
+          dispatch(setNotification({ type: 'warning', text: 'Уже был добавлен ранее в этот список' }));
         } else {
           dispatch(setNotification({ type: 'success', text: 'Успешно добавлено в список' }));
           return { ...list, items: [...list.items, { id, name, nameOrig, bgImg, section }] };
@@ -76,9 +74,7 @@ export const ListsCatalogPopup = () => {
     dispatch(updateLists(newArr));
     await updateDoc(doc(db, 'users', userData.email), {
       lists: newArr
-    }).catch(() =>
-      dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
-    );
+    }).catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   const onFormSubmit = async (e: any) => {
@@ -100,9 +96,7 @@ export const ListsCatalogPopup = () => {
         const fetchData = docSnap.data();
         dispatch(updateLists(fetchData?.lists));
       })
-      .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
-      );
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
   };
 
   return (
@@ -114,11 +108,7 @@ export const ListsCatalogPopup = () => {
               {lists.map(({ title }) => (
                 <li key={title} className={classes.modal__catalog__item}>
                   <p className={classes.modal__title}>{title}</p>
-                  <Button
-                    onClick={() => onAddElementToList(title)}
-                    text='Добавить'
-                    state='accept'
-                  />
+                  <Button onClick={() => onAddElementToList(title)} text='Добавить' state='accept' />
                 </li>
               ))}
             </ul>

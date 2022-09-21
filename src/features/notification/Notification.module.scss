@@ -1,4 +1,3 @@
-@import '../../styles/varibles';
 
 .message {
   position: fixed;
@@ -9,7 +8,7 @@
   color: rgb(225, 225, 225);
   box-shadow: var(#{--shadow-color-default});
   z-index: 100;
-  font-weight: $fw-normal;
+  font-weight: 600;
 
   &__success {
     background-color: #28a745;
