@@ -14,10 +14,7 @@ import { Description } from './Description';
 import { loadGameInfo } from '../../../features/games/loadGameInfoSlice';
 import { setLoginOffer } from '../../../features/loginOffer/loginOfferSlice';
 import { setNotification } from '../../../features/notification/notificationSlice';
-import {
-  setCatalogListData,
-  setCatalogListOpen
-} from '../../../features/listsCatalog/listsCatalogSlice';
+import { setCatalogListData, setCatalogListOpen } from '../../../features/listsCatalog/listsCatalogSlice';
 
 import { db } from '../../../firebase';
 
@@ -72,42 +69,28 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
     const waitGameAdded = findWaitSection?.items.find((item: { id: number }) => item.id === id);
 
     if (waitGameAdded?.id) {
-      return dispatch(
-        setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' })
-      );
+      return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' }));
     }
 
     await updateDoc(doc(db, 'users', userData.email), {
       waitingContent: addContent(waitingContent)
     })
-      .then(() =>
-        dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' }))
-      )
-      .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: ' Произошла ошибка попробуйте снвоа' }))
-      );
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: ' Произошла ошибка попробуйте снвоа' })));
   };
 
   const onFavoriteClick = async (favoriteContent: IAdd[]) => {
-    const findFavoriteSection = favoriteContent.find(
-      (item: IAdd) => item.sectionName === sectionName
-    );
+    const findFavoriteSection = favoriteContent.find((item: IAdd) => item.sectionName === sectionName);
     const favGameAdded = findFavoriteSection?.items.find((item: { id: number }) => item.id === id);
 
     if (favGameAdded?.id)
-      return dispatch(
-        setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' })
-      );
+      return dispatch(setNotification({ type: 'warning', text: 'Вы уже добавляли эту игру в список' }));
 
     await updateDoc(doc(db, 'users', userData.email), {
       favoriteContent: addContent(favoriteContent)
     })
-      .then(() =>
-        dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' }))
-      )
-      .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' }))
-      );
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Игра успешно добавлена в список' })))
+      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' })));
   };
 
   const onAddCustomList = () => {
@@ -162,22 +145,11 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
                   <h3 className={classes.game__about}>О игре</h3>
                   <ul className={classes.game__list}>
                     <GameListItem description='Год выхода' content={released.split('-')[0]} />
-                    <GameListItem
-                      description='Разработчик'
-                      content={developers.map((d) => `${d.name} `)}
-                    />
-                    <GameListItem
-                      description='Издатели'
-                      content={publishers.map((p) => `${p.name} `)}
-                    />
-                    {esrb_rating && (
-                      <GameListItem description='Рейткинг ESRB' content={esrb_rating.name} />
-                    )}
+                    <GameListItem description='Разработчик' content={developers.map((d) => `${d.name} `)} />
+                    <GameListItem description='Издатели' content={publishers.map((p) => `${p.name} `)} />
+                    {esrb_rating && <GameListItem description='Рейткинг ESRB' content={esrb_rating.name} />}
                     <GameListItem description='Жанр' content={genres.map((g) => `${g.name} `)} />
-                    <GameListItem
-                      description='Платформы'
-                      content={platforms.map((p) => `${p.platform.name} `)}
-                    />
+                    <GameListItem description='Платформы' content={platforms.map((p) => `${p.platform.name} `)} />
                   </ul>
                 </div>
               </div>
@@ -210,7 +182,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
           <Description description={description_raw} />
           <div className={classes.game__ratings}>
             <h3 className={classes.game__about}>Оценка</h3>
-            <Ratings />
+            <Ratings contentId={id} />
           </div>
         </>
       ) : (

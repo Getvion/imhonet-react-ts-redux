@@ -202,7 +202,7 @@ export const Movie: React.FC<IProps> = ({ sectionName }) => {
 
           <div className={classes.movie__ratings}>
             <h3 className={classes.movie__about}>Оценка</h3>
-            <Ratings />
+            <Ratings contentId={kinopoiskId} />
           </div>
         </>
       ) : (

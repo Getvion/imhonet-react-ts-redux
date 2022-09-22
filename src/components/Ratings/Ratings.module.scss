@@ -1,10 +1,12 @@
 .ratings {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 20px;
+  &__container {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
 
-  @media (max-width: 900px) {
-    flex-wrap: wrap;
+    @media (max-width: 900px) {
+      flex-wrap: wrap;
+    }
   }
 
   &__item {
@@ -71,5 +73,36 @@
     color: #ccc;
     font-size: 14px;
     margin: 0 10px;
+  }
+}
+
+.review {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+
+  &__field {
+    width: 100%;
+    height: 100px;
+    font-size: 16px;
+    padding: 5px;
+    resize: vertical;
+    border-radius: 10px;
+    border: 2px solid var(#{--text-color-default});
+    background-color: inherit;
+    color: var(#{--text-color-default});
+  }
+
+  &__button {
+    padding: none;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(#{--bg-color-default});
+    background-color: var(#{--text-color-default});
   }
 }
