@@ -1,11 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-//
-// todo настройки все
-// todo Придумать систему для отметок контента,
-//
-
 import { Header } from './components';
 import { Auth, Main, Profile, Games, Movies, Shows, Books, Search, Settings } from './pages';
 import { Book, Game, Movie, Show } from './pages/DetailsPages';

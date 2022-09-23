@@ -182,7 +182,7 @@ export const Game: React.FC<IProps> = ({ sectionName }) => {
           <Description description={description_raw} />
           <div className={classes.game__ratings}>
             <h3 className={classes.game__about}>Оценка</h3>
-            <Ratings contentId={id} />
+            <Ratings />
           </div>
         </>
       ) : (
