@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { LoadingSpinner, SectionCard } from '../../components';
 import { loadBestGames } from '../../features/games/bestGamesSlice';
 import { loadBestMovies } from '../../features/movies/bestMoviesSlice';
-import { useWindowDimensions } from '../../hooks';
-import { AppDispatch } from '../../store';
+import { useWindowDimensions, useAppDispatch } from '../../hooks';
 
 import classes from './Main.module.scss';
 
@@ -21,7 +20,7 @@ interface IBestMovies {
 }
 
 export const Main = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const [slidesToView, setSlidesToView] = useState(4);
 

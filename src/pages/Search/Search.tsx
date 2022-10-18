@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Route, Routes } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { AppDispatch } from '../../store';
 import { searchGamesByName, searchMoviesByName } from '../../features/search/searchSlice';
 import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Search.module.scss';
+
+import { useAppDispatch } from '../../hooks';
 
 interface ISearch {
   search: {
@@ -33,7 +34,7 @@ export const Search = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const { searchInputValue, games, movies } = useSelector((state: ISearch) => state.search);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(searchGamesByName(searchInputValue));

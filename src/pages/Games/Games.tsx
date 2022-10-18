@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { GamesSlider } from './GamesSlider/GamesSlider';
 import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Games.module.scss';
 
 import { loadBestGames } from '../../features/games/bestGamesSlice';
-import { AppDispatch } from '../../store';
+
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 interface IBestGames {
   bestGames: {
@@ -27,7 +28,7 @@ interface IBestGames {
 }
 
 export const Games = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const bestGames = useSelector((state: IBestGames) => state.bestGames.gamesList.results);
 
   useEffect(() => {

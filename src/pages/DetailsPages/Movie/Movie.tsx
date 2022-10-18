@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import classes from './Movie.module.scss';
@@ -16,12 +16,14 @@ import { setCatalogListData, setCatalogListOpen } from '../../../features/listsC
 
 import { db } from '../../../firebase';
 
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+
 interface IProps {
   sectionName: string;
 }
 
 export const Movie: React.FC<IProps> = ({ sectionName }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const { movieInfo } = useSelector((state: IMovieData) => state);
   const { userData } = useSelector(({ user }: IUserData) => user);

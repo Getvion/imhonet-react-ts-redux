@@ -1,14 +1,15 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MoviesSlider } from './MoviesSlider/MoviesSlider';
 import { LoadingSpinner, SectionCard } from '../../components';
 
 import classes from './Movies.module.scss';
 
 import { loadBestMovies } from '../../features/movies/bestMoviesSlice';
-import { AppDispatch } from '../../store';
+
+import { useAppDispatch } from '../../hooks';
 
 interface IMovie {
   filmId: number;
@@ -18,7 +19,7 @@ interface IMovie {
 }
 
 export const Movies = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const bestMovies = useSelector((state: any) => state?.bestMovies.moviesList.films);
 
