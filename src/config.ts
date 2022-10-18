@@ -1,17 +1,6 @@
 // shows
 // const BASE_SHOWS = 'https://api.tvmaze.com';
 
-// games
-const GAMES_BASE = 'https://api.rawg.io/api';
-const GAMES_API_KEY = 'key=2d5893a4192a410486b36abbd099f4cb';
-
-export const GET_BEST_GAMES = (pageNumber: number | string) =>
-  `${GAMES_BASE}/games?${GAMES_API_KEY}&page=${pageNumber}`;
-
-export const GET_GAME_INFO_BY_ID = (gameId: number | string) => `${GAMES_BASE}/games/${gameId}?${GAMES_API_KEY}`;
-
-export const SEARCH_GAME_BY_NAME = (gameQuery: string) => `${GAMES_BASE}/games?${GAMES_API_KEY}&search=${gameQuery}`;
-
 //
 // movies
 export const MOVIES_BASE = 'https://kinopoiskapiunofficial.tech/api';

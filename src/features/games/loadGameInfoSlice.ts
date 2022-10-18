@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { gamesRequests } from '../../requests/games';
 
-export const loadGameInfo = createAsyncThunk(
-  'load-game-info',
-  async (gameId: number | string, { extra: { axios, requests } }: any) =>
-    axios.get(requests.GET_GAME_INFO_BY_ID(gameId), {})
+export const loadGameInfo = createAsyncThunk('load-game-info', async (gameId: number | string) =>
+  gamesRequests.getGameInfoByID(gameId)
 );
 
 const gameInfo = createSlice({
@@ -13,7 +12,7 @@ const gameInfo = createSlice({
     emptyGameState: () => {}
   },
   extraReducers: (builder) => {
-    builder.addCase(loadGameInfo.fulfilled, (_, action) => action.payload.data);
+    builder.addCase(loadGameInfo.fulfilled, (_, action) => action.payload);
   }
 });
 

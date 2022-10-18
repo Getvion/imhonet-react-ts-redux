@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { gamesRequests } from '../../requests/games';
 
-export const searchGamesByName = createAsyncThunk(
-  'load-search-games',
-  async (gameQuery: string, { extra: { axios, requests } }: any) =>
-    axios.get(requests.SEARCH_GAME_BY_NAME(gameQuery))
+export const searchGamesByName = createAsyncThunk('load-search-games', async (gameQuery: string) =>
+  gamesRequests.searchGameByName(gameQuery)
 );
 
 export const searchMoviesByName = createAsyncThunk(
@@ -18,22 +17,10 @@ export const searchMoviesByName = createAsyncThunk(
 
 const initialState = {
   searchInputValue: '',
-  games: {
-    gamesSearch: [],
-    isLoaded: false
-  },
-  movies: {
-    moviesSearch: [],
-    isLoaded: false
-  },
-  shows: {
-    showsSearch: [],
-    isLoaded: false
-  },
-  books: {
-    booksSearch: [],
-    isLoaded: false
-  }
+  games: { gamesSearch: [], isLoaded: false },
+  movies: { moviesSearch: [], isLoaded: false },
+  shows: { showsSearch: [], isLoaded: false },
+  books: { booksSearch: [], isLoaded: false }
 };
 
 const searchSlice = createSlice({
@@ -47,7 +34,7 @@ const searchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(searchGamesByName.fulfilled, (state, action) => {
-        state.games.gamesSearch = action.payload.data;
+        state.games.gamesSearch = action.payload;
         state.games.isLoaded = true;
       })
       .addCase(searchGamesByName.pending, (state) => {
