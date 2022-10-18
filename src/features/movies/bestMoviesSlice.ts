@@ -1,13 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { moviesRequests } from '../../requests/movies';
 
 export const loadBestMovies = createAsyncThunk(
   'load-best-movies',
-  async (_, { extra: { axios, requests } }: any) =>
-    axios.get(requests.GET_BEST_MOVIES(1), {
-      headers: {
-        'X-API-KEY': requests.MOVIES_API_KEY
-      }
-    })
+  async (movieId: number | string = 1) => moviesRequests.getBestMovies(movieId)
 );
 
 const initialState = {
@@ -20,7 +16,7 @@ const bestMovies = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loadBestMovies.fulfilled, (state, action) => {
-      state.moviesList = action.payload.data;
+      state.moviesList = action.payload;
     });
   }
 });

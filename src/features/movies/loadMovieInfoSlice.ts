@@ -1,13 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { moviesRequests } from '../../requests/movies';
 
-export const loadMovieInfo = createAsyncThunk(
-  'load-movie-info',
-  async (filmId: number | string, { extra: { axios, requests } }: any) =>
-    axios.get(requests.GET_MOVIE_INFO_BY_ID(filmId), {
-      headers: {
-        'X-API-KEY': requests.MOVIES_API_KEY
-      }
-    })
+export const loadMovieInfo = createAsyncThunk('load-movie-info', async (filmId: number | string) =>
+  moviesRequests.getMovieInfoByID(filmId)
 );
 
 const movieInfo = createSlice({
@@ -17,7 +12,7 @@ const movieInfo = createSlice({
     emptyMovieState: () => {}
   },
   extraReducers: (builder) => {
-    builder.addCase(loadMovieInfo.fulfilled, (state, action) => action.payload.data);
+    builder.addCase(loadMovieInfo.fulfilled, (state, action) => action.payload);
   }
 });
 

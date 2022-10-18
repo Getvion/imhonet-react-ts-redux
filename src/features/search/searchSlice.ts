@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { gamesRequests } from '../../requests/games';
+import { moviesRequests } from '../../requests/movies';
 
 export const searchGamesByName = createAsyncThunk('load-search-games', async (gameQuery: string) =>
   gamesRequests.searchGameByName(gameQuery)
@@ -7,12 +8,7 @@ export const searchGamesByName = createAsyncThunk('load-search-games', async (ga
 
 export const searchMoviesByName = createAsyncThunk(
   'load-search-movies',
-  async (movieQuery: string, { extra: { axios, requests } }: any) =>
-    axios.get(requests.SEARCH_MOVIE_BY_NAME(movieQuery), {
-      headers: {
-        'X-API-KEY': requests.MOVIES_API_KEY
-      }
-    })
+  async (moviesQuery: string) => moviesRequests.searchMovieByName(moviesQuery)
 );
 
 const initialState = {
@@ -41,7 +37,7 @@ const searchSlice = createSlice({
         state.games.isLoaded = false;
       })
       .addCase(searchMoviesByName.fulfilled, (state, action) => {
-        state.movies.moviesSearch = action.payload.data;
+        state.movies.moviesSearch = action.payload;
         state.movies.isLoaded = true;
       })
       .addCase(searchMoviesByName.pending, (state) => {
