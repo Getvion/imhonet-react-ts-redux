@@ -25,7 +25,7 @@ export const store = configureStore({
     search: searchReducer,
     showLoginPopup: LoginPopupOfferReducer,
     notification: notificationReducer,
-    listsCatalog: listsCatalogReducer,
+    listsCatalog: listsCatalogReducer
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>
@@ -33,11 +33,11 @@ export const store = configureStore({
       thunk: {
         extraArgument: {
           axios,
-          requests,
-        },
+          requests
+        }
       },
-      serializableCheck: false,
-    }),
+      serializableCheck: false
+    })
 });
 
 export type AppDispatch = typeof store.dispatch;

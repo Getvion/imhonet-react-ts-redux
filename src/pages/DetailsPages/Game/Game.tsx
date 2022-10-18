@@ -7,7 +7,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import classes from './Game.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
-import { IAdd, IGameInfo, IUserData } from '../../../intefaces';
+import { IAdd, IGameInfo, IUserData } from '../../../@types/intefaces';
 import { GameListItem } from './GameListItem';
 import { AppDispatch } from '../../../store';
 import { Description } from './Description';

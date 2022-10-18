@@ -9,7 +9,7 @@ import { setCatalogListOpen } from './listsCatalogSlice';
 
 import classes from './ListsCatalogPopup.module.scss';
 import { Input, Button } from '../../components';
-import { IItem } from '../../intefaces';
+import { IItem } from '../../@types/intefaces';
 
 import { db } from '../../firebase';
 import { setNotification } from '../notification/notificationSlice';

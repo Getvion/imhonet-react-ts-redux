@@ -6,7 +6,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import classes from './Movie.module.scss';
 
 import { Button, LoadingSpinner, Ratings } from '../../../components';
-import { IAdd, IMovieData, IUserData } from '../../../intefaces';
+import { IAdd, IMovieData, IUserData } from '../../../@types/intefaces';
 import { MovieListItem } from './MovieListItem';
 import { loadMovieInfo } from '../../../features/movies/loadMovieInfoSlice';
 import { AppDispatch } from '../../../store';

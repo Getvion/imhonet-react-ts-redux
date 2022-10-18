@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 
-import { IUserData } from '../../intefaces';
+import { IUserData } from '../../@types/intefaces';
 import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
 
 import exceptionalImg from './img/exceptional.png';

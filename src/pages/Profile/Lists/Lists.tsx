@@ -8,7 +8,7 @@ import { setNotification } from '../../../features/notification/notificationSlic
 import { db } from '../../../firebase';
 
 import classes from './Lists.module.scss';
-import { IItem, IUserData } from '../../../intefaces';
+import { IItem, IUserData } from '../../../@types/intefaces';
 
 interface IProps {
   lists: { items: IItem[]; title: string; description: string }[];

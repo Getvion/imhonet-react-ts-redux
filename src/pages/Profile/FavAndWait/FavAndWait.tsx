@@ -3,7 +3,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, SectionCard, ListPopup } from '../../../components';
-import { IItem, IUserData } from '../../../intefaces';
+import { IItem, IUserData } from '../../../@types/intefaces';
 import { updateFavoriteContent, updateWaitingContent } from '../../../features/auth/userSlice';
 import { setNotification } from '../../../features/notification/notificationSlice';
 import { db } from '../../../firebase';

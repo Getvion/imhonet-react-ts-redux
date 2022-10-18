@@ -4,7 +4,7 @@ import { ref, list, deleteObject, uploadBytes, getDownloadURL } from 'firebase/s
 import clsx from 'clsx';
 
 import { storage } from '../../firebase';
-import { IUserData } from '../../intefaces';
+import { IUserData } from '../../@types/intefaces';
 import { Button } from '../UI/Button/Button';
 import { GlobalSvgSelector } from '../../assets/icons/GlobalSvgSelector';
 

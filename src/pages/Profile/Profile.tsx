@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { Button, LoadingSpinner } from '../../components';
 import { Lists, Stats, FavAndWait } from '.';
-import { IUserData } from '../../intefaces';
+import { IUserData } from '../../@types/intefaces';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
 

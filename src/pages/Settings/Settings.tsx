@@ -7,7 +7,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 
 import { ResetPassword, Links, General } from '.';
 import { Button } from '../../components';
-import { IUserData } from '../../intefaces';
+import { IUserData } from '../../@types/intefaces';
 import { auth, db } from '../../firebase';
 import { setNotification } from '../../features/notification/notificationSlice';
 

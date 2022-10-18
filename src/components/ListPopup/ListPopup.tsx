@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ListButtons, SectionCard } from '../index';
-import { IItem } from '../../intefaces';
+import { IItem } from '../../@types/intefaces';
 
 import classes from './ListPopup.module.scss';
 
@@ -31,12 +31,7 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, onD
             <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section} />
 
             <div className={classes.modal__delete}>
-              <ListButtons
-                title={name}
-                deleteButtonText='Удалить'
-                onDelete={onDeleteItemFromList}
-                openFrom='popup'
-              />
+              <ListButtons title={name} deleteButtonText='Удалить' onDelete={onDeleteItemFromList} openFrom='popup' />
             </div>
           </div>
         ))}
