@@ -4,13 +4,12 @@ import {
   theme,
   bestMovies,
   bestGames,
-  movieInfo,
   user,
-  gameInfo,
   search,
   loginPopup,
   notification,
-  listsCatalog
+  listsCatalog,
+  pageDetails
 } from './features';
 
 export const store = configureStore({
@@ -18,13 +17,12 @@ export const store = configureStore({
     theme,
     bestGames,
     bestMovies,
-    movieInfo,
-    gameInfo,
     user,
     search,
     loginPopup,
     notification,
-    listsCatalog
+    listsCatalog,
+    pageDetails
   }
 });
 
