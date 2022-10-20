@@ -15,7 +15,13 @@ export interface IItem {
 // userData
 export interface IUserData {
   user: {
-    userData: { email: string; name: string; imageUrl: string; country: string; description: string };
+    userData: {
+      email: string;
+      name: string;
+      imageUrl: string;
+      country: string;
+      description: string;
+    };
     lists: { items: IItem[]; title: string; description: string }[];
     favoriteContent: { title: string; items: IItem[] }[];
     waitingContent: { title: string; items: IItem[] }[];
@@ -65,4 +71,16 @@ export interface IGame {
 
 export interface IGameInfo {
   gameInfo: IGame;
+}
+
+export interface IItemInfo {
+  id: number;
+  name: string;
+  nameOriginal: string;
+  posterUrl: string;
+  year: string;
+  genres: string[];
+  rating1: number;
+  rating2: number;
+  description: string;
 }

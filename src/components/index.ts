@@ -12,3 +12,4 @@ export { Dropdown } from './UI/Dropdown/Dropdown';
 export { Search } from './UI/Search/Search';
 export { Button } from './UI/Button/Button';
 export { Input } from './UI/Input/Input';
+export { RatingFormater } from './UI/RatingFormater/RatingFormater';
