@@ -4,8 +4,7 @@ import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 
 import { ThemeSwitcher } from '../../features/theme/ThemeSwitcher';
-import { emptyGameState } from '../../features/games/loadGameInfoSlice';
-import { emptyMovieState } from '../../features/movies/loadMovieInfoSlice';
+import { emptyPageState } from '../../features/details/pageDetailsSlice';
 
 import { useWindowDimensions } from '../../hooks';
 
@@ -36,8 +35,7 @@ export const Header = () => {
 
   const onLogoClick = () => {
     setCurrentPage(-1);
-    dispatch(emptyMovieState());
-    dispatch(emptyGameState());
+    dispatch(emptyPageState());
   };
 
   return (
@@ -60,10 +58,17 @@ export const Header = () => {
         <nav className={clsx(classes.nav, { [classes.visible]: isMenuVisible })}>
           {windowWidth < 600 ? <Search /> : null}
           <ul className={classes.nav__list}>
-            {navArr.map((obj, index) => (
-              <li key={obj.text} className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}>
-                <Link to={`/${obj.link}`} onClick={() => onLinkClick(index)} className={classes.nav__link}>
-                  {obj.text}
+            {navArr.map(({ text, link }, index) => (
+              <li
+                key={text}
+                className={clsx(classes.nav__item, { [classes.active]: currentPage === index })}
+              >
+                <Link
+                  to={`/${link}`}
+                  onClick={() => onLinkClick(index)}
+                  className={classes.nav__link}
+                >
+                  {text}
                 </Link>
               </li>
             ))}
