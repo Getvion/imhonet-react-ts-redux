@@ -64,9 +64,11 @@ export interface IGame {
   esrb_rating: { name: string };
   platforms: { platform: { name: string } }[];
   description_raw: string;
-  developers: { name: string }[];
+  developers: { name: string; image_background: string }[];
   genres: { name: string }[];
-  publishers: { name: string }[];
+  publishers: { name: string; image_background: string }[];
+  parent_platforms: { platform: { id: number; name: string; slug: string } }[];
+  achievements_count: number;
 }
 
 export interface IGameInfo {
@@ -83,4 +85,11 @@ export interface IItemInfo {
   rating1: number;
   rating2: number;
   description: string;
+  platforms?: string[];
+  achievementsCount?: number;
+  developers?: { name: string; imgUrl: string }[];
+  publishers?: { name: string; imgUrl: string }[];
+  countries?: string[];
+  filmLength?: number;
+  ageRating: string;
 }

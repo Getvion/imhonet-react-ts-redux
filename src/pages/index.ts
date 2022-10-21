@@ -5,4 +5,4 @@ export { Games } from './Games/Games';
 export { Movies } from './Movies/Movies';
 export { Search } from './Search/Search';
 export { Settings } from './Settings/Settings';
-export {DetailPage} from './DetailPage/DetaiPage'
+export { DetailPage } from './DetailPage/DetailPage';

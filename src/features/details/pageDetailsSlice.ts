@@ -20,7 +20,14 @@ const initialState: IItemInfo = {
   genres: [],
   rating1: 0,
   rating2: 0,
-  description: ''
+  description: '',
+  filmLength: 0,
+  countries: [],
+  publishers: [],
+  developers: [],
+  achievementsCount: 0,
+  platforms: [],
+  ageRating: ''
 };
 
 const pageDetails = createSlice({
