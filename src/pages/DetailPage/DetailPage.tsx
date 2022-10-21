@@ -31,8 +31,8 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
-  const { description, name, id, nameOriginal, posterUrl, rating1, rating2, year, genres } =
-    useSelector((state: RootState) => state.pageDetails);
+  const pageDetails = useSelector((state: RootState) => state.pageDetails);
+  const { name, nameOriginal, id, posterUrl } = pageDetails;
 
   const { userData } = useSelector(({ user }: IUserData) => user);
 
@@ -88,7 +88,13 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const onAddCustomList = () => {
-    const catalogListObj = { name, nameOrig: nameOriginal, bgImg: posterUrl, id, section: 'games' };
+    const catalogListObj = {
+      name,
+      nameOrig: nameOriginal,
+      bgImg: posterUrl,
+      id,
+      section: sectionName
+    };
     dispatch(setCatalogListData(catalogListObj));
     dispatch(setCatalogListOpen(true));
   };
@@ -115,6 +121,13 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
     return 'книге';
   };
 
+  const ratingAgeLimits = () => {
+    if (pageDetails.ageRating === 'age18' || pageDetails.ageRating === 'Mature') return '18+';
+    if (pageDetails.ageRating === 'age16' || pageDetails.ageRating === 'Teen') return '16+';
+    if (pageDetails.ageRating === 'age12' || pageDetails.ageRating === 'Everyone 10+') return '12+';
+    return '0+';
+  };
+
   useEffect(() => {
     if (id) return;
 
@@ -132,10 +145,10 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
 
   return (
     <div className={classes.page}>
-      {name ? (
+      {id ? (
         <>
           <div className={classes.page__top}>
-            <img className={classes.page__image} src={posterUrl} alt={name} />
+            <img className={classes.page__image} src={posterUrl} alt={pageDetails.name} />
             <div className={classes.page__title_wrapper}>
               <div className={classes.page__inner}>
                 <h1 className={classes.page__title}>{name}</h1>
@@ -148,18 +161,42 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
                 <div className={classes.page__info}>
                   <h3 className={classes.page__about}>О {contentTypeCheck()}</h3>
                   <ul className={classes.page__list}>
-                    <ListItem description='Год выхода' content={year} />
-                    <ListItem description='Жанр' content={genres} />
+                    <ListItem description='Год выхода' content={pageDetails.year} />
+                    <ListItem description='Жанр' content={pageDetails.genres} />
+                    <ListItem description='Возраст' content={ratingAgeLimits()} />
+
+                    {pageDetails.achievementsCount && (
+                      <ListItem description='Достижения' content={pageDetails.achievementsCount} />
+                    )}
+
+                    {pageDetails.developers?.length && (
+                      <ListItem
+                        description='Разработчики'
+                        content={pageDetails.developers.map((elem) => elem.name)}
+                      />
+                    )}
+                    {pageDetails.publishers?.length && (
+                      <ListItem
+                        description='Издатели'
+                        content={pageDetails.publishers.map((elem) => elem.name)}
+                      />
+                    )}
+                    {pageDetails.countries?.length && (
+                      <ListItem description='Страны' content={pageDetails.countries} />
+                    )}
+                    {pageDetails.filmLength && (
+                      <ListItem description='Длина' content={`${pageDetails.filmLength}мин`} />
+                    )}
                   </ul>
                 </div>
               </div>
               <div className={classes.page__grades}>
-                <RatingFormater rating={rating1} />
-                <RatingFormater rating={rating2} />
+                <RatingFormater rating={pageDetails.rating1} />
+                <RatingFormater rating={pageDetails.rating2} />
               </div>
             </div>
           </div>
-          <Description description={description} />
+          <Description description={pageDetails.description} />
           <div className={classes.page__ratings}>
             <h3 className={classes.page__about}>Оценка</h3>
             <Ratings />
