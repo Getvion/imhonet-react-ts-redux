@@ -14,6 +14,8 @@ const gamesRequest = async <T>(requestString: string): Promise<T> => {
 const getGameInfoByID = async (gameId: string | number): Promise<IItemInfo> => {
   const data = await gamesRequest<IGame>(`${GAMES_BASE}/games/${gameId}?${GAMES_API_KEY}`);
 
+  // console.log('init', data);
+
   return {
     id: data.id,
     name: data.name,
@@ -23,7 +25,12 @@ const getGameInfoByID = async (gameId: string | number): Promise<IItemInfo> => {
     genres: data.genres.map((genre) => genre.name),
     rating1: data.metacritic / 10,
     rating2: data.rating * 2,
-    description: data.description_raw
+    description: data.description_raw,
+    platforms: data.parent_platforms.map((elem) => elem.platform.name),
+    achievementsCount: data.achievements_count,
+    developers: data.developers.map((dev) => ({ name: dev.name, imgUrl: dev.image_background })),
+    publishers: data.publishers.map((pub) => ({ name: pub.name, imgUrl: pub.image_background })),
+    ageRating: data.esrb_rating.name
   };
 };
 

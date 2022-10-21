@@ -25,8 +25,10 @@ const getBestMovies = async (pageNumber: number | string) => {
 const getMovieInfoByID = async (filmId: number | string): Promise<IItemInfo> => {
   const data = await moviesRequest<IMovie>(`${MOVIES_BASE}/v2.2/films/${filmId}`);
 
+  // console.log('init', data);
+
   return {
-    id: data.filmId,
+    id: data.kinopoiskId,
     name: data.nameRu,
     nameOriginal: data.nameOriginal,
     posterUrl: data.posterUrl,
@@ -34,7 +36,10 @@ const getMovieInfoByID = async (filmId: number | string): Promise<IItemInfo> => 
     genres: data.genres.map((g) => g.genre),
     rating1: data.ratingKinopoisk,
     rating2: data.ratingImdb,
-    description: data.description
+    description: data.description,
+    countries: data.countries.map((c) => c.country),
+    filmLength: data.filmLength,
+    ageRating: data.ratingMpaa
   };
 };
 
