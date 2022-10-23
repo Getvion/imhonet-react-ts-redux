@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import { IState } from '../../@types/state';
+
 import { Button } from '../../components';
 import { setLoginOffer } from './loginOfferSlice';
 
@@ -11,7 +14,7 @@ export const LoginPopupOffer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isPopupShow = useSelector((state: { showLoginPopup: boolean }) => state.showLoginPopup);
+  const isPopupShow = useSelector((state: IState) => state.loginPopup);
 
   const onCloseModal = (isNavigate: boolean) => {
     dispatch(setLoginOffer(false));

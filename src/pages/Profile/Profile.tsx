@@ -5,7 +5,8 @@ import clsx from 'clsx';
 
 import { Button, LoadingSpinner } from '../../components';
 import { Lists, Stats, FavAndWait } from '.';
-import { IUserData } from '../../@types/intefaces';
+
+import { IState } from '../../@types/state';
 
 import { useFetchUser } from '../../features/auth/useFetchUser';
 
@@ -19,7 +20,7 @@ export const Profile = () => {
   const { userData } = useFetchUser();
   const { country, description, imageUrl, name } = userData;
 
-  const { favoriteContent, waitingContent, lists } = useSelector((state: IUserData) => state.user);
+  const { favoriteContent, waitingContent, lists } = useSelector((state: IState) => state.user);
 
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
@@ -32,7 +33,11 @@ export const Profile = () => {
     <div className={classes.profile}>
       <div className={classes.profile__info}>
         <div className={classes.profile__info_container}>
-          {imageUrl ? <img src={imageUrl} alt={name} className={classes.profile__avatar} /> : <LoadingSpinner />}
+          {imageUrl ? (
+            <img src={imageUrl} alt={name} className={classes.profile__avatar} />
+          ) : (
+            <LoadingSpinner />
+          )}
           <div className={classes.profile__content}>
             <h1 className={classes.profile__username}>{name}</h1>
             <div className={classes.profile__descr}>
@@ -59,9 +64,15 @@ export const Profile = () => {
           ))}
         </div>
         <Routes>
-          <Route path='favorite' element={<FavAndWait itemsArr={favoriteContent} dbSection='favoriteContent' />} />
+          <Route
+            path='favorite'
+            element={<FavAndWait itemsArr={favoriteContent} dbSection='favoriteContent' />}
+          />
           <Route path='lists' element={<Lists lists={lists} />} />
-          <Route path='waiting' element={<FavAndWait itemsArr={waitingContent} dbSection='waitingContent' />} />
+          <Route
+            path='waiting'
+            element={<FavAndWait itemsArr={waitingContent} dbSection='waitingContent' />}
+          />
           <Route path='stats' element={<Stats />} />
         </Routes>
       </div>

@@ -5,49 +5,26 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { setCatalogListOpen } from './listsCatalogSlice';
+
+import { SubmitFormType } from '../../@types/types';
+import { IState } from '../../@types/state';
 
 import { Input, Button } from '../../components';
-
-import { IItem } from '../../@types/intefaces';
-import { SubmitFormType } from '../../@types/types';
-
-import { db } from '../../firebase';
 import { setNotification } from '../notification/notificationSlice';
 import { updateLists } from '../auth/userSlice';
+import { setCatalogListOpen } from './listsCatalogSlice';
+
+import { db } from '../../firebase';
 
 import classes from './ListsCatalogPopup.module.scss';
-
-interface IUserData {
-  user: {
-    userData: { email: string };
-    lists: ILists[];
-  };
-}
-
-interface ILists {
-  title: string;
-  items: IItem[];
-}
-
-interface IListsCatalog {
-  listsCatalog: {
-    isOpen: boolean;
-    name: string;
-    bgImg: string;
-    id: number;
-    nameOrig: string;
-    section: string;
-  };
-}
 
 export const ListsCatalogPopup = () => {
   const [inputValue, setInputValue] = useState('');
 
   const dispatch = useDispatch();
 
-  const { userData, lists } = useSelector(({ user }: IUserData) => user);
-  const listsCatalog = useSelector((state: IListsCatalog) => state.listsCatalog);
+  const { userData, lists } = useSelector((state: IState) => state.user);
+  const listsCatalog = useSelector((state: IState) => state.listsCatalog);
   const { isOpen, name, bgImg, id, nameOrig, section } = listsCatalog;
 
   const onClosePopup = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -59,7 +36,7 @@ export const ListsCatalogPopup = () => {
   };
 
   const onAddElementToList = async (title: string) => {
-    const newArr = lists.map((list: ILists) => {
+    const newArr = lists.map((list) => {
       if (list.title === title) {
         const isAlreadyAdded = list.items.find((item) => item.name === name);
 

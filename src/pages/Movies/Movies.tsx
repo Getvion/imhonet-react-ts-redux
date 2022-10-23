@@ -5,11 +5,13 @@ import { useSelector } from 'react-redux';
 import { MoviesSlider } from './MoviesSlider/MoviesSlider';
 import { LoadingSpinner, SectionCard } from '../../components';
 
-import classes from './Movies.module.scss';
-
-import { loadBestMovies } from '../../features/movies/bestMoviesSlice';
+import { loadBestMovies } from '../../features/best/bestMoviesSlice';
 
 import { useAppDispatch } from '../../hooks';
+
+import { IState } from '../../@types/state';
+
+import classes from './Movies.module.scss';
 
 interface IMovie {
   filmId: number;
@@ -21,7 +23,7 @@ interface IMovie {
 export const Movies = () => {
   const dispatch = useAppDispatch();
 
-  const bestMovies = useSelector((state: any) => state?.bestMovies.moviesList.films);
+  const bestMovies = useSelector((state: IState) => state?.bestMovies.moviesList.films);
 
   useEffect(() => {
     dispatch(loadBestMovies());

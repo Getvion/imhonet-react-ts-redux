@@ -7,8 +7,11 @@ import { doc, updateDoc } from 'firebase/firestore';
 
 import { ResetPassword, Links, General } from '.';
 import { Button } from '../../components';
-import { IUserData } from '../../@types/intefaces';
+
+import { IState } from '../../@types/state';
+
 import { auth, db } from '../../firebase';
+
 import { setNotification } from '../../features/notification/notificationSlice';
 
 import classes from './Settings.module.scss';
@@ -17,7 +20,7 @@ export const Settings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { userData } = useSelector((state: IUserData) => state.user);
+  const { userData } = useSelector((state: IState) => state.user);
   const { name, imageUrl, country, description, email } = userData;
 
   const [activeLinkIndex, setActiveLinkIndex] = useState(0);
@@ -30,7 +33,8 @@ export const Settings = () => {
   ];
 
   const onApplyChanges = async () => {
-    if (!generalData.name) return dispatch(setNotification({ type: 'reject', text: 'Сначала укажите имя' }));
+    if (!generalData.name)
+      return dispatch(setNotification({ type: 'reject', text: 'Сначала укажите имя' }));
 
     const newUserData = {
       ...userData,
@@ -49,7 +53,9 @@ export const Settings = () => {
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Данные обновллены' })))
       .then(() => navigate('/profile/favorite'))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+      );
   };
 
   return (
@@ -58,8 +64,15 @@ export const Settings = () => {
         <nav className={classes.nav}>
           <ul className={classes.nav__list}>
             {navLinks.map((link, index) => (
-              <li key={link.href} className={clsx(classes.nav__item, { [classes.active]: activeLinkIndex === index })}>
-                <Link className={classes.nav__link} to={link.href} onClick={() => setActiveLinkIndex(index)}>
+              <li
+                key={link.href}
+                className={clsx(classes.nav__item, { [classes.active]: activeLinkIndex === index })}
+              >
+                <Link
+                  className={classes.nav__link}
+                  to={link.href}
+                  onClick={() => setActiveLinkIndex(index)}
+                >
                   {link.text}
                 </Link>
               </li>

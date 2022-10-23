@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { IState } from '../../@types/state';
 
 import { LoadingSpinner, SectionCard } from '../../components';
-import { loadBestGames } from '../../features/games/bestGamesSlice';
-import { loadBestMovies } from '../../features/movies/bestMoviesSlice';
+
+import { loadBestGames } from '../../features/best/bestGamesSlice';
+import { loadBestMovies } from '../../features/best/bestMoviesSlice';
+
 import { useWindowDimensions, useAppDispatch } from '../../hooks';
 
 import classes from './Main.module.scss';
-
-interface IBestGames {
-  bestGames: { gamesList: { results: { background_image: string; id: number; name: string }[] } };
-}
-
-interface IBestMovies {
-  bestMovies: {
-    moviesList: { films: { filmId: number; nameRu: string; nameEn: string; posterUrlPreview: string }[] };
-  };
-}
 
 export const Main = () => {
   const dispatch = useAppDispatch();
 
   const [slidesToView, setSlidesToView] = useState(4);
 
-  const bestGames = useSelector((state: IBestGames) => state.bestGames.gamesList.results);
-  const bestMovies = useSelector((state: IBestMovies) => state.bestMovies.moviesList.films);
+  const bestGames = useSelector((state: IState) => state.bestGames.gamesList.results);
+  const bestMovies = useSelector((state: IState) => state.bestMovies.moviesList.films);
 
   const { windowWidth } = useWindowDimensions();
 
@@ -50,7 +43,12 @@ export const Main = () => {
             <Swiper slidesPerView={slidesToView} loop>
               {bestMovies.map(({ filmId, nameEn, nameRu, posterUrlPreview }) => (
                 <SwiperSlide key={filmId} className={classes.card}>
-                  <SectionCard name={nameRu || nameEn} bgImage={posterUrlPreview} section='movies' id={filmId} />
+                  <SectionCard
+                    name={nameRu || nameEn}
+                    bgImage={posterUrlPreview}
+                    section='movies'
+                    id={filmId}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

@@ -3,12 +3,16 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, EmptyList, ListButtons, ListPopup, SectionCard } from '../../../components';
+
 import { updateLists } from '../../../features/auth/userSlice';
 import { setNotification } from '../../../features/notification/notificationSlice';
+
 import { db } from '../../../firebase';
 
+import { IItem } from '../../../@types/intefaces';
+import { IState } from '../../../@types/state';
+
 import classes from './Lists.module.scss';
-import { IItem, IUserData } from '../../../@types/intefaces';
 
 interface IProps {
   lists: { items: IItem[]; title: string; description: string }[];
@@ -21,7 +25,7 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
   const [popupArray, setPopupArray] = useState<IItem[]>([]);
   const [popupTitle, setPopupTitle] = useState('');
 
-  const { userData } = useSelector(({ user }: IUserData) => user);
+  const { userData } = useSelector((state: IState) => state.user);
 
   const onShowList = (title: string) => {
     const foundArray = lists.find((list) => list.title === title)?.items;

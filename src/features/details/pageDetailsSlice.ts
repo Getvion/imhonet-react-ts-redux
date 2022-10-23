@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IItemInfo } from '../../@types/intefaces';
+
+import { IItemInfo } from '../../@types/state';
+
 import { gamesRequests } from '../../requests/games';
 import { moviesRequests } from '../../requests/movies';
 

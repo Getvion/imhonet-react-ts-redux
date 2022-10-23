@@ -10,7 +10,11 @@ import { Description, ListItem } from './components';
 
 import { setNotification } from '../../features/notification/notificationSlice';
 import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
-import { loadGameInfo, loadMovieInfo } from '../../features/details/pageDetailsSlice';
+import {
+  emptyPageState,
+  loadGameInfo,
+  loadMovieInfo
+} from '../../features/details/pageDetailsSlice';
 import {
   setCatalogListData,
   setCatalogListOpen
@@ -18,10 +22,10 @@ import {
 
 import { useAppDispatch } from '../../hooks';
 
-import { IAdd, IUserData } from '../../@types/intefaces';
+import { IAdd } from '../../@types/intefaces';
+import { IState } from '../../@types/state';
 
 import classes from './DetailPage.module.scss';
-import { RootState } from '../../store';
 
 interface IProps {
   sectionName: string;
@@ -31,10 +35,9 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
-  const pageDetails = useSelector((state: RootState) => state.pageDetails);
+  const { userData } = useSelector((state: IState) => state.user);
+  const pageDetails = useSelector((state: IState) => state.pageDetails);
   const { name, nameOriginal, id, posterUrl } = pageDetails;
-
-  const { userData } = useSelector(({ user }: IUserData) => user);
 
   const addContent = (contentType: IAdd[]) =>
     contentType.map((element) => {
@@ -141,6 +144,10 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
     if (section === 'games') {
       dispatch(loadGameInfo(currentId));
     }
+
+    return () => {
+      dispatch(emptyPageState());
+    };
   }, []);
 
   return (

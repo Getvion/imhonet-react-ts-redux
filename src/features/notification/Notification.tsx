@@ -4,16 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeNotification } from './notificationSlice';
 
-import classes from './Notification.module.scss';
+import { IState } from '../../@types/state';
 
-interface INotification {
-  notification: { isShown: boolean; text: string; type: string };
-}
+import classes from './Notification.module.scss';
 
 export const Notification = () => {
   const dispatch = useDispatch();
 
-  const { isShown, type, text } = useSelector(({ notification }: INotification) => notification);
+  const { isShown, type, text } = useSelector((state: IState) => state.notification);
 
   useEffect(() => {
     setTimeout(() => {

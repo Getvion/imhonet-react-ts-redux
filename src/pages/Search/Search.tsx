@@ -4,36 +4,19 @@ import { Link, Route, Routes } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { searchGamesByName, searchMoviesByName } from '../../features/search/searchSlice';
+
 import { LoadingSpinner, SectionCard } from '../../components';
 
-import classes from './Search.module.scss';
+import { IState } from '../../@types/state';
 
 import { useAppDispatch } from '../../hooks';
 
-interface ISearch {
-  search: {
-    searchInputValue: string;
-    books: {
-      isLoaded: boolean;
-    };
-    games: {
-      isLoaded: boolean;
-      gamesSearch: { results: { name: string; background_image: string; id: number }[] };
-    };
-    movies: {
-      isLoaded: boolean;
-      moviesSearch: { films: { filmId: number; posterUrlPreview: string; nameEn: string; nameRu: string }[] };
-    };
-    shows: {
-      isLoaded: boolean;
-    };
-  };
-}
+import classes from './Search.module.scss';
 
 export const Search = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const { searchInputValue, games, movies } = useSelector((state: ISearch) => state.search);
+  const { searchInputValue, games, movies } = useSelector((state: IState) => state.search);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -69,7 +52,13 @@ export const Search = () => {
               {games.isLoaded ? (
                 <>
                   {games.gamesSearch.results.map(({ id, name, background_image }) => (
-                    <SectionCard key={id} name={name} id={id} bgImage={background_image} section='games' />
+                    <SectionCard
+                      key={id}
+                      name={name}
+                      id={id}
+                      bgImage={background_image}
+                      section='games'
+                    />
                   ))}
                 </>
               ) : (

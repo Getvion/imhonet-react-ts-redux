@@ -1,0 +1,80 @@
+/* eslint-disable import/no-cycle */
+import { IItem } from './intefaces';
+import { IBestGamesRequest, IBestMoviesRequest } from './requestInterfaces';
+
+export interface IState {
+  theme: 'dark' | 'light';
+  bestGames: { gamesList: IBestGamesRequest };
+  bestMovies: { moviesList: IBestMoviesRequest };
+  user: IUserData;
+  search: ISearch;
+  loginPopup: boolean;
+  notification: {
+    type: 'warning' | 'success' | 'reject';
+    isShown: boolean;
+    text: string;
+  };
+  listsCatalog: IListsCatalog;
+  pageDetails: IItemInfo;
+}
+
+export interface IItemInfo {
+  id: number;
+  name: string;
+  nameOriginal: string;
+  posterUrl: string;
+  year: string;
+  genres: string[];
+  rating1: number;
+  rating2: number;
+  description: string;
+  platforms?: string[];
+  achievementsCount?: number;
+  developers?: { name: string; imgUrl: string }[];
+  publishers?: { name: string; imgUrl: string }[];
+  countries?: string[];
+  filmLength?: number;
+  ageRating: string;
+}
+
+export interface IUserData {
+  userData: {
+    email: string;
+    name: string;
+    imageUrl: string;
+    country: string;
+    description: string;
+  };
+  lists: { items: IItem[]; title: string; description: string }[];
+  favoriteContent: { title: string; items: IItem[] }[];
+  waitingContent: { title: string; items: IItem[] }[];
+}
+
+export interface ISearch {
+  searchInputValue: string;
+  books: {
+    isLoaded: boolean;
+  };
+  games: {
+    isLoaded: boolean;
+    gamesSearch: { results: { name: string; background_image: string; id: number }[] };
+  };
+  movies: {
+    isLoaded: boolean;
+    moviesSearch: {
+      films: { filmId: number; posterUrlPreview: string; nameEn: string; nameRu: string }[];
+    };
+  };
+  shows: {
+    isLoaded: boolean;
+  };
+}
+
+export interface IListsCatalog {
+  isOpen: boolean;
+  name: string;
+  bgImg: string;
+  id: number;
+  nameOrig: string;
+  section: string;
+}

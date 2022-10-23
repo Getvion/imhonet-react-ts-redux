@@ -4,7 +4,9 @@ import { ref, list, deleteObject, uploadBytes, getDownloadURL } from 'firebase/s
 import clsx from 'clsx';
 
 import { storage } from '../../firebase';
-import { IUserData } from '../../@types/intefaces';
+
+import { IState } from '../../@types/state';
+
 import { Button } from '../UI/Button/Button';
 import { GlobalSvgSelector } from '../../assets/icons/GlobalSvgSelector';
 
@@ -20,7 +22,7 @@ export const UploadAvatar: React.FC<IProps> = ({ setNewImageUrl }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState<string>();
 
-  const { imageUrl, name, email } = useSelector((state: IUserData) => state.user.userData);
+  const { imageUrl, name, email } = useSelector((state: IState) => state.user.userData);
 
   const onUploadImage = () => {
     if (!selectedFile) return;
