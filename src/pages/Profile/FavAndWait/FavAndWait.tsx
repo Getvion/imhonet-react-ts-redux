@@ -19,14 +19,14 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
   const dispatch = useDispatch();
 
   const [showPopup, setShowPopup] = useState(false);
-  const [popupArray, setPopupArray] = useState<any>([]);
+  const [popupArray, setPopupArray] = useState<IItem[]>([]);
   const [popupTitle, setPopupTitle] = useState('');
 
   const { userData, favoriteContent, waitingContent } = useSelector(({ user }: IUserData) => user);
 
   const onShowList = (title: string) => {
     const foundArray = itemsArr.find((item) => item.title === title)?.items;
-    setPopupArray(foundArray);
+    setPopupArray(foundArray || []);
     setPopupTitle(title);
     setShowPopup(true);
   };

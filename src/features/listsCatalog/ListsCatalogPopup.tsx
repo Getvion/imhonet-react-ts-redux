@@ -7,13 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { setCatalogListOpen } from './listsCatalogSlice';
 
-import classes from './ListsCatalogPopup.module.scss';
 import { Input, Button } from '../../components';
+
 import { IItem } from '../../@types/intefaces';
+import { SubmitFormType } from '../../@types/types';
 
 import { db } from '../../firebase';
 import { setNotification } from '../notification/notificationSlice';
 import { updateLists } from '../auth/userSlice';
+
+import classes from './ListsCatalogPopup.module.scss';
 
 interface IUserData {
   user: {
@@ -47,8 +50,8 @@ export const ListsCatalogPopup = () => {
   const listsCatalog = useSelector((state: IListsCatalog) => state.listsCatalog);
   const { isOpen, name, bgImg, id, nameOrig, section } = listsCatalog;
 
-  const onClosePopup = (e: any) => {
-    const isOutsideClick = e.target.classList.contains(classes.modal);
+  const onClosePopup = (e: React.MouseEvent<HTMLDivElement>) => {
+    const isOutsideClick = (e.target as HTMLDListElement).classList.contains(classes.modal);
     if (isOutsideClick) {
       dispatch(setCatalogListOpen(false));
       setInputValue('');
@@ -61,7 +64,9 @@ export const ListsCatalogPopup = () => {
         const isAlreadyAdded = list.items.find((item) => item.name === name);
 
         if (isAlreadyAdded) {
-          dispatch(setNotification({ type: 'warning', text: 'Уже был добавлен ранее в этот список' }));
+          dispatch(
+            setNotification({ type: 'warning', text: 'Уже был добавлен ранее в этот список' })
+          );
         } else {
           dispatch(setNotification({ type: 'success', text: 'Успешно добавлено в список' }));
           return { ...list, items: [...list.items, { id, name, nameOrig, bgImg, section }] };
@@ -74,10 +79,12 @@ export const ListsCatalogPopup = () => {
     dispatch(updateLists(newArr));
     await updateDoc(doc(db, 'users', userData.email), {
       lists: newArr
-    }).catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+    }).catch(() =>
+      dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+    );
   };
 
-  const onFormSubmit = async (e: any) => {
+  const onFormSubmit = async (e: SubmitFormType) => {
     e.preventDefault();
 
     if (inputValue === '') {
@@ -96,7 +103,9 @@ export const ListsCatalogPopup = () => {
         const fetchData = docSnap.data();
         dispatch(updateLists(fetchData?.lists));
       })
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+      );
   };
 
   return (
@@ -108,7 +117,11 @@ export const ListsCatalogPopup = () => {
               {lists.map(({ title }) => (
                 <li key={title} className={classes.modal__catalog__item}>
                   <p className={classes.modal__title}>{title}</p>
-                  <Button onClick={() => onAddElementToList(title)} text='Добавить' state='accept' />
+                  <Button
+                    onClick={() => onAddElementToList(title)}
+                    text='Добавить'
+                    state='accept'
+                  />
                 </li>
               ))}
             </ul>

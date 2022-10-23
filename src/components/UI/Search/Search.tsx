@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Input } from '../..';
+
+import { SubmitFormType } from '../../../@types/types';
+
 import { setSearch } from '../../../features/search/searchSlice';
 
 import classes from './Search.module.scss';
@@ -12,7 +15,7 @@ export const Search = () => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
 
-  const handleSumbit = (event: any) => {
+  const handleSumbit = (event: SubmitFormType) => {
     event.preventDefault();
     if (inputValue) {
       dispatch(setSearch(inputValue));

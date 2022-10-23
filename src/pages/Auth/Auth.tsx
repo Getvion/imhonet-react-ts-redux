@@ -6,25 +6,25 @@ import { Register } from './Register';
 import classes from './Auth.module.scss';
 
 export const Auth = () => {
-  const UserForms: any = useRef(null);
+  const UserForms = useRef<HTMLDivElement>(null);
   const onLoginClick = () => {
-    UserForms.current.classList.remove(classes.bounceLeft);
-    UserForms.current.classList.add(classes.bounceRight);
+    UserForms.current?.classList.remove(classes.bounceLeft);
+    UserForms.current?.classList.add(classes.bounceRight);
   };
 
   const onSignUpClick = () => {
-    UserForms.current.classList.remove(classes.bounceRight);
-    UserForms.current.classList.add(classes.bounceLeft);
+    UserForms.current?.classList.remove(classes.bounceRight);
+    UserForms.current?.classList.add(classes.bounceLeft);
   };
 
   const onMobileSignUpClick = () => {
-    UserForms.current.classList.remove(classes.show_login);
-    UserForms.current.classList.add(classes.show_signup);
+    UserForms.current?.classList.remove(classes.show_login);
+    UserForms.current?.classList.add(classes.show_signup);
   };
 
   const onMobileLoginClick = () => {
-    UserForms.current.classList.remove(classes.show_signup);
-    UserForms.current.classList.add(classes.show_login);
+    UserForms.current?.classList.remove(classes.show_signup);
+    UserForms.current?.classList.add(classes.show_login);
   };
 
   return (

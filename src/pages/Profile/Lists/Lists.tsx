@@ -18,14 +18,14 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
   const dispatch = useDispatch();
 
   const [showPopup, setShowPopup] = useState(false);
-  const [popupArray, setPopupArray] = useState<any>([]);
+  const [popupArray, setPopupArray] = useState<IItem[]>([]);
   const [popupTitle, setPopupTitle] = useState('');
 
   const { userData } = useSelector(({ user }: IUserData) => user);
 
   const onShowList = (title: string) => {
     const foundArray = lists.find((list) => list.title === title)?.items;
-    setPopupArray(foundArray);
+    setPopupArray(foundArray || []);
     setPopupTitle(title);
     setShowPopup(true);
   };
@@ -38,7 +38,9 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
       .then(() => dispatch(updateLists(filteredArr)))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+      );
   };
 
   const onDeleteItem = async (filteredArr: IItem[], listTitle: string) => {
@@ -54,7 +56,9 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
     })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
       .then(() => dispatch(updateLists(newList)))
-      .catch(() => dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' })));
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+      );
   };
 
   return (
@@ -76,7 +80,12 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
                 <ul className={classes.section__list}>
                   {items.slice(0, 3).map(({ id, bgImg, name, nameOrig, section }) => (
                     <li key={id} className={classes.section__item}>
-                      <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section} />
+                      <SectionCard
+                        id={id}
+                        bgImage={bgImg}
+                        name={name || nameOrig}
+                        section={section}
+                      />
                     </li>
                   ))}
                 </ul>

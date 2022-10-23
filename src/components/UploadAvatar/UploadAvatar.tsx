@@ -46,11 +46,11 @@ export const UploadAvatar: React.FC<IProps> = ({ setNewImageUrl }) => {
     });
   };
 
-  const onSelectFile = (e: any) => {
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
     setIsImageAdded(true);
-    setSelectedFile(e.target.files[0]);
+    setSelectedFile((e.target as unknown as HTMLFormElement).files[0]);
   };
 
   useEffect(() => {

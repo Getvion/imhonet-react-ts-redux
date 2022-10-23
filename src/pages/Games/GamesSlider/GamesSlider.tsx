@@ -23,8 +23,8 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
   const [slideImageUrl, setSlideImageUrl] = useState('');
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const onImageSelect = (event: any, index: number) => {
-    setSlideImageUrl(event.target?.currentSrc);
+  const onImageSelect = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
+    setSlideImageUrl((event.target as HTMLFormElement)?.currentSrc);
     setActiveSlide(index);
   };
 
@@ -34,10 +34,20 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
   };
 
   return (
-    <Swiper slidesPerView={1} loop autoplay onSlideChange={onSlideChange} className={classes.slides}>
+    <Swiper
+      slidesPerView={1}
+      loop
+      autoplay
+      onSlideChange={onSlideChange}
+      className={classes.slides}
+    >
       {items.map((item) => (
         <SwiperSlide className={classes.slide__inner} key={item.id}>
-          <img className={classes.slide__img} src={slideImageUrl || item.background_image} alt='slide' />
+          <img
+            className={classes.slide__img}
+            src={slideImageUrl || item.background_image}
+            alt='slide'
+          />
           <div className={classes.slide__content}>
             <h2 className={classes.slide__name}>{item.name}</h2>
             <div className={classes.slide__reviews}>
@@ -60,7 +70,9 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
                 {item.rating}
               </span>
             </div>
-            <span className={classes.slide__release}>Год релиза: {item.released.split('-')[0]}</span>
+            <span className={classes.slide__release}>
+              Год релиза: {item.released.split('-')[0]}
+            </span>
             <div className={classes.slide__genres}>
               Жанры:{' '}
               {item.genres.map((genre) => (
@@ -74,7 +86,9 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
             {item.short_screenshots.slice(0, 5).map((img, index) => (
               <button onClick={(event) => onImageSelect(event, index)}>
                 <img
-                  className={clsx(classes.slide__screens_img, { [classes.active]: index === activeSlide })}
+                  className={clsx(classes.slide__screens_img, {
+                    [classes.active]: index === activeSlide
+                  })}
                   key={img.id}
                   src={img.image}
                   alt={item.name}

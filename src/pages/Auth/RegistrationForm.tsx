@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SubmitFormType } from '../../@types/types';
 import { Input } from '../../components';
 
 import classes from './Auth.module.scss';
@@ -8,7 +9,7 @@ interface IProps {
   text: string;
   buttonText: string;
   isRegistration?: boolean;
-  onSubmitForm: any;
+  onSubmitForm: (nickname: string, email: string, password: string) => void;
 }
 
 export const RegistrationForm: React.FC<IProps> = ({
@@ -22,7 +23,7 @@ export const RegistrationForm: React.FC<IProps> = ({
   const [passwordValue, setPasswordValue] = useState('');
   const [nicknameValue, setNicknameValue] = useState('');
 
-  const onSubmitButtonClick = (e: any) => {
+  const onSubmitButtonClick = (e: SubmitFormType) => {
     e.preventDefault();
 
     onSubmitForm(nicknameValue, emailValue, passwordValue);
