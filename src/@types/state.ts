@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
 import { IItem } from './intefaces';
-import { IBestGamesRequest, IBestMoviesRequest } from './requestInterfaces';
+import { IBestMoviesRequest } from './requestInterfaces';
 
 export interface IState {
   theme: 'dark' | 'light';
-  bestGames: { gamesList: IBestGamesRequest };
+  bestGames: IBestGames;
   bestMovies: { moviesList: IBestMoviesRequest };
   user: IUserData;
   search: ISearch;
@@ -35,6 +35,21 @@ export interface IItemInfo {
   countries?: string[];
   filmLength?: number;
   ageRating: string;
+}
+
+export interface IBestGames {
+  next: string;
+  previous: string;
+  results: {
+    posterUrl: string;
+    genres: string[];
+    id: number;
+    name: string;
+    rating1: number;
+    rating2: number;
+    year: string;
+    screenshots: { imageUrl: string; id: number }[];
+  }[];
 }
 
 export interface IUserData {

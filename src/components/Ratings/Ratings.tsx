@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 
-import { IUserData } from '../../@types/intefaces';
 import { setLoginOffer } from '../../features/loginOffer/loginOfferSlice';
 
 import exceptionalImg from './img/exceptional.png';
@@ -10,7 +9,12 @@ import recomendedImg from './img/recomended.png';
 import mehImg from './img/meh.png';
 import skipImg from './img/skip.png';
 
+import { IState } from '../../@types/state';
+
 import { GlobalSvgSelector } from '../../assets/icons/GlobalSvgSelector';
+
+import { SubmitFormType } from '../../@types/types';
+
 import classes from './Ratings.module.scss';
 
 export const Ratings = () => {
@@ -19,7 +23,7 @@ export const Ratings = () => {
   const [textareaValue, setTextareaValue] = useState<string>('');
   const [isReviewShow, setIsReviewShow] = useState(true);
 
-  const { userData } = useSelector(({ user }: IUserData) => user);
+  const { userData } = useSelector((state: IState) => state.user);
 
   const ratingsData = [
     { img: exceptionalImg, title: 'Великолепно', value: 'excelent' },
@@ -34,7 +38,7 @@ export const Ratings = () => {
     setSelectedRating(index);
   };
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+  const onFormSubmit = (e: SubmitFormType) => {
     e.preventDefault();
     setIsReviewShow(false);
   };
@@ -64,7 +68,11 @@ export const Ratings = () => {
               value={textareaValue}
               onChange={(e) => setTextareaValue(e.target.value)}
             />
-            <button disabled={!textareaValue} className={classes.review__button} onClick={onFormSubmit}>
+            <button
+              disabled={!textareaValue}
+              className={classes.review__button}
+              onClick={onFormSubmit}
+            >
               сохранить
             </button>
           </form>

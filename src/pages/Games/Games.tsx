@@ -15,7 +15,8 @@ import classes from './Games.module.scss';
 
 export const Games = () => {
   const dispatch = useAppDispatch();
-  const bestGames = useSelector((state: IState) => state.bestGames.gamesList.results);
+
+  const bestGames = useSelector((state: IState) => state.bestGames.results);
 
   useEffect(() => {
     dispatch(loadBestGames());
@@ -23,19 +24,13 @@ export const Games = () => {
 
   return (
     <div className={classes.games}>
-      {bestGames ? (
+      {bestGames.length ? (
         <>
           <GamesSlider items={bestGames} />
           <h2 className={classes.games__title}>Лучшие игры</h2>
           <div className={classes.games__list}>
-            {bestGames.map(({ id, background_image, name }) => (
-              <SectionCard
-                key={id}
-                id={id}
-                section='games'
-                bgImage={background_image}
-                name={name}
-              />
+            {bestGames.map(({ id, posterUrl, name }) => (
+              <SectionCard key={id} id={id} section='games' bgImage={posterUrl} name={name} />
             ))}
           </div>
         </>

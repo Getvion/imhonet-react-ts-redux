@@ -1,12 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { IBestGames } from '../../@types/state';
+
 import { gamesRequests } from '../../requests/games';
 
-export const loadBestGames = createAsyncThunk('load-best-games', async (gameId: number | string = 1) =>
-  gamesRequests.getBestGames(gameId)
+export const loadBestGames = createAsyncThunk(
+  'load-best-games',
+  async (gameId: number | string = 1) => gamesRequests.getBestGames(gameId)
 );
 
-const initialState = {
-  gamesList: []
+const initialState: IBestGames = {
+  next: '',
+  previous: '',
+  results: []
 };
 
 const bestGames = createSlice({
@@ -14,9 +20,7 @@ const bestGames = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(loadBestGames.fulfilled, (state, action) => {
-      state.gamesList = action.payload;
-    });
+    builder.addCase(loadBestGames.fulfilled, (state, action) => action.payload);
   }
 });
 

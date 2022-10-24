@@ -4,18 +4,20 @@ import clsx from 'clsx';
 
 import 'swiper/css';
 
+import { RatingFormater } from '../../../components';
+
 import classes from './GamesSlider.module.scss';
 
 interface IProps {
   items: {
+    posterUrl: string;
+    genres: string[];
     id: number;
-    background_image: string;
-    metacritic: number;
-    rating: number;
     name: string;
-    released: string;
-    genres: { id: number; name: string }[];
-    short_screenshots: { id: number; image: string }[];
+    rating1: number;
+    rating2: number;
+    year: string;
+    screenshots: { imageUrl: string; id: number }[];
   }[];
 }
 
@@ -43,54 +45,32 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
     >
       {items.map((item) => (
         <SwiperSlide className={classes.slide__inner} key={item.id}>
-          <img
-            className={classes.slide__img}
-            src={slideImageUrl || item.background_image}
-            alt='slide'
-          />
+          <img className={classes.slide__img} src={slideImageUrl || item.posterUrl} alt='slide' />
           <div className={classes.slide__content}>
             <h2 className={classes.slide__name}>{item.name}</h2>
             <div className={classes.slide__reviews}>
-              <span
-                className={clsx(classes.slide__review, {
-                  [classes.green]: item.metacritic >= 80,
-                  [classes.yellow]: item.metacritic < 80 && item.metacritic > 60,
-                  [classes.red]: item.metacritic < 60
-                })}
-              >
-                {item.metacritic}
-              </span>
-              <span
-                className={clsx(classes.slide__review, {
-                  [classes.green]: item.rating >= 4,
-                  [classes.yellow]: item.rating < 4 && item.rating > 3,
-                  [classes.red]: item.rating < 2
-                })}
-              >
-                {item.rating}
-              </span>
+              <RatingFormater rating={item.rating1} />
+              <RatingFormater rating={item.rating2} />
             </div>
-            <span className={classes.slide__release}>
-              Год релиза: {item.released.split('-')[0]}
-            </span>
+            <span className={classes.slide__release}>Год релиза: {item.year}</span>
             <div className={classes.slide__genres}>
               Жанры:{' '}
               {item.genres.map((genre) => (
-                <span key={genre.id} className={classes.slide__genre}>
-                  {genre.name.toLowerCase()}{' '}
+                <span key={genre} className={classes.slide__genre}>
+                  {genre.toLowerCase()}{' '}
                 </span>
               ))}
             </div>
           </div>
           <div className={classes.slide__screens}>
-            {item.short_screenshots.slice(0, 5).map((img, index) => (
+            {item.screenshots.slice(0, 5).map((img, index) => (
               <button onClick={(event) => onImageSelect(event, index)}>
                 <img
                   className={clsx(classes.slide__screens_img, {
                     [classes.active]: index === activeSlide
                   })}
                   key={img.id}
-                  src={img.image}
+                  src={img.imageUrl}
                   alt={item.name}
                 />
               </button>

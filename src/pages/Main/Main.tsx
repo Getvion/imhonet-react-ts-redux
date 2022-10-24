@@ -11,13 +11,14 @@ import { loadBestMovies } from '../../features/best/bestMoviesSlice';
 import { useWindowDimensions, useAppDispatch } from '../../hooks';
 
 import classes from './Main.module.scss';
+import 'swiper/css';
 
 export const Main = () => {
   const dispatch = useAppDispatch();
 
   const [slidesToView, setSlidesToView] = useState(4);
 
-  const bestGames = useSelector((state: IState) => state.bestGames.gamesList.results);
+  const bestGames = useSelector((state: IState) => state.bestGames.results);
   const bestMovies = useSelector((state: IState) => state.bestMovies.moviesList.films);
 
   const { windowWidth } = useWindowDimensions();
@@ -60,11 +61,11 @@ export const Main = () => {
       <div className={classes.category}>
         <h2 className={classes.category__title}>Лучшие Игры</h2>
         <div className={classes.cards}>
-          {bestGames ? (
+          {bestGames.length ? (
             <Swiper slidesPerView={slidesToView} loop>
-              {bestGames.map(({ id, name, background_image }) => (
+              {bestGames.map(({ id, name, posterUrl }) => (
                 <SwiperSlide key={id} className={classes.card}>
-                  <SectionCard name={name} bgImage={background_image} section='games' id={id} />
+                  <SectionCard name={name} bgImage={posterUrl} section='games' id={id} />
                 </SwiperSlide>
               ))}
             </Swiper>

@@ -173,7 +173,7 @@ export interface IGameRequest {
 }
 
 export interface IBestGamesRequest {
-  count: 814163;
+  count: number;
   description: string;
   next: string;
   nofollow: boolean;
@@ -195,7 +195,7 @@ export interface IBestGamesRequest {
     rating: number;
     rating_top: number;
     ratings_count: number;
-    released: '2013-09-17';
+    released: string;
     reviews_count: number;
     reviews_text_count: number;
     saturated_color: string;
