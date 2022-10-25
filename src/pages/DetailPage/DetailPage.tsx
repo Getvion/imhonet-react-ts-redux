@@ -37,7 +37,7 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
 
   const { userData } = useSelector((state: IState) => state.user);
   const pageDetails = useSelector((state: IState) => state.pageDetails);
-  const { name, nameOriginal, id, posterUrl } = pageDetails;
+  const { name, nameOriginal, id, posterUrl, year, genres, ageRating } = pageDetails;
 
   const addContent = (contentType: IAdd[]) =>
     contentType.map((element) => {
@@ -125,30 +125,38 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const ratingAgeLimits = () => {
-    if (pageDetails.ageRating === 'age18' || pageDetails.ageRating === 'Mature') return '18+';
-    if (pageDetails.ageRating === 'age16' || pageDetails.ageRating === 'Teen') return '16+';
-    if (pageDetails.ageRating === 'age12' || pageDetails.ageRating === 'Everyone 10+') return '12+';
+    if (ageRating === 'r' || ageRating === 'Mature') return '18+';
+    if (ageRating === 'age16' || ageRating === 'Teen') return '16+';
+    if (ageRating === 'pg13' || ageRating === 'Everyone 10+') return '12+';
     return '0+';
   };
 
+  // load content info
   useEffect(() => {
     if (id) return;
 
     const section = pathname.split('/')[1];
     const currentId = pathname.split('/').reverse()[0];
 
-    if (section === 'movies') {
-      dispatch(loadMovieInfo(currentId));
-    }
-
-    if (section === 'games') {
-      dispatch(loadGameInfo(currentId));
-    }
+    if (section === 'movies') dispatch(loadMovieInfo(currentId));
+    if (section === 'games') dispatch(loadGameInfo(currentId));
 
     return () => {
       dispatch(emptyPageState());
     };
   }, []);
+
+  // load yohoho movie
+  useEffect(() => {
+    if (sectionName === 'movies') {
+      const script = document.createElement('script');
+      script.src = 'https://yohoho.cc/yo.js';
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  });
 
   return (
     <div className={classes.page}>
@@ -168,14 +176,12 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
                 <div className={classes.page__info}>
                   <h3 className={classes.page__about}>О {contentTypeCheck()}</h3>
                   <ul className={classes.page__list}>
-                    <ListItem description='Год выхода' content={pageDetails.year} />
-                    <ListItem description='Жанр' content={pageDetails.genres} />
-                    <ListItem description='Возраст' content={ratingAgeLimits()} />
-
+                    {year && <ListItem description='Год выхода' content={year} />}
+                    {genres && <ListItem description='Жанр' content={genres} />}{' '}
+                    {ageRating && <ListItem description='Возраст' content={ratingAgeLimits()} />}
                     {pageDetails.achievementsCount && (
                       <ListItem description='Достижения' content={pageDetails.achievementsCount} />
                     )}
-
                     {pageDetails.developers?.length && (
                       <ListItem
                         description='Разработчики'
@@ -203,9 +209,15 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
               </div>
             </div>
           </div>
-          <Description description={pageDetails.description} />
-          <div className={classes.page__ratings}>
-            <h3 className={classes.page__about}>Оценка</h3>
+          {pageDetails.description && <Description description={pageDetails.description} />}
+          {sectionName === 'movies' && (
+            <div className={classes.player__container}>
+              <div id='yohoho' data-kinopoisk={id} />
+              <p className={classes.player__text}>К сожалению фильм не нейдейн</p>
+            </div>
+          )}
+          <div className={classes.ratings}>
+            <h3 className={classes.ratings__title}>Оценка</h3>
             <Ratings />
           </div>
         </>

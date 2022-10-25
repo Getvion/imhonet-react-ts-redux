@@ -3,11 +3,6 @@
   padding: 0 10px;
   margin: 0 auto;
 
-  &__about {
-    font-size: 20px;
-    margin: 10px 0;
-  }
-
   &__top {
     display: flex;
     align-items: flex-start;
@@ -112,15 +107,29 @@
   }
 }
 
-.similar {
-  &__img {
-    width: 100%;
-    object-fit: cover;
+.player {
+  &__container {
+    position: relative;
   }
-  &__name {
-    display: inline-block;
+
+  &__text {
+    z-index: -1;
+    position: absolute;
+    display: block;
+    height: 100%;
     width: 100%;
-    text-align: center;
-    font-weight: 600;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.ratings {
+  margin: 20px 0;
+
+  &__title {
+    font-size: 20px;
+    margin: 10px 0;
   }
 }
