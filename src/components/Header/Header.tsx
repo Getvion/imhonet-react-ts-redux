@@ -23,9 +23,9 @@ export const Header = () => {
 
   const navArr = [
     { text: 'Игры', link: 'games' },
-    { text: 'Фильмы', link: 'movies' }
-    // { text: 'Сериалы', link: 'shows' },
-    // { text: 'Книги', link: 'books' },
+    { text: 'Фильмы', link: 'movies' },
+    { text: 'Сериалы', link: 'shows' },
+    { text: 'Книги', link: 'books' }
   ];
 
   const onLinkClick = (index: number) => {

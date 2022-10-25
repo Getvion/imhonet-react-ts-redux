@@ -1,11 +1,8 @@
-/* eslint-disable import/no-cycle */
 import { IItem } from './intefaces';
-import { IBestMoviesRequest } from './requestInterfaces';
 
 export interface IState {
   theme: 'dark' | 'light';
-  bestGames: IBestGames;
-  bestMovies: { moviesList: IBestMoviesRequest };
+  bestContent: IBestContent;
   user: IUserData;
   search: ISearch;
   loginPopup: boolean;
@@ -16,6 +13,17 @@ export interface IState {
   };
   listsCatalog: IListsCatalog;
   pageDetails: IItemInfo;
+}
+
+export interface IRequestResult {
+  posterUrl: string;
+  genres: string[];
+  id: number;
+  name: string;
+  rating1: number;
+  rating2?: number;
+  year: string;
+  screenshots?: { imageUrl: string; id: number }[];
 }
 
 export interface IItemInfo {
@@ -37,20 +45,13 @@ export interface IItemInfo {
   ageRating: string;
 }
 
-export interface IBestGames {
-  next: string;
-  previous: string;
-  results: {
-    posterUrl: string;
-    genres: string[];
-    id: number;
-    name: string;
-    rating1: number;
-    rating2: number;
-    year: string;
-    screenshots: { imageUrl: string; id: number }[];
-  }[];
-}
+export type IBestContent = {
+  [key in 'movies' | 'games' | 'books' | 'shows']: {
+    results: IRequestResult[];
+    isLoaded: boolean;
+    isError: string;
+  };
+};
 
 export interface IUserData {
   userData: {
@@ -67,22 +68,10 @@ export interface IUserData {
 
 export interface ISearch {
   searchInputValue: string;
-  books: {
-    isLoaded: boolean;
-  };
-  games: {
-    isLoaded: boolean;
-    gamesSearch: { results: { name: string; background_image: string; id: number }[] };
-  };
-  movies: {
-    isLoaded: boolean;
-    moviesSearch: {
-      films: { filmId: number; posterUrlPreview: string; nameEn: string; nameRu: string }[];
-    };
-  };
-  shows: {
-    isLoaded: boolean;
-  };
+  books: { isError: string; isLoaded: boolean; results: IRequestResult[] };
+  games: { isError: string; isLoaded: boolean; results: IRequestResult[] };
+  movies: { isError: string; isLoaded: boolean; results: IRequestResult[] };
+  shows: { isError: string; isLoaded: boolean; results: IRequestResult[] };
 }
 
 export interface IListsCatalog {

@@ -1,7 +1,7 @@
 // ! movies
 
 // service interfaces
-interface IMovieFilm {
+export interface IMovieFilm {
   countries: { country: string }[];
   filmId: number;
   filmLength: string;
@@ -71,7 +71,7 @@ export interface IBestMoviesRequest {
 }
 
 export interface ISearchMoviesRequest {
-  films: {}[];
+  films: IMovieFilm[];
   keyword: string;
   pagesCount: number;
   searchFilmsCountResult: number;

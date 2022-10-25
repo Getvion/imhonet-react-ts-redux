@@ -2,8 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 import {
   theme,
-  bestMovies,
-  bestGames,
+  bestContent,
   user,
   search,
   loginPopup,
@@ -15,8 +14,7 @@ import {
 export const store = configureStore({
   reducer: {
     theme,
-    bestGames,
-    bestMovies,
+    bestContent,
     user,
     search,
     loginPopup,
