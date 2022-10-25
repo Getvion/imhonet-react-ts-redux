@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 import { setEmailAndName } from '../../features/auth/userSlice';
+import { setNotification } from '../../features/notification/notificationSlice';
 
 import { RegistrationForm } from './RegistrationForm';
 
@@ -25,8 +26,9 @@ export const Login: React.FC<IProps> = ({ onMobileButtonClick }) => {
         dispatch(setEmailAndName({ name: user.displayName, email: user.email }));
         navigate('/');
       })
-      // eslint-disable-next-line no-console
-      .catch((error) => console.log(error));
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+      );
   };
 
   return (

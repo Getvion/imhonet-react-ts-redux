@@ -11,6 +11,7 @@ import { setUser } from '../../features/auth/userSlice';
 import { RegistrationForm } from './RegistrationForm';
 
 import classes from './Auth.module.scss';
+import { setNotification } from '../../features/notification/notificationSlice';
 
 interface IProps {
   onMobileButtonClick: () => void;
@@ -31,7 +32,8 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
             email: regEmail,
             description: '',
             country: '',
-            imageUrl: 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+            imageUrl:
+              'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
             socialMedia: []
           },
           favoriteContent: [
@@ -59,7 +61,8 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
               email: regEmail,
               description: '',
               country: '',
-              imageUrl: 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
+              imageUrl:
+                'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
               socialMedia: []
             },
             favoriteContent: { games: [], movies: [], shows: [], books: [] },
@@ -68,8 +71,9 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
           })
         );
       })
-      // eslint-disable-next-line no-console
-      .catch((error) => console.log(error.message));
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+      );
   };
 
   return (
