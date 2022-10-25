@@ -1,4 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+import { ISearch, IState } from '../../@types/state';
+
 import { gamesRequests } from '../../requests/games';
 import { moviesRequests } from '../../requests/movies';
 
@@ -11,12 +14,12 @@ export const searchMoviesByName = createAsyncThunk(
   async (moviesQuery: string) => moviesRequests.searchMovieByName(moviesQuery)
 );
 
-const initialState = {
+const initialState: ISearch = {
   searchInputValue: '',
-  games: { gamesSearch: [], isLoaded: false },
-  movies: { moviesSearch: [], isLoaded: false },
-  shows: { showsSearch: [], isLoaded: false },
-  books: { booksSearch: [], isLoaded: false }
+  games: { results: [], isLoaded: false, isError: '' },
+  movies: { results: [], isLoaded: false, isError: '' },
+  shows: { results: [], isLoaded: false, isError: '' },
+  books: { results: [], isLoaded: false, isError: '' }
 };
 
 const searchSlice = createSlice({
@@ -30,21 +33,42 @@ const searchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(searchGamesByName.fulfilled, (state, action) => {
-        state.games.gamesSearch = action.payload;
+        state.games.results = action.payload;
         state.games.isLoaded = true;
+        state.games.isError = '';
       })
       .addCase(searchGamesByName.pending, (state) => {
         state.games.isLoaded = false;
+        state.games.isError = '';
+      })
+      .addCase(searchGamesByName.rejected, (state) => {
+        state.games.results = [];
+        state.games.isError = 'Произошла ошибка во время поиска, попробуйте снова';
+        state.games.isLoaded = true;
       })
       .addCase(searchMoviesByName.fulfilled, (state, action) => {
-        state.movies.moviesSearch = action.payload;
+        state.movies.results = action.payload;
         state.movies.isLoaded = true;
+        state.movies.isError = '';
       })
       .addCase(searchMoviesByName.pending, (state) => {
         state.movies.isLoaded = false;
+      })
+      .addCase(searchMoviesByName.rejected, (state) => {
+        state.movies.results = [];
+        state.movies.isLoaded = true;
+        state.movies.isError = 'Произошла ошибка во время поиска, попробуйте снова';
       });
   }
 });
 
 export const searchReducer = searchSlice.reducer;
 export const { setSearch } = searchSlice.actions;
+
+// selectors
+export const selectSearchValue = (state: IState) => state.search.searchInputValue;
+export const selectSearchBooks = (state: IState) => state.search.books;
+export const selectSearchGames = (state: IState) => state.search.games;
+export const selectSearchMovies = (state: IState) => state.search.movies;
+export const selectSearchShows = (state: IState) => state.search.shows;
+export const selectSearchContent = (state: IState) => state.search;

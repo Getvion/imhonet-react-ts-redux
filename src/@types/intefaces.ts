@@ -1,6 +1,3 @@
-/* eslint-disable import/no-cycle */
-import { IItemInfo } from './state';
-
 export interface IAdd {
   title: string;
   sectionName: string;
@@ -13,14 +10,4 @@ export interface IItem {
   nameOrig: string;
   bgImg: string;
   section: string;
-}
-
-// movies
-export interface IMovieData {
-  movieInfo: IItemInfo;
-}
-
-// games
-export interface IGameInfo {
-  gameInfo: IItemInfo;
 }

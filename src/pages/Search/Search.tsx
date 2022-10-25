@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux';
 import { Link, Route, Routes } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { searchGamesByName, searchMoviesByName } from '../../features/search/searchSlice';
+import {
+  searchGamesByName,
+  searchMoviesByName,
+  selectSearchContent
+} from '../../features/search/searchSlice';
 
 import { LoadingSpinner, SectionCard } from '../../components';
-
-import { IState } from '../../@types/state';
 
 import { useAppDispatch } from '../../hooks';
 
@@ -16,18 +18,20 @@ import classes from './Search.module.scss';
 export const Search = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const { searchInputValue, games, movies } = useSelector((state: IState) => state.search);
+  const { searchInputValue, games, movies } = useSelector(selectSearchContent);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(searchGamesByName(searchInputValue));
     dispatch(searchMoviesByName(searchInputValue));
-  }, [dispatch, searchInputValue]);
+  }, []);
 
   const searchTabs = [
     { title: 'Игры', route: 'games' },
-    { title: 'Фильмы', route: 'movies' }
-    // { title: 'Сериалы', route: 'shows' }, { title: 'Книги', route: 'books' },
+    { title: 'Фильмы', route: 'movies' },
+    { title: 'Сериалы', route: 'shows' },
+    { title: 'Книги', route: 'books' }
   ];
 
   return (
@@ -50,17 +54,9 @@ export const Search = () => {
           element={
             <section className={classes.search__section}>
               {games.isLoaded ? (
-                <>
-                  {games.gamesSearch.results.map(({ id, name, background_image }) => (
-                    <SectionCard
-                      key={id}
-                      name={name}
-                      id={id}
-                      bgImage={background_image}
-                      section='games'
-                    />
-                  ))}
-                </>
+                games.results.map(({ id, name, posterUrl }) => (
+                  <SectionCard key={id} name={name} id={id} bgImage={posterUrl} section='games' />
+                ))
               ) : (
                 <LoadingSpinner />
               )}
@@ -72,25 +68,43 @@ export const Search = () => {
           element={
             <section className={classes.search__section}>
               {movies.isLoaded ? (
-                <>
-                  {movies.moviesSearch.films.map(({ filmId, nameEn, nameRu, posterUrlPreview }) => (
-                    <SectionCard
-                      key={filmId}
-                      name={nameRu || nameEn}
-                      bgImage={posterUrlPreview}
-                      id={filmId}
-                      section='movies'
-                    />
-                  ))}
-                </>
+                movies.results.map(({ id, name, posterUrl }) => (
+                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='movies' />
+                ))
               ) : (
                 <LoadingSpinner />
               )}
             </section>
           }
         />
-        {/* <Route path='shows' element={<Section title={'Только cериалы:'} dataArray={[]} />} /> */}
-        {/* <Route path='books' element={<Section title={'Только книги:'} dataArray={[]} />} /> */}
+        <Route
+          path='shows'
+          element={
+            <section className={classes.search__section}>
+              {movies.isLoaded ? (
+                movies.results.map(({ id, name, posterUrl }) => (
+                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='movies' />
+                ))
+              ) : (
+                <LoadingSpinner />
+              )}
+            </section>
+          }
+        />
+        <Route
+          path='books'
+          element={
+            <section className={classes.search__section}>
+              {movies.isLoaded ? (
+                movies.results.map(({ id, name, posterUrl }) => (
+                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='movies' />
+                ))
+              ) : (
+                <LoadingSpinner />
+              )}
+            </section>
+          }
+        />
       </Routes>
     </div>
   );
