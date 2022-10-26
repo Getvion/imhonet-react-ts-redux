@@ -29,7 +29,7 @@ export const Search = () => {
       <Input
         placeholder='Grand Theft Auto 5'
         value={inputValue}
-        setValue={(value: string) => setInputValue(value)}
+        setValue={(e) => setInputValue(e.target.value)}
       />
       <Button text='Поиск' onClick={handleSumbit} type='submit' />
     </form>

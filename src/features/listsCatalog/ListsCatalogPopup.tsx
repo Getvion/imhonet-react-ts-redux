@@ -109,7 +109,11 @@ export const ListsCatalogPopup = () => {
             </p>
           )}
           <form className={classes.modal__form} onSubmit={onFormSubmit}>
-            <Input setValue={setInputValue} placeholder='Название списка...' value={inputValue} />
+            <Input
+              setValue={(e) => setInputValue(e.target.value)}
+              placeholder='Название списка...'
+              value={inputValue}
+            />
             <Button text='Cоздать' onClick={onFormSubmit} type='submit' />
           </form>
         </div>
