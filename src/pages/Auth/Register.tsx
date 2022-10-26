@@ -72,7 +72,12 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
         );
       })
       .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+        dispatch(
+          setNotification({
+            type: 'reject',
+            text: 'Произошла ошибка, попробуйте снова, а так же проверьте правильность введенный данных'
+          })
+        )
       );
   };
 

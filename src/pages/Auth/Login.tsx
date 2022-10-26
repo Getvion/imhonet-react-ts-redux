@@ -27,7 +27,12 @@ export const Login: React.FC<IProps> = ({ onMobileButtonClick }) => {
         navigate('/');
       })
       .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка, попробуйте снова' }))
+        dispatch(
+          setNotification({
+            type: 'reject',
+            text: 'Произошла ошибка, попробуйте снова, а так же проверьте правильность введенный данных'
+          })
+        )
       );
   };
 
