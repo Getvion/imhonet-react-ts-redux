@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { IBestGames, IItemInfo } from '../@types/state';
+import { IRequestResult, IItemInfo } from '../@types/state';
 import { IBestGamesRequest, IGameRequest, ISerchGamesRequest } from '../@types/requestInterfaces';
 
 const GAMES_API_KEY = 'key=2d5893a4192a410486b36abbd099f4cb';
@@ -32,13 +32,11 @@ const getGameInfoByID = async (gameId: string | number): Promise<IItemInfo> => {
   };
 };
 
-const getBestGames = async (pageNumber: number | string): Promise<IBestGames> => {
+const getBestGames = async (pageNumber: number | string): Promise<IRequestResult[]> => {
   const data = await gamesRequest<IBestGamesRequest>(`/games?${GAMES_API_KEY}&page=${pageNumber}`);
 
-  return {
-    next: data.next,
-    previous: data.previous,
-    results: data.results.map((obj) => ({
+  return [
+    ...data.results.map((obj) => ({
       id: obj.id,
       name: obj.name,
       posterUrl: obj.background_image,
@@ -48,15 +46,26 @@ const getBestGames = async (pageNumber: number | string): Promise<IBestGames> =>
       genres: obj.genres.map((g) => g.name),
       year: obj.released.split('-')[0]
     }))
-  };
+  ];
 };
 
-const searchGameByName = async (gameQuery: string): Promise<any> => {
+const searchGameByName = async (gameQuery: string): Promise<IRequestResult[]> => {
   const data = await gamesRequest<ISerchGamesRequest>(
     `/games?${GAMES_API_KEY}&search=${gameQuery}`
   );
 
-  return data;
+  return [
+    ...data.results.map((obj) => ({
+      id: obj.id,
+      name: obj.name,
+      posterUrl: obj.background_image,
+      rating1: obj.metacritic / 10,
+      rating2: obj.rating * 2,
+      screenshots: obj.short_screenshots.map((shot) => ({ imageUrl: shot.image, id: shot.id })),
+      genres: obj.genres.map((g) => g.name),
+      year: obj.released.split('-')[0]
+    }))
+  ];
 };
 
 export const gamesRequests = {
