@@ -33,7 +33,7 @@ export const useFormValidator = (form: IForm) => {
     error: IErrors;
     forceTouchErrors?: boolean;
   }) => {
-    let isValid = false;
+    let isValid = true;
 
     // Create a deep copy of the errors
     let nextErrors = JSON.parse(JSON.stringify(error));
