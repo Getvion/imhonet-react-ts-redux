@@ -11,7 +11,7 @@ input {
 
 input.input {
   width: 100%;
-  border-bottom: 1px solid #ccc !important;
+  border-bottom: 1px solid #ccc;
   padding: 6px 20px 6px 0;
   font-size: 1rem;
   color: var(#{--text-color-defailt});
@@ -19,6 +19,6 @@ input.input {
   transition: all 0.2s ease-in-out;
   position: relative;
   &:focus {
-    border-color: gray !important;
+    border-color: gray;
   }
 }
