@@ -12,3 +12,9 @@ export { notificationReducer as notification } from './notification/notification
 export { listsCatalogReducer as listsCatalog } from './listsCatalog/listsCatalogSlice';
 export { pageDetailsReducer as pageDetails } from './details/pageDetailsSlice';
 export { bestContentReducer as bestContent } from './best/bestContentSlice';
+
+// actions
+export { setCatalogListOpen, setCatalogListData } from './listsCatalog/listsCatalogSlice';
+export { emptyPageState } from './details/pageDetailsSlice';
+export { setLoginOffer } from './loginOffer/loginOfferSlice';
+export { setNotification } from './notification/notificationSlice';
