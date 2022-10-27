@@ -23,6 +23,18 @@
     border-radius: 5px;
     box-shadow: var(#{--shadow-color-default});
     overflow: auto;
+    position: relative;
+  }
+
+  &__close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: var(#{--text-color-default});
+    padding: 10px;
   }
 
   &__title {

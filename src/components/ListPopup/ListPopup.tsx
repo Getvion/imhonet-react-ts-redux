@@ -9,7 +9,7 @@ interface IProps {
   setShowPopup: Function;
   itemsArr: IItem[];
   title: string;
-  onDeleteItem: Function;
+  onDeleteItem: (filteredArr: IItem[], listTitle: string) => Promise<void>;
 }
 
 export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, onDeleteItem }) => {
@@ -22,19 +22,32 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, onD
     setShowPopup(false);
   };
 
-  return (
-    <div className={classes.modal__dialog}>
-      <h3 className={classes.modal__title}>{title}</h3>
-      <div className={classes.modal__content}>
-        {filteredArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
-          <div className={classes.modal__element} key={id}>
-            <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section} />
+  const onClosePopup = () => {
+    setShowPopup(false);
+  };
 
-            <div className={classes.modal__delete}>
-              <ListButtons title={name} deleteButtonText='Удалить' onDelete={onDeleteItemFromList} openFrom='popup' />
+  return (
+    <div className={classes.modal}>
+      <div className={classes.modal__dialog}>
+        <button onClick={onClosePopup} className={classes.modal__close}>
+          x
+        </button>
+        <h3 className={classes.modal__title}>{title}</h3>
+        <div className={classes.modal__content}>
+          {filteredArr.map(({ id, bgImg, name, nameOrig, section }: IItem) => (
+            <div className={classes.modal__element} key={id}>
+              <SectionCard id={id} bgImage={bgImg} name={name || nameOrig} section={section} />
+              <div className={classes.modal__delete}>
+                <ListButtons
+                  title={name}
+                  deleteButtonText='Удалить'
+                  onDelete={onDeleteItemFromList}
+                  openFrom='popup'
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
