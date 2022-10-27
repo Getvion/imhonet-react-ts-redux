@@ -17,22 +17,19 @@ export const useFormValidator = (form: IForm) => {
   type ErrorType = keyof typeof errors;
 
   const [errors, setErrors] = useState<IErrors>({
-    email: { error: true, dirty: false, message: '' },
-    nickname: { error: true, dirty: false, message: '' },
-    password: { error: true, dirty: false, message: '' }
+    email: { error: true, dirty: true, message: '' },
+    nickname: { error: true, dirty: true, message: '' },
+    password: { error: true, dirty: true, message: '' }
   });
 
-  const validateForm = ({
-    form,
-    fieldName,
-    error,
-    forceTouchErrors = false
-  }: {
+  interface IValidateForm {
     form: IForm;
     fieldName?: ErrorType;
     error: IErrors;
     forceTouchErrors?: boolean;
-  }) => {
+  }
+
+  const validateForm = ({ form, fieldName, error, forceTouchErrors = false }: IValidateForm) => {
     let isValid = true;
 
     // Create a deep copy of the errors
@@ -71,10 +68,7 @@ export const useFormValidator = (form: IForm) => {
 
     setErrors(nextErrors);
 
-    return {
-      isValid,
-      errors: nextErrors
-    };
+    return { isValid, errors: nextErrors };
   };
 
   const onBlurField = (e: React.FocusEvent<HTMLInputElement>) => {

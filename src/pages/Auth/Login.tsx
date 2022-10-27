@@ -6,7 +6,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 import { setEmailAndName } from '../../features/auth/userSlice';
-import { setNotification } from '../../features/notification/notificationSlice';
 
 import { RegistrationForm } from './RegistrationForm';
 
@@ -21,19 +20,10 @@ export const Login: React.FC<IProps> = ({ onMobileButtonClick }) => {
   const dispatch = useDispatch();
 
   const onLogin = async (nickname: string, loginEmail: string, loginPassword: string) => {
-    await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
-      .then(({ user }) => {
-        dispatch(setEmailAndName({ name: user.displayName, email: user.email }));
-        navigate('/');
-      })
-      .catch(() =>
-        dispatch(
-          setNotification({
-            type: 'reject',
-            text: 'Произошла ошибка, попробуйте снова, а так же проверьте правильность введенный данных'
-          })
-        )
-      );
+    await signInWithEmailAndPassword(auth, loginEmail, loginPassword).then(({ user }) => {
+      dispatch(setEmailAndName({ name: user.displayName, email: user.email }));
+      navigate('/');
+    });
   };
 
   return (

@@ -10,7 +10,7 @@ export const emailValidator = (email: string): string => {
 export const passwordValidator = (password: string): string => {
   if (!password) return 'Пароль обязателен';
 
-  if (password.length <= 8) return 'Пароль должен содержать минимум 8 символов';
+  if (password.length < 8) return 'Пароль должен содержать минимум 8 символов';
 
   return '';
 };

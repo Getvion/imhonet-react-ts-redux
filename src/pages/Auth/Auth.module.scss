@@ -22,7 +22,7 @@
 
       &:hover {
         cursor: not-allowed;
-        color: #fff;
+        color: var(#{--text-color-default});
         background-color: transparent;
       }
     }
