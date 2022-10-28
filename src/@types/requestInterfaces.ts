@@ -240,3 +240,159 @@ export interface ISerchGamesRequest {
   }[];
   user_platforms: boolean;
 }
+
+// ! shows
+
+// service interfaces
+interface IShowCountry {
+  name: string;
+  code: string;
+  timezone: string;
+}
+
+interface IShowNetwork {
+  id: number;
+  name: string;
+  country: IShowCountry;
+  officialSite: string;
+}
+
+interface IResolutionElement {
+  url: string;
+  width: number;
+  height: number;
+}
+
+//
+
+export interface IShowRequest {
+  id: number;
+  url: string;
+  name: string;
+  type: string;
+  language: string;
+  genres: string[];
+  status: string;
+  runtime: number;
+  averageRuntime: number;
+  premiered: string;
+  ended: number;
+  officialSite: string;
+  schedule: { time: string; days: string[] };
+  rating: { average: number };
+  weight: number;
+  network: IShowNetwork;
+  webChannel: string;
+  dvdCountry: string;
+  externals: { tvrage: number; thetvdb: number; imdb: string };
+  image: { medium: string; original: string };
+  summary: string;
+  updated: string;
+  _links: { self: { href: string }; previousepisode: { href: string } };
+  _embedded: {
+    seasons: {
+      id: number;
+      url: string;
+      number: number;
+      name: string;
+      episodeOrder: number;
+      premiereDate: string;
+      endDate: string;
+      network: IShowNetwork;
+      webChannel: null;
+      image: { medium: string; original: string };
+      summary: string;
+      _links: { self: { href: string } };
+    }[];
+    crew: {
+      type: string;
+      person: {
+        id: number;
+        url: string;
+        name: string;
+        country: string;
+        birthday: string;
+        deathday: string;
+        gender: string;
+        image: { medium: string; original: string };
+        updated: number;
+        _links: { self: { href: string } };
+      };
+    }[];
+    cast: {
+      person: {
+        id: number;
+        url: string;
+        name: string;
+        country: IShowCountry;
+        birthday: string;
+        deathday: string;
+        gender: string;
+        image: { medium: string; original: string };
+        updated: number;
+        _links: { self: { href: string } };
+      };
+      character: {
+        id: number;
+        url: string;
+        name: string;
+        image: { medium: string; original: string };
+        _links: { self: { href: string } };
+      };
+      self: boolean;
+      voice: boolean;
+    }[];
+    akas: {
+      name: string;
+      country: IShowCountry;
+    }[];
+    images: {
+      id: number;
+      type: string;
+      main: boolean;
+      resolutions: { original: IResolutionElement; medium: IResolutionElement };
+    }[];
+  };
+}
+
+export interface IBestShowsRequest {}
+
+export interface ISearchShowsRequest {
+  score: number;
+  show: {
+    id: number;
+    url: string;
+    name: string;
+    type: string;
+    language: string;
+    genres: string[];
+    status: string;
+    runtime: number;
+    averageRuntime: number;
+    premiered: string;
+    ended: string;
+    officialSite: string;
+    schedule: { time: string; days: string[] };
+    rating: { average: number };
+    weight: number;
+    network: {
+      id: number;
+      name: string;
+      country: { name: string; code: string; timezone: string };
+      officialSite: string;
+    };
+    webChannel: string;
+    dvdCountry: string;
+    externals: { tvrage: number; thetvdb: number; imdb: string };
+    image: {
+      medium: string;
+      original: string;
+    };
+    summary: string;
+    updated: string;
+    _links: {
+      self: { href: string };
+      previousepisode: { href: string };
+    };
+  }[];
+}

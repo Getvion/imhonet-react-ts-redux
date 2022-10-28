@@ -18,6 +18,7 @@ const App = () => (
 
         <Route path='/games' element={<Games />} />
         <Route path='/movies' element={<Movies />} />
+        <Route path='/shows' element={<Movies />} />
 
         <Route path='/auth' element={<Auth />} />
         <Route path='/search/*' element={<Search />} />
@@ -25,6 +26,7 @@ const App = () => (
 
         <Route path='/games/:id' element={<DetailPage sectionName='games' />} />
         <Route path='/movies/:id' element={<DetailPage sectionName='movies' />} />
+        <Route path='/shows/:id' element={<DetailPage sectionName='shows' />} />
       </Routes>
     </div>
   </div>

@@ -7,7 +7,11 @@ import { db } from '../../firebase';
 import { Button, LoadingSpinner, RatingFormater, Ratings } from '../../components';
 import { Description, MoviePlayer, PageInfo } from './components';
 
-import { loadGameInfo, loadMovieInfo } from '../../features/details/pageDetailsSlice';
+import {
+  loadGameInfo,
+  loadMovieInfo,
+  loadShowsInfo
+} from '../../features/details/pageDetailsSlice';
 import {
   setCatalogListData,
   setCatalogListOpen,
@@ -32,7 +36,7 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
 
   const { userData } = useSelector((state: IState) => state.user);
   const pageDetails = useSelector((state: IState) => state.pageDetails);
-  const { name, nameOriginal, id, posterUrl } = pageDetails;
+  const { name, nameOriginal, id, posterUrl, rating1, rating2, description } = pageDetails;
 
   const addContent = (contentType: IAdd[]) =>
     contentType.map((element) => {
@@ -114,12 +118,11 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
 
   // load content info
   useEffect(() => {
-    if (id) return;
-
     const currentId = window.location.href.split('/').reverse()[0];
 
     if (sectionName === 'movies') dispatch(loadMovieInfo(currentId));
     if (sectionName === 'games') dispatch(loadGameInfo(currentId));
+    if (sectionName === 'shows') dispatch(loadShowsInfo(currentId));
 
     return () => {
       dispatch(emptyPageState());
@@ -131,7 +134,7 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
       {id ? (
         <>
           <div className={classes.page__top}>
-            <img className={classes.page__image} src={posterUrl} alt={pageDetails.name} />
+            <img className={classes.page__image} src={posterUrl} alt={name} />
             <div className={classes.page__title_wrapper}>
               <div className={classes.page__inner}>
                 <h1 className={classes.page__title}>{name}</h1>
@@ -144,12 +147,12 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
                 <PageInfo pageDetails={pageDetails} sectionName={sectionName} />
               </div>
               <div className={classes.page__grades}>
-                <RatingFormater rating={pageDetails.rating1} />
-                <RatingFormater rating={pageDetails.rating2} />
+                {rating1 && <RatingFormater rating={rating1} />}
+                {rating2 && <RatingFormater rating={rating2} />}
               </div>
             </div>
           </div>
-          {pageDetails.description && <Description description={pageDetails.description} />}
+          {description && <Description description={description} />}
           {sectionName === 'movies' && <MoviePlayer sectionName={sectionName} id={id} />}
           <div className={classes.ratings}>
             <h3 className={classes.ratings__title}>Оценка</h3>

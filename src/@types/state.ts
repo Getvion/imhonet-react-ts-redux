@@ -34,7 +34,7 @@ export interface IItemInfo {
   year: string;
   genres: string[];
   rating1: number;
-  rating2: number;
+  rating2?: number;
   description: string;
   platforms?: string[];
   achievementsCount?: number;
