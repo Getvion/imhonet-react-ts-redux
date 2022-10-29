@@ -394,5 +394,5 @@ export interface ISearchShowsRequest {
       self: { href: string };
       previousepisode: { href: string };
     };
-  }[];
+  };
 }

@@ -42,7 +42,8 @@ export interface IItemInfo {
   publishers?: { name: string; imgUrl: string }[];
   countries?: string[];
   filmLength?: number;
-  ageRating: string;
+  ageRating?: string;
+  cast?: {};
 }
 
 export type IBestContent = {

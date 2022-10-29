@@ -20,34 +20,35 @@ const getShowInfoByID = async (showId: string | number): Promise<IItemInfo> => {
     name: data._embedded.akas.find((elem) => elem.country.code === 'RU')?.name || '',
     id: data.id,
     posterUrl: data.image.original,
-    ageRating: '',
+
     description: data.summary,
-    genres: data.genres.map((genre) => genre),
-    year: data.premiered.split('-')[0],
+    genres: data.genres?.map((genre) => genre),
+    year: data.premiered?.split('-')[0],
     rating1: data.rating.average,
     nameOriginal: data.name,
     countries: [data.network.country.name] || []
+    // cast: {}
   };
 };
 
-const getBestShows = async (pageNumber: number | string): Promise<IBestShowsRequest[]> => {
+const getBestShows = async (pageNumber: number | string): Promise<IRequestResult[]> => {
   const data = await showsRequest<IBestShowsRequest>(`/shows?page=${pageNumber || 1}`);
   console.log(data);
 
-  return [{}];
+  return [];
 };
 
 const searchShowsByName = async (showQuery: string): Promise<IRequestResult[]> => {
-  const data = await showsRequest<ISearchShowsRequest>(`search/shows?q=${showQuery}`);
+  const data = await showsRequest<ISearchShowsRequest[]>(`/search/shows?q=${showQuery}`);
 
   return [
-    ...data.show.map((obj) => ({
-      posterUrl: obj.image.original,
-      genres: obj.genres,
-      id: obj.id,
-      name: obj.name,
-      rating1: obj.rating.average || 0,
-      year: obj.premiered.split('-')[0]
+    ...data.map(({ show }) => ({
+      posterUrl: show.image.original,
+      genres: show.genres,
+      id: show.id,
+      name: show.name,
+      rating1: show.rating.average || 0,
+      year: show.premiered?.split('-')[0]
     }))
   ];
 };

@@ -4,6 +4,7 @@ import { ISearch, IState } from '../../@types/state';
 
 import { gamesRequests } from '../../requests/games';
 import { moviesRequests } from '../../requests/movies';
+import { showsRequests } from '../../requests/shows';
 
 export const searchGamesByName = createAsyncThunk('load-search-games', async (gameQuery: string) =>
   gamesRequests.searchGameByName(gameQuery)
@@ -12,6 +13,10 @@ export const searchGamesByName = createAsyncThunk('load-search-games', async (ga
 export const searchMoviesByName = createAsyncThunk(
   'load-search-movies',
   async (moviesQuery: string) => moviesRequests.searchMovieByName(moviesQuery)
+);
+
+export const searchShowsByName = createAsyncThunk('load-search-shows', async (showQuery: string) =>
+  showsRequests.searchShowsByName(showQuery)
 );
 
 const initialState: ISearch = {
@@ -58,6 +63,19 @@ const searchSlice = createSlice({
         state.movies.results = [];
         state.movies.isLoaded = true;
         state.movies.isError = 'Произошла ошибка во время поиска, попробуйте снова';
+      })
+      .addCase(searchShowsByName.fulfilled, (state, action) => {
+        state.shows.results = action.payload;
+        state.shows.isLoaded = true;
+        state.shows.isError = '';
+      })
+      .addCase(searchShowsByName.pending, (state) => {
+        state.shows.isLoaded = false;
+      })
+      .addCase(searchShowsByName.rejected, (state) => {
+        state.shows.results = [];
+        state.shows.isLoaded = true;
+        state.shows.isError = 'Произошла ошибка во время поиска, попробуйте снова';
       });
   }
 });

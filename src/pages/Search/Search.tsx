@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import {
   searchGamesByName,
   searchMoviesByName,
+  searchShowsByName,
   selectSearchContent
 } from '../../features/search/searchSlice';
 
@@ -18,13 +19,14 @@ import classes from './Search.module.scss';
 export const Search = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const { searchInputValue, games, movies } = useSelector(selectSearchContent);
+  const { searchInputValue, games, movies, shows } = useSelector(selectSearchContent);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(searchGamesByName(searchInputValue));
     dispatch(searchMoviesByName(searchInputValue));
+    dispatch(searchShowsByName(searchInputValue));
   }, []);
 
   const searchTabs = [
@@ -37,14 +39,14 @@ export const Search = () => {
   return (
     <div className={classes.search}>
       <h1 className={classes.search__title}>Поиск по запросу: {searchInputValue}</h1>
-      {searchTabs.map((tab, i) => (
+      {searchTabs.map(({ route, title }, i) => (
         <Link
-          to={tab.route}
-          key={tab.route}
+          to={route}
+          key={route}
           onClick={() => setSelectedTab(i)}
           className={clsx(classes.search__tab, { [classes.active]: selectedTab === i })}
         >
-          {tab.title}
+          {title}
         </Link>
       ))}
 
@@ -81,9 +83,9 @@ export const Search = () => {
           path='shows'
           element={
             <section className={classes.search__section}>
-              {movies.isLoaded ? (
-                movies.results.map(({ id, name, posterUrl }) => (
-                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='movies' />
+              {shows.isLoaded ? (
+                shows.results.map(({ id, name, posterUrl }) => (
+                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='shows' />
                 ))
               ) : (
                 <LoadingSpinner />
