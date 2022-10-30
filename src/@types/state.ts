@@ -43,7 +43,7 @@ export interface IItemInfo {
   countries?: string[];
   filmLength?: number;
   ageRating?: string;
-  cast?: {};
+  show?: { seasons: number };
 }
 
 export type IBestContent = {

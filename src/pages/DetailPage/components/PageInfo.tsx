@@ -12,8 +12,17 @@ interface IProps {
 }
 
 export const PageInfo: React.FC<IProps> = ({ pageDetails, sectionName }) => {
-  const { year, genres, ageRating, developers, achievementsCount, publishers } = pageDetails;
-  const { countries, filmLength } = pageDetails;
+  const {
+    year,
+    genres,
+    ageRating,
+    developers,
+    achievementsCount,
+    publishers,
+    show,
+    countries,
+    filmLength
+  } = pageDetails;
 
   const ratingAgeLimits = () => {
     if (ageRating === 'r' || ageRating === 'Mature') return '18+';
@@ -45,6 +54,7 @@ export const PageInfo: React.FC<IProps> = ({ pageDetails, sectionName }) => {
         )}
         {countries?.length && <ListItem description='Страны' content={countries} />}
         {filmLength && <ListItem description='Длина' content={`${filmLength} мин`} />}
+        {show?.seasons && <ListItem description='Сезонов' content={show?.seasons} />}
       </ul>
     </div>
   );

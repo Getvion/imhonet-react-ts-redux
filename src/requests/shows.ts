@@ -2,7 +2,7 @@
 
 // shows
 import axios from 'axios';
-import { IBestShowsRequest, ISearchShowsRequest, IShowRequest } from '../@types/requestInterfaces';
+import { ISearchShowsRequest, IShowRequest } from '../@types/requestInterfaces';
 
 import { IRequestResult, IItemInfo } from '../@types/state';
 
@@ -17,26 +17,25 @@ const getShowInfoByID = async (showId: string | number): Promise<IItemInfo> => {
     embed[]=crew&embed[]=cast&embed[]=akas&embed[]=images`);
 
   return {
-    name: data._embedded.akas.find((elem) => elem.country.code === 'RU')?.name || '',
+    name: data.name,
     id: data.id,
     posterUrl: data.image.original,
-
     description: data.summary,
     genres: data.genres?.map((genre) => genre),
     year: data.premiered?.split('-')[0],
     rating1: data.rating.average,
-    nameOriginal: data.name,
-    countries: [data.network.country.name] || []
-    // cast: {}
+    nameOriginal: data._embedded.akas.find((elem) => elem.country.code === 'RU')?.name || '',
+    countries: [data.network.country.name] || [],
+    show: { seasons: data._embedded.seasons.length }
   };
 };
 
-const getBestShows = async (pageNumber: number | string): Promise<IRequestResult[]> => {
-  const data = await showsRequest<IBestShowsRequest>(`/shows?page=${pageNumber || 1}`);
-  console.log(data);
+// const getBestShows = async (pageNumber: number | string): Promise<IRequestResult[]> => {
+//   const data = await showsRequest<IBestShowsRequest>(`/shows?page=${pageNumber || 1}`);
+//   console.log(data);
 
-  return [];
-};
+//   return [];
+// };
 
 const searchShowsByName = async (showQuery: string): Promise<IRequestResult[]> => {
   const data = await showsRequest<ISearchShowsRequest[]>(`/search/shows?q=${showQuery}`);
@@ -54,7 +53,7 @@ const searchShowsByName = async (showQuery: string): Promise<IRequestResult[]> =
 };
 
 export const showsRequests = {
-  getBestShows,
+  // getBestShows,
   getShowInfoByID,
   searchShowsByName
 };
