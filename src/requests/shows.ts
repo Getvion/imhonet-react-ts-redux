@@ -42,7 +42,7 @@ const searchShowsByName = async (showQuery: string): Promise<IRequestResult[]> =
 
   return [
     ...data.map(({ show }) => ({
-      posterUrl: show.image.original,
+      posterUrl: show.image?.original,
       genres: show.genres,
       id: show.id,
       name: show.name,

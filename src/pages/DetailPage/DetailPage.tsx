@@ -10,7 +10,8 @@ import { Description, MoviePlayer, PageInfo } from './components';
 import {
   loadGameInfo,
   loadMovieInfo,
-  loadShowsInfo
+  loadShowsInfo,
+  loadBookInfo
 } from '../../features/details/pageDetailsSlice';
 import {
   setCatalogListData,
@@ -123,6 +124,7 @@ export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
     if (sectionName === 'movies') dispatch(loadMovieInfo(currentId));
     if (sectionName === 'games') dispatch(loadGameInfo(currentId));
     if (sectionName === 'shows') dispatch(loadShowsInfo(currentId));
+    if (sectionName === 'books') dispatch(loadBookInfo(currentId));
 
     return () => {
       dispatch(emptyPageState());

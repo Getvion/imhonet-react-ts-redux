@@ -44,6 +44,7 @@ export interface IItemInfo {
   filmLength?: number;
   ageRating?: string;
   show?: { seasons: number };
+  book?: { author: string[]; publisher: string };
 }
 
 export type IBestContent = {

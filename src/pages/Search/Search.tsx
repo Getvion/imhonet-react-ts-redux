@@ -4,6 +4,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import clsx from 'clsx';
 
 import {
+  searchBooksByName,
   searchGamesByName,
   searchMoviesByName,
   searchShowsByName,
@@ -19,7 +20,7 @@ import classes from './Search.module.scss';
 export const Search = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const { searchInputValue, games, movies, shows } = useSelector(selectSearchContent);
+  const { searchInputValue, games, movies, shows, books } = useSelector(selectSearchContent);
 
   const dispatch = useAppDispatch();
 
@@ -27,6 +28,7 @@ export const Search = () => {
     dispatch(searchGamesByName(searchInputValue));
     dispatch(searchMoviesByName(searchInputValue));
     dispatch(searchShowsByName(searchInputValue));
+    dispatch(searchBooksByName(searchInputValue));
   }, []);
 
   const searchTabs = [
@@ -97,9 +99,9 @@ export const Search = () => {
           path='books'
           element={
             <section className={classes.search__section}>
-              {movies.isLoaded ? (
-                movies.results.map(({ id, name, posterUrl }) => (
-                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='movies' />
+              {books.isLoaded ? (
+                books.results.map(({ id, name, posterUrl }) => (
+                  <SectionCard key={id} name={name} bgImage={posterUrl} id={id} section='books' />
                 ))
               ) : (
                 <LoadingSpinner />

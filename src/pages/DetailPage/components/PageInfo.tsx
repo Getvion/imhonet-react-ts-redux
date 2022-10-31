@@ -20,6 +20,7 @@ export const PageInfo: React.FC<IProps> = ({ pageDetails, sectionName }) => {
     achievementsCount,
     publishers,
     show,
+    book,
     countries,
     filmLength
   } = pageDetails;
@@ -55,6 +56,8 @@ export const PageInfo: React.FC<IProps> = ({ pageDetails, sectionName }) => {
         {countries?.length && <ListItem description='Страны' content={countries} />}
         {filmLength && <ListItem description='Длина' content={`${filmLength} мин`} />}
         {show?.seasons && <ListItem description='Сезонов' content={show?.seasons} />}
+        {book?.author && <ListItem description='Автор' content={book?.author} />}
+        {book?.publisher && <ListItem description='Издатель' content={book?.publisher} />}
       </ul>
     </div>
   );

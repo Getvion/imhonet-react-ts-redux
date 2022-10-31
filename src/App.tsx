@@ -27,6 +27,7 @@ const App = () => (
         <Route path='/games/:id' element={<DetailPage sectionName='games' />} />
         <Route path='/movies/:id' element={<DetailPage sectionName='movies' />} />
         <Route path='/shows/:id' element={<DetailPage sectionName='shows' />} />
+        <Route path='/books/:id' element={<DetailPage sectionName='books' />} />
       </Routes>
     </div>
   </div>
