@@ -69,10 +69,11 @@ export interface IUserData {
 
 export interface ISearch {
   searchInputValue: string;
-  books: { isError: string; isLoaded: boolean; results: IRequestResult[] };
-  games: { isError: string; isLoaded: boolean; results: IRequestResult[] };
-  movies: { isError: string; isLoaded: boolean; results: IRequestResult[] };
-  shows: { isError: string; isLoaded: boolean; results: IRequestResult[] };
+  isError: string;
+  books: { isLoaded: boolean; results: IRequestResult[] };
+  games: { isLoaded: boolean; results: IRequestResult[] };
+  movies: { isLoaded: boolean; results: IRequestResult[] };
+  shows: { isLoaded: boolean; results: IRequestResult[] };
 }
 
 export interface IListsCatalog {

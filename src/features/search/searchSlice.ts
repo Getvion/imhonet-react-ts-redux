@@ -5,6 +5,7 @@ import { ISearch, IState } from '../../@types/state';
 import { gamesRequests } from '../../requests/games';
 import { moviesRequests } from '../../requests/movies';
 import { showsRequests } from '../../requests/shows';
+import { booksRequests } from '../../requests/books';
 
 export const searchGamesByName = createAsyncThunk('load-search-games', async (gameQuery: string) =>
   gamesRequests.searchGameByName(gameQuery)
@@ -19,12 +20,17 @@ export const searchShowsByName = createAsyncThunk('load-search-shows', async (sh
   showsRequests.searchShowsByName(showQuery)
 );
 
+export const searchBooksByName = createAsyncThunk('load-search-books', async (bookQuery: string) =>
+  booksRequests.searchBooksByName(bookQuery)
+);
+
 const initialState: ISearch = {
   searchInputValue: '',
-  games: { results: [], isLoaded: false, isError: '' },
-  movies: { results: [], isLoaded: false, isError: '' },
-  shows: { results: [], isLoaded: false, isError: '' },
-  books: { results: [], isLoaded: false, isError: '' }
+  isError: '',
+  games: { results: [], isLoaded: false },
+  movies: { results: [], isLoaded: false },
+  shows: { results: [], isLoaded: false },
+  books: { results: [], isLoaded: false }
 };
 
 const searchSlice = createSlice({
@@ -40,21 +46,21 @@ const searchSlice = createSlice({
       .addCase(searchGamesByName.fulfilled, (state, action) => {
         state.games.results = action.payload;
         state.games.isLoaded = true;
-        state.games.isError = '';
+        state.isError = '';
       })
       .addCase(searchGamesByName.pending, (state) => {
         state.games.isLoaded = false;
-        state.games.isError = '';
+        state.isError = '';
       })
       .addCase(searchGamesByName.rejected, (state) => {
         state.games.results = [];
-        state.games.isError = 'Произошла ошибка во время поиска, попробуйте снова';
         state.games.isLoaded = true;
+        state.isError = 'Произошла ошибка во время поиска, попробуйте снова';
       })
       .addCase(searchMoviesByName.fulfilled, (state, action) => {
         state.movies.results = action.payload;
         state.movies.isLoaded = true;
-        state.movies.isError = '';
+        state.isError = '';
       })
       .addCase(searchMoviesByName.pending, (state) => {
         state.movies.isLoaded = false;
@@ -62,12 +68,12 @@ const searchSlice = createSlice({
       .addCase(searchMoviesByName.rejected, (state) => {
         state.movies.results = [];
         state.movies.isLoaded = true;
-        state.movies.isError = 'Произошла ошибка во время поиска, попробуйте снова';
+        state.isError = 'Произошла ошибка во время поиска, попробуйте снова';
       })
       .addCase(searchShowsByName.fulfilled, (state, action) => {
         state.shows.results = action.payload;
         state.shows.isLoaded = true;
-        state.shows.isError = '';
+        state.isError = '';
       })
       .addCase(searchShowsByName.pending, (state) => {
         state.shows.isLoaded = false;
@@ -75,7 +81,20 @@ const searchSlice = createSlice({
       .addCase(searchShowsByName.rejected, (state) => {
         state.shows.results = [];
         state.shows.isLoaded = true;
-        state.shows.isError = 'Произошла ошибка во время поиска, попробуйте снова';
+        state.isError = 'Произошла ошибка во время поиска, попробуйте снова';
+      })
+      .addCase(searchBooksByName.fulfilled, (state, action) => {
+        state.books.results = action.payload;
+        state.books.isLoaded = true;
+        state.isError = '';
+      })
+      .addCase(searchBooksByName.pending, (state) => {
+        state.books.isLoaded = false;
+      })
+      .addCase(searchBooksByName.rejected, (state) => {
+        state.books.results = [];
+        state.books.isLoaded = true;
+        state.isError = 'Произошла ошибка во время поиска, попробуйте снова';
       });
   }
 });
