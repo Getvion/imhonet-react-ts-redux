@@ -2,23 +2,15 @@ import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import clsx from 'clsx';
 
-import 'swiper/css';
-
 import { RatingFormater } from '../../../components';
 
+import { IRequestResult } from '../../../@types/state';
+
 import classes from './GamesSlider.module.scss';
+import 'swiper/css';
 
 interface IProps {
-  items: {
-    posterUrl: string;
-    genres: string[];
-    id: number;
-    name: string;
-    rating1: number;
-    rating2: number;
-    year: string;
-    screenshots: { imageUrl: string; id: number }[];
-  }[];
+  items: IRequestResult[];
 }
 
 export const GamesSlider: React.FC<IProps> = ({ items }) => {
@@ -50,7 +42,7 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
             <h2 className={classes.slide__name}>{item.name}</h2>
             <div className={classes.slide__reviews}>
               <RatingFormater rating={item.rating1} />
-              <RatingFormater rating={item.rating2} />
+              {item.rating2 && <RatingFormater rating={item.rating2} />}
             </div>
             <span className={classes.slide__release}>Год релиза: {item.year}</span>
             <div className={classes.slide__genres}>
@@ -63,7 +55,7 @@ export const GamesSlider: React.FC<IProps> = ({ items }) => {
             </div>
           </div>
           <div className={classes.slide__screens}>
-            {item.screenshots.slice(0, 5).map((img, index) => (
+            {item.screenshots?.slice(0, 5).map((img, index) => (
               <button onClick={(event) => onImageSelect(event, index)}>
                 <img
                   className={clsx(classes.slide__screens_img, {
