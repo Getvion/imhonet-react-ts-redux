@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { IState } from '../../@types/state';
 
 import { LoadingSpinner, SectionCard } from '../../components';
 
-import { loadBestGames } from '../../features/best/bestGamesSlice';
-import { loadBestMovies } from '../../features/best/bestMoviesSlice';
+import {
+  loadBestGames,
+  loadBestMovies,
+  selectBestContent
+} from '../../features/best/bestContentSlice';
+import { setNotification } from '../../features/notification/notificationSlice';
 
 import { useWindowDimensions, useAppDispatch } from '../../hooks';
 
@@ -18,8 +21,7 @@ export const Main = () => {
 
   const [slidesToView, setSlidesToView] = useState(4);
 
-  const bestGames = useSelector((state: IState) => state.bestGames.results);
-  const bestMovies = useSelector((state: IState) => state.bestMovies.moviesList.films);
+  const { games, movies } = useSelector(selectBestContent);
 
   const { windowWidth } = useWindowDimensions();
 
@@ -35,21 +37,20 @@ export const Main = () => {
     dispatch(loadBestMovies());
   }, [dispatch]);
 
+  if (games.isError || movies.isError) {
+    dispatch(setNotification({ text: games.isError || movies.isError, type: 'reject' }));
+  }
+
   return (
     <main className={classes.main}>
       <div className={classes.category}>
         <h2 className={classes.category__title}>Лучшие Фильмы</h2>
         <div className={classes.cards}>
-          {bestMovies ? (
+          {movies.isLoaded ? (
             <Swiper slidesPerView={slidesToView} loop>
-              {bestMovies.map(({ filmId, nameEn, nameRu, posterUrlPreview }) => (
-                <SwiperSlide key={filmId} className={classes.card}>
-                  <SectionCard
-                    name={nameRu || nameEn}
-                    bgImage={posterUrlPreview}
-                    section='movies'
-                    id={filmId}
-                  />
+              {movies.results.map(({ id, name, posterUrl }) => (
+                <SwiperSlide key={id} className={classes.card}>
+                  <SectionCard name={name} bgImage={posterUrl} section='movies' id={id} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -61,9 +62,9 @@ export const Main = () => {
       <div className={classes.category}>
         <h2 className={classes.category__title}>Лучшие Игры</h2>
         <div className={classes.cards}>
-          {bestGames.length ? (
+          {games.isLoaded ? (
             <Swiper slidesPerView={slidesToView} loop>
-              {bestGames.map(({ id, name, posterUrl }) => (
+              {games.results.map(({ id, name, posterUrl }) => (
                 <SwiperSlide key={id} className={classes.card}>
                   <SectionCard name={name} bgImage={posterUrl} section='games' id={id} />
                 </SwiperSlide>
