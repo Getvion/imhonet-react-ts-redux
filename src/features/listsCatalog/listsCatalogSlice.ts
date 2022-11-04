@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IState } from '../../@types/state';
 
 const initialState = {
   isOpen: false,
@@ -28,3 +29,6 @@ const listsCatalogSlice = createSlice({
 
 export const listsCatalogReducer = listsCatalogSlice.reducer;
 export const { setCatalogListOpen, setCatalogListData } = listsCatalogSlice.actions;
+
+// selectors
+export const selectListsCatalog = (state: IState) => state.listsCatalog;

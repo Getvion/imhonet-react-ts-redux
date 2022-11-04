@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { IItemInfo } from '../../@types/state';
+import { IItemInfo, IState } from '../../@types/state';
 
 import { gamesRequests } from '../../requests/games';
 import { moviesRequests } from '../../requests/movies';
@@ -59,3 +59,6 @@ const pageDetails = createSlice({
 
 export const pageDetailsReducer = pageDetails.reducer;
 export const { emptyPageState } = pageDetails.actions;
+
+// selectors
+export const selectPageDetails = (state: IState) => state.pageDetails;

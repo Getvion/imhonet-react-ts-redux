@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IState } from '../../@types/state';
 
 const initialState = {
   type: '',
@@ -23,3 +24,6 @@ const notificationSlice = createSlice({
 
 export const notificationReducer = notificationSlice.reducer;
 export const { setNotification, closeNotification } = notificationSlice.actions;
+
+// selectors
+export const selectNotification = (state: IState) => state.notification;
