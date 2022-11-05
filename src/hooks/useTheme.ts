@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setTheme } from './themeSlice';
-
-import { IState } from '../../@types/state';
+import { selectTheme, setTheme } from '../features/theme/themeSlice';
 
 export const useTheme = () => {
-  const theme = useSelector((state: IState) => state.theme);
+  const theme = useSelector(selectTheme);
   const dispatch = useDispatch();
 
   const localTheme = localStorage.getItem('theme');

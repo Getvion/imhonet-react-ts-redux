@@ -1,7 +1,7 @@
 import { Auth, onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setEmailAndName } from './userSlice';
+import { setEmailAndName } from '../features/auth/userSlice';
 
 export const useAuthOnReload = (auth: Auth) => {
   const dispatch = useDispatch();

@@ -2,8 +2,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { db } from '../../firebase';
-import { setUser } from './userSlice';
+import { db } from '../firebase';
+import { setUser } from '../features/auth/userSlice';
 
 interface IUserData {
   user: {
