@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import classes from '../DetailPage.module.scss';
+import classes from '../Detail.module.scss';
 
 interface IProps {
   description: string;

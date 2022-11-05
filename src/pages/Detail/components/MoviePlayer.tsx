@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import classes from '../DetailPage.module.scss';
+import classes from '../Detail.module.scss';
 
 export const MoviesPlayer = ({ sectionName, id }: { sectionName: string; id: number }) => {
   // load yohoho movie

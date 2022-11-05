@@ -11,7 +11,8 @@ import {
   loadGameInfo,
   loadMovieInfo,
   loadShowsInfo,
-  loadBookInfo
+  loadBookInfo,
+  selectPageDetails
 } from '../../features/details/pageDetailsSlice';
 import {
   setCatalogListData,
@@ -20,23 +21,23 @@ import {
   setLoginOffer,
   setNotification
 } from '../../features';
+import { selectUser } from '../../features/auth/userSlice';
 
 import { useAppDispatch } from '../../hooks';
 
 import { IAdd } from '../../@types/intefaces';
-import { IState } from '../../@types/state';
 
-import classes from './DetailPage.module.scss';
+import classes from './Detail.module.scss';
 
 interface IProps {
   sectionName: string;
 }
 
-export const DetailPage: React.FC<IProps> = ({ sectionName }) => {
+export const Detail: React.FC<IProps> = ({ sectionName }) => {
   const dispatch = useAppDispatch();
 
-  const { userData } = useSelector((state: IState) => state.user);
-  const pageDetails = useSelector((state: IState) => state.pageDetails);
+  const { userData } = useSelector(selectUser);
+  const pageDetails = useSelector(selectPageDetails);
   const { name, nameOriginal, id, posterUrl, rating1, rating2, description } = pageDetails;
 
   const addContent = (contentType: IAdd[]) =>

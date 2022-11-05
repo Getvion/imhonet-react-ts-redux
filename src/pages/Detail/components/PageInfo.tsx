@@ -4,7 +4,7 @@ import { ListItem } from './ListItem';
 
 import { IItemInfo } from '../../../@types/state';
 
-import classes from '../DetailPage.module.scss';
+import classes from '../Detail.module.scss';
 
 interface IProps {
   pageDetails: IItemInfo;
