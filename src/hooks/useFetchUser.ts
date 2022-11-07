@@ -1,38 +1,32 @@
-import { doc, getDoc } from 'firebase/firestore';
 import { useEffect } from 'react';
-
+import { doc, getDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
-import { db } from '../firebase';
-import { setUser } from '../features/auth/userSlice';
 
-interface IUserData {
-  user: {
-    userData: {
-      email: string;
-      name: string;
-      imageUrl: string;
-      description: string;
-      country: string;
-      socialMedia: { link: string; name: string }[];
-    };
-  };
-}
+import { selectUser, setUser } from '../features/auth/userSlice';
+
+import { IUserData } from '../@types/state';
+
+import { db } from '../firebase';
+
+export const fetchUserData = async (user: IUserData) => {
+  const docRef = doc(db, 'users', user.userData.email);
+  const docSnap = await getDoc(docRef);
+  const fetchData = docSnap.data() as IUserData;
+
+  return fetchData;
+};
 
 export const useFetchUser = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: IUserData) => state.user);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
-    const getData = async () => {
-      const docRef = doc(db, 'users', user.userData.email);
-      const docSnap = await getDoc(docRef);
-      const fetchData = docSnap.data();
+    fetchUserData(user).then((data: IUserData) => data && dispatch(setUser(data)));
+  }, []);
 
-      dispatch(setUser(fetchData));
-    };
-
-    getData();
-  }, [dispatch, user.userData.email]);
+  if (!user.userData.imageUrl) {
+    fetchUserData(user).then((data: IUserData) => data && dispatch(setUser(data)));
+  }
 
   return user;
 };

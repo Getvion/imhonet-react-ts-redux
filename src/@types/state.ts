@@ -64,8 +64,8 @@ export interface IUserData {
     description: string;
   };
   lists: { items: IItem[]; title: string; description: string }[];
-  favoriteContent: { title: string; items: IItem[] }[];
-  waitingContent: { title: string; items: IItem[] }[];
+  favoriteContent: { sectionName: string; title: string; items: IItem[] }[];
+  waitingContent: { sectionName: string; title: string; items: IItem[] }[];
 }
 
 export interface ISearch {

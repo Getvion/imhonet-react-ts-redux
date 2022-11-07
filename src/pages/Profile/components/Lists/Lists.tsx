@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, EmptyList, ListButtons, ListPopup, SectionCard } from '../../../components';
+import { Button, EmptyList, ListButtons, ListPopup, SectionCard } from '../../../../components';
 
-import { updateLists } from '../../../features/auth/userSlice';
-import { setNotification } from '../../../features/notification/notificationSlice';
+import { selectUser, updateLists } from '../../../../features/auth/userSlice';
+import { setNotification } from '../../../../features/notification/notificationSlice';
 
-import { db } from '../../../firebase';
+import { db } from '../../../../firebase';
 
-import { IItem } from '../../../@types/intefaces';
-import { IState } from '../../../@types/state';
+import { IItem } from '../../../../@types/intefaces';
 
 import classes from './Lists.module.scss';
 
@@ -21,25 +20,23 @@ interface IProps {
 export const Lists: React.FC<IProps> = ({ lists }) => {
   const dispatch = useDispatch();
 
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState('');
   const [popupArray, setPopupArray] = useState<IItem[]>([]);
   const [popupTitle, setPopupTitle] = useState('');
 
-  const { userData } = useSelector((state: IState) => state.user);
+  const { userData } = useSelector(selectUser);
 
   const onShowList = (title: string) => {
     const foundArray = lists.find((list) => list.title === title)?.items;
     setPopupArray(foundArray || []);
     setPopupTitle(title);
-    setShowPopup(true);
+    setShowPopup(title);
   };
 
   const onDeleteList = async (titleToRemove: string) => {
     const filteredArr = lists.filter((list) => list.title !== titleToRemove);
 
-    await updateDoc(doc(db, 'users', userData.email), {
-      lists: filteredArr
-    })
+    await updateDoc(doc(db, 'users', userData.email), { lists: filteredArr })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Список успешно удален' })))
       .then(() => dispatch(updateLists(filteredArr)))
       .catch(() =>
@@ -48,16 +45,11 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
   };
 
   const onDeleteItem = async (filteredArr: IItem[], listTitle: string) => {
-    const newList = lists.map((list) => {
-      if (list.title === listTitle) {
-        return { ...list, items: filteredArr };
-      }
-      return list;
-    });
+    const newList = lists.map((list) =>
+      list.title === listTitle ? { ...list, items: filteredArr } : list
+    );
 
-    await updateDoc(doc(db, 'users', userData.email), {
-      lists: newList
-    })
+    await updateDoc(doc(db, 'users', userData.email), { lists: newList })
       .then(() => dispatch(setNotification({ type: 'success', text: 'Элемент успешно удален' })))
       .then(() => dispatch(updateLists(newList)))
       .catch(() =>
@@ -96,7 +88,7 @@ export const Lists: React.FC<IProps> = ({ lists }) => {
               ) : (
                 <EmptyList text='Вы пока ничего не добавили в список' />
               )}
-              {showPopup && (
+              {showPopup === title && (
                 <ListPopup
                   itemsArr={popupArray}
                   title={popupTitle}

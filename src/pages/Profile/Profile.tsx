@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
 import { Button, LoadingSpinner } from '../../components';
-import { Lists, Stats, FavAndWait } from '.';
 
-import { IState } from '../../@types/state';
+import { Lists, Stats, FavAndWait } from './components';
 
-import { useFetchUser } from '../../features/auth/useFetchUser';
+import { useFetchUser } from '../../hooks';
 
 import classes from './Profile.module.scss';
 
@@ -17,16 +15,14 @@ export const Profile = () => {
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const { userData } = useFetchUser();
+  const { userData, lists, waitingContent, favoriteContent } = useFetchUser();
   const { country, description, imageUrl, name } = userData;
-
-  const { favoriteContent, waitingContent, lists } = useSelector((state: IState) => state.user);
 
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
     { title: 'Ожидаемое', route: 'waiting' },
-    { title: 'Списки', route: 'lists' }
-    // { title: 'Статистика', route: 'stats' },
+    { title: 'Списки', route: 'lists' },
+    { title: 'Статистика', route: 'stats' }
   ];
 
   return (
@@ -49,29 +45,28 @@ export const Profile = () => {
         <Button text='Редактировать' onClick={() => navigate('/settings/general')} />
       </div>
       <div className={classes.tabs}>
-        <div className={classes.tabs__list}>
-          {tabsTitles.map((item, index) => (
-            <Link
-              key={item.route}
-              to={item.route}
-              onClick={() => setActiveTabIndex(index)}
-              className={clsx(classes.tabs__title, {
-                [classes.active]: activeTabIndex === index
-              })}
-            >
-              {item.title}
-            </Link>
+        <ul className={classes.tabs__list}>
+          {tabsTitles.map((item, i) => (
+            <li key={item.route}>
+              <Link
+                to={item.route}
+                onClick={() => setActiveTabIndex(i)}
+                className={clsx(classes.tabs__title, { [classes.active]: activeTabIndex === i })}
+              >
+                {item.title}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
         <Routes>
           <Route
             path='favorite'
-            element={<FavAndWait itemsArr={favoriteContent} dbSection='favoriteContent' />}
+            element={<FavAndWait itemsArr={favoriteContent} dbSection='favorite' />}
           />
           <Route path='lists' element={<Lists lists={lists} />} />
           <Route
             path='waiting'
-            element={<FavAndWait itemsArr={waitingContent} dbSection='waitingContent' />}
+            element={<FavAndWait itemsArr={waitingContent} dbSection='waiting' />}
           />
           <Route path='stats' element={<Stats />} />
         </Routes>
