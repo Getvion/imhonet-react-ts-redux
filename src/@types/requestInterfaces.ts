@@ -352,7 +352,31 @@ export interface IShowRequest {
   };
 }
 
-export interface IBestShowsRequest {}
+export interface IBestShowsRequest {
+  id: number;
+  url: string;
+  name: string;
+  type: string;
+  language: string;
+  genres: string[];
+  status: string;
+  runtime: number;
+  averageRuntime: number;
+  premiered: string;
+  ended: string;
+  officialSite: string;
+  schedule: { time: string; days: string[] };
+  rating: { average: number };
+  weight: number;
+  network: IShowNetwork;
+  webChannel: string;
+  dvdCountry: string;
+  externals: { tvrage: number; thetvdb: number; imdb: string };
+  image: { medium: string; original: string };
+  summary: string;
+  updated: number;
+  _links: { self: { href: string }; previousepisode: { href: string } };
+}
 
 export interface ISearchShowsRequest {
   score: number;
@@ -387,10 +411,7 @@ export interface ISearchShowsRequest {
     };
     summary: string;
     updated: string;
-    _links: {
-      self: { href: string };
-      previousepisode: { href: string };
-    };
+    _links: { self: { href: string }; previousepisode: { href: string } };
   };
 }
 

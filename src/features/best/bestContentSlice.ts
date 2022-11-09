@@ -4,15 +4,24 @@ import { IBestContent, IState } from '../../@types/state';
 
 import { gamesRequests } from '../../requests/games';
 import { moviesRequests } from '../../requests/movies';
+import { showsRequests } from '../../requests/shows';
+import { booksRequests } from '../../requests/books';
 
-export const loadBestGames = createAsyncThunk(
-  'load-best-games',
-  async (pageNumber: number | string = 1) => gamesRequests.getBestGames(pageNumber)
+export const loadBestGames = createAsyncThunk('load-best-games', async (pageNumber: string = '1') =>
+  gamesRequests.getBestGames(pageNumber)
 );
 
 export const loadBestMovies = createAsyncThunk(
   'load-best-movies',
-  async (pageNumber: number | string = 1) => moviesRequests.getBestMovies(pageNumber)
+  async (pageNumber: string = '1') => moviesRequests.getBestMovies(pageNumber)
+);
+
+export const loadBestShows = createAsyncThunk('load-best-shows', async (pageNumber: string = '1') =>
+  showsRequests.getBestShows(pageNumber)
+);
+
+export const loadBestBooks = createAsyncThunk('load-best-books', async (pageNumber: string = '1') =>
+  booksRequests.getBestBooks(pageNumber)
 );
 
 const initialState: IBestContent = {
@@ -69,6 +78,34 @@ const bestContent = createSlice({
         state.movies.results = [];
         state.movies.isError = 'Прозошла ошибка, попробуйте снова';
         state.movies.isLoaded = true;
+      })
+      .addCase(loadBestShows.fulfilled, (state, action) => {
+        state.shows.results = action.payload;
+        state.shows.isLoaded = true;
+        state.shows.isError = '';
+      })
+      .addCase(loadBestShows.pending, (state) => {
+        state.shows.isLoaded = false;
+        state.shows.isError = '';
+      })
+      .addCase(loadBestShows.rejected, (state) => {
+        state.shows.results = [];
+        state.shows.isError = 'Прозошла ошибка, попробуйте снова';
+        state.shows.isLoaded = true;
+      })
+      .addCase(loadBestBooks.fulfilled, (state, action) => {
+        state.books.results = action.payload;
+        state.books.isLoaded = true;
+        state.books.isError = '';
+      })
+      .addCase(loadBestBooks.pending, (state) => {
+        state.books.isLoaded = false;
+        state.books.isError = '';
+      })
+      .addCase(loadBestBooks.rejected, (state) => {
+        state.books.results = [];
+        state.books.isError = 'Прозошла ошибка, попробуйте снова';
+        state.books.isLoaded = true;
       });
   }
 });
