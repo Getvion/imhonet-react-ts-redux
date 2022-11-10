@@ -1,0 +1,30 @@
+.footer {
+  background-color: var(#{--bg-color-default});
+  width: 100%;
+  box-shadow: var(#{--shadow-color-default});
+
+  &__container {
+    padding: 20px 10px;
+    margin: 0 auto;
+    max-width: 1320px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__list {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__link {
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+
+    &:hover {
+      border-bottom: 2px solid var(#{--text-color-default});
+    }
+  }
+}
