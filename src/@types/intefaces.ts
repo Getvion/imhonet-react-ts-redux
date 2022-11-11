@@ -15,6 +15,7 @@ export interface IItem {
   nameOrig: string;
   bgImg: string;
   section: string;
+  year: number;
 }
 
 export interface IReview {
@@ -23,4 +24,5 @@ export interface IReview {
   section: string;
   reviewText: string;
   reviewRating: number;
+  year: string;
 }
