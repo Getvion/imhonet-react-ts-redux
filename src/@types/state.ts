@@ -1,4 +1,4 @@
-import { IItem } from './intefaces';
+import { IItem, IReview } from './intefaces';
 
 export interface IState {
   theme: 'dark' | 'light';
@@ -66,6 +66,7 @@ export interface IUserData {
   lists: { items: IItem[]; title: string; description: string }[];
   favoriteContent: { sectionName: string; title: string; items: IItem[] }[];
   waitingContent: { sectionName: string; title: string; items: IItem[] }[];
+  reviews: { sectionName: string; items: IReview[] }[];
 }
 
 export interface ISearch {

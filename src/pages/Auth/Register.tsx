@@ -24,7 +24,7 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
     await createUserWithEmailAndPassword(auth, regEmail, regPassword).then(() => {
       if (!auth.currentUser) return;
 
-      setDoc(doc(db, 'users', regEmail), {
+      const userTemplate = {
         userData: {
           name: nickname,
           email: regEmail,
@@ -46,28 +46,21 @@ export const Register: React.FC<IProps> = ({ onMobileButtonClick }) => {
           { sectionName: 'shows', title: 'Серилы', items: [] },
           { sectionName: 'books', title: 'Книги', items: [] }
         ],
+        reviews: [
+          { sectionName: 'games', items: [] },
+          { sectionName: 'movies', items: [] },
+          { sectionName: 'shows', items: [] },
+          { sectionName: 'books', items: [] }
+        ],
         lists: []
-      });
+      };
+
+      setDoc(doc(db, 'users', regEmail), userTemplate);
 
       updateProfile(auth.currentUser, { displayName: nickname });
       navigate('/');
 
-      dispatch(
-        setUser({
-          userData: {
-            name: nickname,
-            email: regEmail,
-            description: '',
-            country: '',
-            imageUrl:
-              'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg',
-            socialMedia: []
-          },
-          favoriteContent: { games: [], movies: [], shows: [], books: [] },
-          waitingContent: { games: [], movies: [], shows: [], books: [] },
-          lists: []
-        })
-      );
+      dispatch(setUser(userTemplate));
     });
   };
 

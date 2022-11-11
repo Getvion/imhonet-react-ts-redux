@@ -1,28 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { IState } from '../../@types/state';
+import { IState, IUserData } from '../../@types/state';
 
-const initialState = {
+const initialState: IUserData = {
   userData: {
     name: '',
     email: '',
     description: '',
-    county: '',
-    imageUrl: '',
-    socialMedia: []
+    country: '',
+    imageUrl: ''
+    // socialMedia: []
   },
   favoriteContent: [],
   waitingContent: [],
-  lists: []
+  lists: [],
+  reviews: []
 };
 
 const userSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state = action.payload;
-    },
+    setUser: (state, action) => action.payload,
     setEmailAndName: (state, action) => {
       state.userData.email = action.payload.email;
       state.userData.name = action.payload.name;
@@ -36,6 +35,9 @@ const userSlice = createSlice({
     },
     updateWaitingContent: (state, action) => {
       state.waitingContent = action.payload;
+    },
+    updateReviws: (state, action) => {
+      state.reviews = action.payload;
     }
   }
 });
@@ -48,7 +50,8 @@ export const {
   setEmailAndName,
   updateLists,
   updateFavoriteContent,
-  updateWaitingContent
+  updateWaitingContent,
+  updateReviws
 } = userSlice.actions;
 
 // selectors
@@ -57,3 +60,4 @@ export const selectUserData = (state: IState) => state.user.userData;
 export const selectUserFavorite = (state: IState) => state.user.favoriteContent;
 export const selectUserWaiting = (state: IState) => state.user.waitingContent;
 export const selectUserLists = (state: IState) => state.user.lists;
+export const selectUserReviews = (state: IState) => state.user.reviews;
