@@ -13,8 +13,17 @@
     color: var(#{--bg-color-default});
   }
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+      color: var(#{--text-color-default});
+    }
+  }
+
   &.accept {
-    cursor: pointer;
     background-color: transparent;
     border: 1px solid green;
 
@@ -25,7 +34,6 @@
   }
 
   &.reject {
-    cursor: pointer;
     background-color: transparent;
     border: 1px solid red;
 
@@ -33,5 +41,12 @@
       background-color: red;
       color: white;
     }
+  }
+
+  &.active {
+    cursor: auto;
+    background-color: var(#{--text-color-default});
+    color: var(#{--bg-color-default});
+    border: 1px solid var(#{--text-color-default});
   }
 }

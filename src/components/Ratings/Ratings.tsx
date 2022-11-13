@@ -16,8 +16,7 @@ import skipImg from './img/skip.png';
 
 import { Button } from '..';
 
-import { SubmitFormType } from '../../@types/types';
-import { IAddReview } from '../../@types/intefaces';
+import { IAddReview, SubmitFormType } from '../../@types/intefaces';
 
 import { useFetchUser } from '../../hooks';
 
