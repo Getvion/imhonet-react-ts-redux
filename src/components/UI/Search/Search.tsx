@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Input } from '../..';
 
-import { SubmitFormType } from '../../../@types/types';
+import { SubmitFormType } from '../../../@types/intefaces';
 
 import { setSearch } from '../../../features/search/searchSlice';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { SubmitFormType } from '../../@types/types';
+import { SubmitFormType } from '../../@types/intefaces';
 
 import { Input } from '../../components';
 

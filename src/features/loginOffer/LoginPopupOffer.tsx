@@ -3,10 +3,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { IState } from '../../@types/state';
-
 import { Button } from '../../components';
-import { setLoginOffer } from './loginOfferSlice';
+import { selectLoginPopup, setLoginOffer } from './loginOfferSlice';
 
 import classes from './LoginPopupOffer.module.scss';
 
@@ -14,7 +12,7 @@ export const LoginPopupOffer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isPopupShow = useSelector((state: IState) => state.loginPopup);
+  const isPopupShow = useSelector(selectLoginPopup);
 
   const onCloseModal = (isNavigate: boolean) => {
     dispatch(setLoginOffer(false));

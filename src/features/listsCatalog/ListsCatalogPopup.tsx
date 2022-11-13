@@ -6,13 +6,12 @@ import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
-import { SubmitFormType } from '../../@types/types';
-import { IState } from '../../@types/state';
+import { SubmitFormType } from '../../@types/intefaces';
 
 import { Input, Button } from '../../components';
 import { setNotification } from '../notification/notificationSlice';
-import { updateLists } from '../auth/userSlice';
-import { setCatalogListOpen } from './listsCatalogSlice';
+import { selectUser, updateLists } from '../auth/userSlice';
+import { selectListsCatalog, setCatalogListOpen } from './listsCatalogSlice';
 
 import { db } from '../../firebase';
 
@@ -23,9 +22,8 @@ export const ListsCatalogPopup = () => {
 
   const dispatch = useDispatch();
 
-  const { userData, lists } = useSelector((state: IState) => state.user);
-  const listsCatalog = useSelector((state: IState) => state.listsCatalog);
-  const { isOpen, name, bgImg, id, nameOrig, section } = listsCatalog;
+  const { userData, lists } = useSelector(selectUser);
+  const { isOpen, name, bgImg, id, nameOrig, section } = useSelector(selectListsCatalog);
 
   const onClosePopup = (e: React.MouseEvent<HTMLDivElement>) => {
     const isOutsideClick = (e.target as HTMLDListElement).classList.contains(classes.modal);

@@ -15,7 +15,7 @@ export interface IItem {
   nameOrig: string;
   bgImg: string;
   section: string;
-  year: number;
+  year: string;
 }
 
 export interface IReview {
@@ -26,3 +26,5 @@ export interface IReview {
   reviewRating: number;
   year: string;
 }
+
+export type SubmitFormType = React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>;

@@ -2,16 +2,14 @@ import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeNotification } from './notificationSlice';
-
-import { IState } from '../../@types/state';
+import { closeNotification, selectNotification } from './notificationSlice';
 
 import classes from './Notification.module.scss';
 
 export const Notification = () => {
   const dispatch = useDispatch();
 
-  const { isShown, type, text } = useSelector((state: IState) => state.notification);
+  const { isShown, type, text } = useSelector(selectNotification);
 
   useEffect(() => {
     setTimeout(() => {

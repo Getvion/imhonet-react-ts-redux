@@ -7,8 +7,7 @@ import { removeUser } from '../../../features/auth/userSlice';
 
 import { auth } from '../../../firebase';
 
-import { useAuthOnReload } from '../../../features/auth/useAuthOnReload';
-import { useFetchUser } from '../../../features/auth/useFetchUser';
+import { useAuthOnReload, useFetchUser } from '../../../hooks';
 
 import classes from './Dropdown.module.scss';
 
