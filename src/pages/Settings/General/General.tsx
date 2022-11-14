@@ -11,7 +11,13 @@ interface IProps {
   setGeneralData: Function;
 }
 
-export const General: React.FC<IProps> = ({ name, imageUrl, country, description, setGeneralData }) => {
+export const General: React.FC<IProps> = ({
+  name,
+  imageUrl,
+  country,
+  description,
+  setGeneralData
+}) => {
   const [nicknameValue, setNicknameValue] = useState(name);
   const [descriptionValue, setDescriptionValue] = useState(description);
   const [counryValue, setCounryValue] = useState(country);
@@ -32,15 +38,27 @@ export const General: React.FC<IProps> = ({ name, imageUrl, country, description
       <div className={classes.general__form}>
         <div className={classes.general__form__container} onBlur={onBlurElement}>
           <span className={classes.general__form__span}>Никнейм</span>
-          <Input placeholder='' setValue={(value: string) => setNicknameValue(value)} value={nicknameValue} />
+          <Input
+            placeholder=''
+            setValue={(e) => setNicknameValue(e.target.value)}
+            value={nicknameValue}
+          />
         </div>
         <div className={classes.general__form__container} onBlur={onBlurElement}>
           <span className={classes.general__form__span}>Описание </span>
-          <Input placeholder='' setValue={(value: string) => setDescriptionValue(value)} value={descriptionValue} />
+          <Input
+            placeholder=''
+            setValue={(e) => setDescriptionValue(e.target.value)}
+            value={descriptionValue}
+          />
         </div>
         <div className={classes.general__form__container} onBlur={onBlurElement}>
           <span className={classes.general__form__span}>Страна</span>
-          <Input placeholder='' setValue={(value: string) => setCounryValue(value)} value={counryValue} />
+          <Input
+            placeholder=''
+            setValue={(e) => setCounryValue(e.target.value)}
+            value={counryValue}
+          />
         </div>
       </div>
     </section>

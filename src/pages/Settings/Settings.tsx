@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 
-import { ResetPassword, Links, General } from '.';
+import { General } from '.';
 import { Button } from '../../components';
 
 import { IState } from '../../@types/state';
@@ -23,14 +23,7 @@ export const Settings = () => {
   const { userData } = useSelector((state: IState) => state.user);
   const { name, imageUrl, country, description, email } = userData;
 
-  const [activeLinkIndex, setActiveLinkIndex] = useState(0);
   const [generalData, setGeneralData] = useState(userData);
-
-  const navLinks = [
-    { href: 'general', text: 'Основные' }
-    // { href: 'password', text: 'Смена пароля (в разработке)' },
-    // { href: 'social-links', text: 'Сcылки (в разработке)' }
-  ];
 
   const onApplyChanges = async () => {
     if (!generalData.name)
@@ -63,40 +56,21 @@ export const Settings = () => {
       <div className={classes.settings__container}>
         <nav className={classes.nav}>
           <ul className={classes.nav__list}>
-            {navLinks.map((link, index) => (
-              <li
-                key={link.href}
-                className={clsx(classes.nav__item, { [classes.active]: activeLinkIndex === index })}
-              >
-                <Link
-                  className={classes.nav__link}
-                  to={link.href}
-                  onClick={() => setActiveLinkIndex(index)}
-                >
-                  {link.text}
-                </Link>
-              </li>
-            ))}
+            <li className={classes.nav__item}>
+              {/* className={classes.nav__link} */}
+              <Button onClick={() => {}} text='Основные' />
+            </li>
           </ul>
         </nav>
 
         <div className={classes.settings__content}>
-          <Routes>
-            <Route
-              path='general'
-              element={
-                <General
-                  name={name}
-                  imageUrl={imageUrl}
-                  country={country}
-                  description={description}
-                  setGeneralData={setGeneralData}
-                />
-              }
-            />
-            <Route path='password' element={<ResetPassword />} />
-            <Route path='social-links' element={<Links />} />
-          </Routes>
+          <General
+            name={name}
+            imageUrl={imageUrl}
+            country={country}
+            description={description}
+            setGeneralData={setGeneralData}
+          />
         </div>
       </div>
 
