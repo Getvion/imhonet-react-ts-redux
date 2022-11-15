@@ -1,133 +1,176 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { BarChart, Bar, PieChart, Pie, Tooltip, XAxis, YAxis } from 'recharts';
 
-// import classes from './Stats.module.scss';
+import { IItem, IReview } from '../../../../@types/intefaces';
 
-// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-// const data = [
-//   {
-//     name: 'Page A',
-//     uv: 4000,
-//     pv: 2400,
-//     amt: 2400
-//   },
-//   {
-//     name: 'Page B',
-//     uv: 3000,
-//     pv: 1398,
-//     amt: 2210
-//   },
-//   {
-//     name: 'Page C',
-//     uv: 2000,
-//     pv: 9800,
-//     amt: 2290
-//   },
-//   {
-//     name: 'Page D',
-//     uv: 2780,
-//     pv: 3908,
-//     amt: 2000
-//   },
-//   {
-//     name: 'Page E',
-//     uv: 1890,
-//     pv: 4800,
-//     amt: 2181
-//   },
-//   {
-//     name: 'Page F',
-//     uv: 2390,
-//     pv: 3800,
-//     amt: 2500
-//   },
-//   {
-//     name: 'Page G',
-//     uv: 3490,
-//     pv: 4300,
-//     amt: 2100
-//   }
-// ];
+import { selectUser } from '../../../../features/auth/userSlice';
 
-// export const Stats = () => (
-//   <div>
-//     <LineChart
-//       width={500}
-//       height={300}
-//       data={data}
-//       margin={{
-//         top: 5,
-//         right: 30,
-//         left: 20,
-//         bottom: 5
-//       }}
-//     >
-//       <CartesianGrid strokeDasharray='3 3' />
-//       <XAxis dataKey='name' />
-//       <YAxis />
-//       <Tooltip />
-//       <Legend />
-//       <Line type='monotone' dataKey='pv' stroke='#8884d8' activeDot={{ r: 8 }} />
-//       <Line type='monotone' dataKey='uv' stroke='#82ca9d' />
-//     </LineChart>
-//   </div>
-// );
+import { useWindowDimensions } from '../../../../hooks';
 
-import pie from './pie.png';
-import graph from './stats-graph.png';
-import year from './stats-2.png';
+import classes from './Stats.module.scss';
 
-const StatsGraph = ({ title }: { title: string }) => (
-  <div>
-    <div>{title}</div>
-    <span>(line in procent for each span)</span>
-    <p>all: *line* a</p>
-    <p>completed: *line* b</p>
-    <p>later: *line* c</p>
-    <p>favorite *line* : d</p>
+interface IStatsService {
+  title: string;
+}
+
+const StatsGraph: React.FC<IStatsService> = ({ title }) => (
+  <div className={classes.graph}>
+    <h2 className={classes.graph__title}>
+      {title}
+      <span className={classes.graph__title__number}> a</span>
+    </h2>
+    <div className={classes.graph__item}>
+      <span className={classes.graph__item__text}>completed</span>
+      <div className={classes.graph__line}>
+        <span className={classes.graph__line__full} />
+        <span className={classes.graph__line__part} />
+      </div>
+      <span className={classes.graph__item__number}> b</span>
+    </div>
+
+    <div className={classes.graph__item}>
+      <span className={classes.graph__item__text}>later</span>
+      <div className={classes.graph__line}>
+        <span className={classes.graph__line__full} />
+        <span className={classes.graph__line__part} />
+      </div>
+      <span className={classes.graph__item__number}> c</span>
+    </div>
+
+    <div className={classes.graph__item}>
+      <span className={classes.graph__item__text}>favorite</span>
+      <div className={classes.graph__line}>
+        <span className={classes.graph__line__full} />
+        <span className={classes.graph__line__part} />
+      </div>
+      <span className={classes.graph__item__number}> d</span>
+    </div>
   </div>
 );
 
-const StatsYear = ({ title }: { title: string }) => <div>{title}</div>;
+interface IStatsYear {
+  title: string;
+  section: keyof IYearsStateData;
+  data: IYearsStateData[];
+}
 
-const StatsGenres = ({ title }: { title: string }) => <div>{title}</div>;
+const StatsYear: React.FC<IStatsYear> = ({ title, data, section }) => {
+  const { windowWidth } = useWindowDimensions();
 
-export const Stats = () => (
-  <>
-    <img src={graph} alt='' />
-    <div className='graph' style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <StatsGraph title='all' />
-      <StatsGraph title='games' />
-      <StatsGraph title='movies' />
-      <StatsGraph title='shows' />
-      <StatsGraph title='books' />
+  const statsYearWidth = Math.floor(windowWidth / 2);
+
+  const sortedData = data.sort((a, b) => a.year - b.year);
+
+  return (
+    <div>
+      <h2>{title}</h2>
+      <BarChart width={statsYearWidth} height={150} data={sortedData}>
+        <YAxis dataKey='all' />
+        <XAxis dataKey='year' />
+        <Bar dataKey={section} fill='#8884d8' />
+        <Tooltip />
+      </BarChart>
     </div>
-    <hr />
-    <div className='years'>
-      <p> releas by year (bar charts)</p>
-      <img src={year} alt='' />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}
-      >
-        <StatsYear title='all' />
-        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-          <StatsYear title='games' />
-          <StatsYear title='movies' />
+  );
+};
+
+const StatsGenres: React.FC<IStatsService> = ({ title }) => {
+  const data = [
+    { name: 'Group A', value: 400 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 },
+    { name: 'Group D', value: 200 },
+    { name: 'Group E', value: 278 },
+    { name: 'Group F', value: 189 }
+  ];
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <h2 style={{ marginBottom: 20 }}>{title}</h2>
+      <PieChart width={200} height={200}>
+        <Pie
+          dataKey='value'
+          isAnimationActive={false}
+          data={data}
+          outerRadius={99}
+          fill='#8884d8'
+        />
+        <Tooltip />
+      </PieChart>
+    </div>
+  );
+};
+
+interface IYearsStateData {
+  year: number;
+  games: number;
+  shows: number;
+  books: number;
+  movies: number;
+  all: number;
+}
+
+export const Stats = () => {
+  // const [genresData, setGenresData] = useState([]);
+  // const [graphData, setGraphData] = useState([]);
+
+  const { favoriteContent, reviews, waitingContent } = useSelector(selectUser);
+
+  // years stats
+  const allYearsContent: IItem[] & IReview[] = [];
+
+  favoriteContent.forEach((elem) => elem.items.forEach((obj) => allYearsContent.push(obj)));
+  waitingContent.forEach((elem) => elem.items.forEach((obj) => allYearsContent.push(obj)));
+  reviews.forEach((elem) => elem.items.forEach((obj) => allYearsContent.push(obj)));
+
+  const yearsArrWithoutDublicates = allYearsContent.filter(
+    (elem, index, self) => index === self.findIndex((t) => t.id === elem.id)
+  );
+
+  let yearData: IYearsStateData[] = [];
+
+  yearsArrWithoutDublicates.forEach(({ section, year }) => {
+    const baseYear: IYearsStateData = { year: 0, games: 0, shows: 0, books: 0, movies: 0, all: 0 };
+    const yearsAdded = yearData.find((elem) => elem.year === Number(year));
+    const yearsWithoutAdded = yearData.filter((elem) => Number(elem.year) !== Number(year));
+
+    if (yearsAdded) {
+      yearData = [
+        ...yearsWithoutAdded,
+        { ...yearsAdded, [section]: yearsAdded[section] + 1, all: yearsAdded.all + 1 }
+      ];
+    } else {
+      yearData = [...yearsWithoutAdded, { ...baseYear, year: Number(year), [section]: 1, all: 1 }];
+    }
+  });
+
+  return (
+    <div className={classes.stats}>
+      <div className={classes.stats__container}>
+        <StatsGraph title='all' />
+        <div className={classes.stats__row}>
+          <StatsGraph title='games' />
+          <StatsGraph title='movies' />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-          <StatsYear title='shows' />
-          <StatsYear title='books' />
+        <div className={classes.stats__row}>
+          <StatsGraph title='shows' />
+          <StatsGraph title='books' />
         </div>
       </div>
-    </div>
-    <hr />
-    <div className='genres'>
-      <p>genres (PieChart)</p>
-      <img src={pie} alt='' />
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+      <div className={classes.stats__container}>
+        <StatsYear section='all' data={yearData} title='Все' />
+        <div className={classes.stats__row}>
+          <StatsYear section='games' data={yearData} title='Игры' />
+          <StatsYear section='movies' data={yearData} title='Фильмы' />
+        </div>
+        <div className={classes.stats__row}>
+          <StatsYear section='shows' data={yearData} title='Сериалы' />
+          <StatsYear section='books' data={yearData} title='Книги' />
+        </div>
+      </div>
+
+      <div className={classes.pie__container}>
         <StatsGenres title='all' />
         <StatsGenres title='games' />
         <StatsGenres title='movies' />
@@ -135,5 +178,5 @@ export const Stats = () => (
         <StatsGenres title='books' />
       </div>
     </div>
-  </>
-);
+  );
+};

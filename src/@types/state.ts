@@ -1,4 +1,4 @@
-import { IItem, IReview } from './intefaces';
+import { IItem, IReview, SectionType } from './intefaces';
 
 export interface IState {
   theme: 'dark' | 'light';
@@ -64,9 +64,9 @@ export interface IUserData {
     description: string;
   };
   lists: { items: IItem[]; title: string; description: string }[];
-  favoriteContent: { sectionName: string; title: string; items: IItem[] }[];
-  waitingContent: { sectionName: string; title: string; items: IItem[] }[];
-  reviews: { sectionName: string; items: IReview[] }[];
+  favoriteContent: { sectionName: SectionType; title: string; items: IItem[] }[];
+  waitingContent: { sectionName: SectionType; title: string; items: IItem[] }[];
+  reviews: { sectionName: SectionType; items: IReview[] }[];
 }
 
 export interface ISearch {
@@ -84,5 +84,5 @@ export interface IListsCatalog {
   bgImg: string;
   id: number;
   nameOrig: string;
-  section: string;
+  section: SectionType;
 }
