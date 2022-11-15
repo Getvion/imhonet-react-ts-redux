@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { BarChart, Bar, PieChart, Pie, Tooltip, XAxis, YAxis } from 'recharts';
 
-import { IItem, IReview } from '../../../../@types/intefaces';
+import { IItem, IReview, SectionType } from '../../../../@types/intefaces';
 
 import { selectUser } from '../../../../features/auth/userSlice';
 
@@ -12,42 +12,51 @@ import classes from './Stats.module.scss';
 
 interface IStatsService {
   title: string;
+  content: { favorite: number; waiting: number; completed: number };
 }
 
-const StatsGraph: React.FC<IStatsService> = ({ title }) => (
-  <div className={classes.graph}>
-    <h2 className={classes.graph__title}>
-      {title}
-      <span className={classes.graph__title__number}> a</span>
-    </h2>
-    <div className={classes.graph__item}>
-      <span className={classes.graph__item__text}>completed</span>
-      <div className={classes.graph__line}>
-        <span className={classes.graph__line__full} />
-        <span className={classes.graph__line__part} />
-      </div>
-      <span className={classes.graph__item__number}> b</span>
-    </div>
+const StatsGraph: React.FC<IStatsService> = ({ content, title }) => {
+  const { completed, favorite, waiting } = content;
 
-    <div className={classes.graph__item}>
-      <span className={classes.graph__item__text}>later</span>
-      <div className={classes.graph__line}>
-        <span className={classes.graph__line__full} />
-        <span className={classes.graph__line__part} />
-      </div>
-      <span className={classes.graph__item__number}> c</span>
-    </div>
+  const all = completed + favorite + waiting;
 
-    <div className={classes.graph__item}>
-      <span className={classes.graph__item__text}>favorite</span>
-      <div className={classes.graph__line}>
-        <span className={classes.graph__line__full} />
-        <span className={classes.graph__line__part} />
+  const calcBarWidth = (part: number) => `${(part / all) * 100}%`;
+
+  return (
+    <div className={classes.graph}>
+      <h2 className={classes.graph__title}>
+        {title}
+        <span className={classes.graph__title__number}> {all}</span>
+      </h2>
+      <div className={classes.graph__item}>
+        <span className={classes.graph__item__text}>Оценено</span>
+        <div className={classes.graph__line}>
+          <span className={classes.graph__line__full} />
+          <span className={classes.graph__line__part} style={{ width: calcBarWidth(completed) }} />
+        </div>
+        <span className={classes.graph__item__number}>{completed}</span>
       </div>
-      <span className={classes.graph__item__number}> d</span>
+
+      <div className={classes.graph__item}>
+        <span className={classes.graph__item__text}>Позже</span>
+        <div className={classes.graph__line}>
+          <span className={classes.graph__line__full} />
+          <span className={classes.graph__line__part} style={{ width: calcBarWidth(favorite) }} />
+        </div>
+        <span className={classes.graph__item__number}>{favorite}</span>
+      </div>
+
+      <div className={classes.graph__item}>
+        <span className={classes.graph__item__text}>Любимое</span>
+        <div className={classes.graph__line}>
+          <span className={classes.graph__line__full} />
+          <span className={classes.graph__line__part} style={{ width: calcBarWidth(waiting) }} />
+        </div>
+        <span className={classes.graph__item__number}>{waiting}</span>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 interface IStatsYear {
   title: string;
@@ -55,27 +64,45 @@ interface IStatsYear {
   data: IYearsStateData[];
 }
 
+interface IYearsStateData {
+  year: number;
+  games: number;
+  shows: number;
+  books: number;
+  movies: number;
+  all: number;
+}
+
 const StatsYear: React.FC<IStatsYear> = ({ title, data, section }) => {
   const { windowWidth } = useWindowDimensions();
-
-  const statsYearWidth = Math.floor(windowWidth / 2);
+  const [width, setWidth] = useState(windowWidth / 2);
 
   const sortedData = data.sort((a, b) => a.year - b.year);
 
+  const screenOffset = 100;
+  useEffect(() => {
+    if (windowWidth < 800) setWidth(windowWidth - screenOffset);
+    if (windowWidth > 1200) setWidth(windowWidth / 2);
+  }, [windowWidth]);
+
   return (
-    <div>
+    <div style={{ width }}>
       <h2>{title}</h2>
-      <BarChart width={statsYearWidth} height={150} data={sortedData}>
+      <BarChart width={width} height={150} data={sortedData}>
         <YAxis dataKey='all' />
         <XAxis dataKey='year' />
-        <Bar dataKey={section} fill='#8884d8' />
+        <Bar dataKey={section} fill='rgb(67, 84, 186)' />
         <Tooltip />
       </BarChart>
     </div>
   );
 };
 
-const StatsGenres: React.FC<IStatsService> = ({ title }) => {
+interface IStatsGenresProps {
+  title: string;
+}
+
+const StatsGenres: React.FC<IStatsGenresProps> = ({ title }) => {
   const data = [
     { name: 'Group A', value: 400 },
     { name: 'Group B', value: 300 },
@@ -101,35 +128,25 @@ const StatsGenres: React.FC<IStatsService> = ({ title }) => {
   );
 };
 
-interface IYearsStateData {
-  year: number;
-  games: number;
-  shows: number;
-  books: number;
-  movies: number;
-  all: number;
-}
-
 export const Stats = () => {
   // const [genresData, setGenresData] = useState([]);
-  // const [graphData, setGraphData] = useState([]);
 
   const { favoriteContent, reviews, waitingContent } = useSelector(selectUser);
 
-  // years stats
-  const allYearsContent: IItem[] & IReview[] = [];
+  const allContent: IItem[] & IReview[] = [];
 
-  favoriteContent.forEach((elem) => elem.items.forEach((obj) => allYearsContent.push(obj)));
-  waitingContent.forEach((elem) => elem.items.forEach((obj) => allYearsContent.push(obj)));
-  reviews.forEach((elem) => elem.items.forEach((obj) => allYearsContent.push(obj)));
+  favoriteContent.forEach((elem) => elem.items.forEach((obj) => allContent.push(obj)));
+  waitingContent.forEach((elem) => elem.items.forEach((obj) => allContent.push(obj)));
+  reviews.forEach((elem) => elem.items.forEach((obj) => allContent.push(obj)));
 
-  const yearsArrWithoutDublicates = allYearsContent.filter(
+  const arrWithoutDublicates = allContent.filter(
     (elem, index, self) => index === self.findIndex((t) => t.id === elem.id)
   );
 
+  // years stats
   let yearData: IYearsStateData[] = [];
 
-  yearsArrWithoutDublicates.forEach(({ section, year }) => {
+  arrWithoutDublicates.forEach(({ section, year }) => {
     const baseYear: IYearsStateData = { year: 0, games: 0, shows: 0, books: 0, movies: 0, all: 0 };
     const yearsAdded = yearData.find((elem) => elem.year === Number(year));
     const yearsWithoutAdded = yearData.filter((elem) => Number(elem.year) !== Number(year));
@@ -144,17 +161,51 @@ export const Stats = () => {
     }
   });
 
+  // stats graph
+  const allCompleted = [...reviews.map((elem) => elem.items)].length;
+  const allWaiting = [...waitingContent.map((elem) => elem.items)].length;
+  const allFavorite = [...favoriteContent.map((elem) => elem.items)].length;
+
+  const allObj = { completed: allCompleted, favorite: allFavorite, waiting: allWaiting };
+
+  type ContentType = { sectionName: SectionType; items: IReview[] | IItem[] };
+
+  const getContentLength = (content: ContentType[], sectionName: SectionType): number =>
+    content.find((elem) => elem.sectionName === sectionName)?.items.length as number;
+
+  const gamesObj = {
+    completed: getContentLength(reviews, 'games'),
+    waiting: getContentLength(waitingContent, 'games'),
+    favorite: getContentLength(favoriteContent, 'games')
+  };
+
+  const showsObj = {
+    completed: getContentLength(reviews, 'shows'),
+    waiting: getContentLength(waitingContent, 'shows'),
+    favorite: getContentLength(favoriteContent, 'shows')
+  };
+
+  const moviesObj = {
+    completed: getContentLength(reviews, 'movies'),
+    waiting: getContentLength(waitingContent, 'movies'),
+    favorite: getContentLength(favoriteContent, 'movies')
+  };
+
+  const booksObj = {
+    completed: getContentLength(reviews, 'books'),
+    waiting: getContentLength(waitingContent, 'books'),
+    favorite: getContentLength(favoriteContent, 'books')
+  };
+
   return (
     <div className={classes.stats}>
-      <div className={classes.stats__container}>
-        <StatsGraph title='all' />
+      <div className={classes.graph__container}>
+        <StatsGraph content={allObj} title='Все' />
         <div className={classes.stats__row}>
-          <StatsGraph title='games' />
-          <StatsGraph title='movies' />
-        </div>
-        <div className={classes.stats__row}>
-          <StatsGraph title='shows' />
-          <StatsGraph title='books' />
+          <StatsGraph content={gamesObj} title='Игры' />
+          <StatsGraph content={moviesObj} title='Фильмы' />
+          <StatsGraph content={showsObj} title='Сериалы' />
+          <StatsGraph content={booksObj} title='Книги' />
         </div>
       </div>
 
