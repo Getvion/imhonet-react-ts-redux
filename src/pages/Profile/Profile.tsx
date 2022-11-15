@@ -20,7 +20,7 @@ export const Profile = () => {
 
   const tabsTitles = [
     { title: 'Избранные', route: 'favorite' },
-    { title: 'Ожидаемое', route: 'waiting' },
+    { title: 'Позже', route: 'waiting' },
     { title: 'Списки', route: 'lists' },
     { title: 'Статистика', route: 'stats' }
   ];

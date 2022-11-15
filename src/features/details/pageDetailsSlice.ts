@@ -19,8 +19,8 @@ export const loadShowsInfo = createAsyncThunk('load-show-info', async (showId: n
   showsRequests.getShowInfoByID(showId)
 );
 
-export const loadBookInfo = createAsyncThunk('load-book-info', async (showId: number | string) =>
-  booksRequests.getBookInfoByID(showId)
+export const loadBookInfo = createAsyncThunk('load-book-info', async (bookId: string) =>
+  booksRequests.getBookInfoByID(bookId)
 );
 
 const initialState: IItemInfo = {

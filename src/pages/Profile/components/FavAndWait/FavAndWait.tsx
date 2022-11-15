@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, SectionCard, ListPopup, EmptyList } from '../../../../components';
+import { Button, SectionCard, ListPopup } from '../../../../components';
 
 import { IItem } from '../../../../@types/intefaces';
 
@@ -89,9 +89,7 @@ export const FavAndWait: React.FC<IProps> = ({ itemsArr, dbSection }) => {
                 />
               )}
             </section>
-          ) : (
-            <EmptyList text='Вы пока ничего не добавили в список' />
-          )}
+          ) : null}
         </div>
       ))}
     </>

@@ -6,7 +6,7 @@ import { IItem } from '../../@types/intefaces';
 import classes from './ListPopup.module.scss';
 
 interface IProps {
-  setShowPopup: Function;
+  setShowPopup: (value: string) => void;
   itemsArr: IItem[];
   title: string;
   onDeleteItem: (filteredArr: IItem[], listTitle: string) => Promise<void>;
@@ -19,11 +19,11 @@ export const ListPopup: React.FC<IProps> = ({ itemsArr, setShowPopup, title, onD
     const filteredArrByName = itemsArr.filter((item: IItem) => item.name !== nameToDelete);
     onDeleteItem(filteredArrByName, title);
     setFilteredArr(filteredArrByName);
-    setShowPopup(false);
+    setShowPopup('');
   };
 
   const onClosePopup = () => {
-    setShowPopup(false);
+    setShowPopup('');
   };
 
   return (
