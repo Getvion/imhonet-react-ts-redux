@@ -9,19 +9,20 @@ const booksRequest = async <T>(
   request: string,
   key: boolean,
   res: boolean,
-  offset: number
+  offset: number,
+  order: boolean
 ): Promise<T> => {
   const response = await axios.get(
     `https://www.googleapis.com/books/v1/volumes${request}${key ? `&key=${BOOKS_API_KEY}` : ''}${
       res ? '&maxResults=20' : ''
-    }${offset ? `&startIndex=${offset}` : ''}&orderBy=newest`
+    }${offset ? `&startIndex=${offset}` : ''}${order ? '&orderBy=newest' : ''}`
   );
 
   return response.data;
 };
 
-const getBookInfoByID = async (bookID: string | number): Promise<IItemInfo> => {
-  const { id, volumeInfo } = await booksRequest<IBookRequest>(`/${bookID}`, false, false, 0);
+const getBookInfoByID = async (bookID: string): Promise<IItemInfo> => {
+  const { id, volumeInfo } = await booksRequest<IBookRequest>(`/${bookID}`, false, false, 0, false);
 
   return {
     id,
@@ -42,7 +43,7 @@ const getBestBooks = async (page: string): Promise<IRequestResult[]> => {
   const pageNumber = Number(page);
 
   const offset = pageNumber * 20;
-  const data = await booksRequest<ISearchBooksRequest>(`?q=игра`, true, true, offset);
+  const data = await booksRequest<ISearchBooksRequest>(`?q=игра`, true, true, offset, true);
 
   return [
     ...data.items.map(({ id, volumeInfo }) => ({
@@ -59,7 +60,7 @@ const getBestBooks = async (page: string): Promise<IRequestResult[]> => {
 };
 
 const searchBooksByName = async (bookQuery: string): Promise<IRequestResult[]> => {
-  const data = await booksRequest<ISearchBooksRequest>(`?q=${bookQuery}`, true, true, 0);
+  const data = await booksRequest<ISearchBooksRequest>(`?q=${bookQuery}`, true, true, 0, true);
 
   return [
     ...data.items.map(({ id, volumeInfo }) => ({
