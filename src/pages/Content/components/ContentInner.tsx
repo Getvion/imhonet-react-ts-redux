@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { SectionType } from '../../../@types/intefaces';
 import { IRequestResult } from '../../../@types/state';
 
 import { LoadingSpinner, SectionCard } from '../../../components';
@@ -12,7 +13,7 @@ import classes from '../Content.module.scss';
 
 interface IContentInner {
   content: { results: IRequestResult[]; isLoaded: boolean; isError: string };
-  section: string;
+  section: SectionType;
 }
 
 export const ContentInner: React.FC<IContentInner> = ({ content, section }) => {

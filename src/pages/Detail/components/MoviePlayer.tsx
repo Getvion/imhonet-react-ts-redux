@@ -1,8 +1,15 @@
 import React, { useEffect } from 'react';
 
+import { SectionType } from '../../../@types/intefaces';
+
 import classes from '../Detail.module.scss';
 
-export const MoviesPlayer = ({ sectionName, id }: { sectionName: string; id: number }) => {
+interface IProps {
+  sectionName: SectionType;
+  id: number;
+}
+
+export const MoviesPlayer: React.FC<IProps> = ({ sectionName, id }) => {
   // load yohoho movie
   useEffect(() => {
     if (sectionName === 'movies') {

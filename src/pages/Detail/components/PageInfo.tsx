@@ -4,11 +4,13 @@ import { ListItem } from './ListItem';
 
 import { IItemInfo } from '../../../@types/state';
 
+import { SectionType } from '../../../@types/intefaces';
+
 import classes from '../Detail.module.scss';
 
 interface IProps {
   pageDetails: IItemInfo;
-  sectionName: string;
+  sectionName: SectionType;
 }
 
 export const PageInfo: React.FC<IProps> = ({ pageDetails, sectionName }) => {

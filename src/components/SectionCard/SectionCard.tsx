@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { SectionType } from '../../@types/intefaces';
+
 import classes from './SectionCard.module.scss';
 
 interface IProps {
   name: string;
   bgImage: string;
   id: number;
-  section: string;
+  section: SectionType;
 }
 
 export const SectionCard: React.FC<IProps> = ({ name, bgImage, id, section }) => (

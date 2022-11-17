@@ -21,16 +21,16 @@ import {
   setLoginOffer,
   setNotification
 } from '../../features';
-import { selectUser } from '../../features/auth/userSlice';
+import { selectUserData } from '../../features/auth/userSlice';
 
 import { useAppDispatch } from '../../hooks';
 
-import { IAdd } from '../../@types/intefaces';
+import { IAdd, IItem, SectionType } from '../../@types/intefaces';
 
 import classes from './Detail.module.scss';
 
 interface IProps {
-  sectionName: string;
+  sectionName: SectionType;
 }
 
 export const Detail: React.FC<IProps> = ({ sectionName }) => {
@@ -159,7 +159,7 @@ export const Detail: React.FC<IProps> = ({ sectionName }) => {
           {sectionName === 'movies' && <MoviePlayer sectionName={sectionName} id={id} />}
           <div className={classes.ratings}>
             <h3 className={classes.ratings__title}>Оценка</h3>
-            <Ratings />
+            <Ratings section={sectionName} />
           </div>
         </>
       ) : (

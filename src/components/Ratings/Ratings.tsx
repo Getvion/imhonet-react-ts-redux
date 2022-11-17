@@ -16,21 +16,21 @@ import skipImg from './img/skip.png';
 
 import { Button } from '..';
 
-import { IAddReview, SubmitFormType } from '../../@types/intefaces';
+import { IAddReview, IReview, SectionType, SubmitFormType } from '../../@types/intefaces';
 
 import { useFetchUser } from '../../hooks';
 
 import classes from './Ratings.module.scss';
 
 interface IProps {
-  section: string;
+  section: SectionType;
 }
 
 export const Ratings: React.FC<IProps> = ({ section }) => {
   const dispatch = useDispatch();
 
   const { reviews, userData } = useFetchUser();
-  const { id, name, year } = useSelector(selectPageDetails);
+  const { id, name, year, genres } = useSelector(selectPageDetails);
 
   const findReviewObj = reviews
     .find((elem) => elem.sectionName === section)
@@ -53,7 +53,15 @@ export const Ratings: React.FC<IProps> = ({ section }) => {
   ];
 
   const updateBaseContent = async (reviewsArr: IAddReview[], rating: number) => {
-    const newObj = { id, section, reviewText: textareaValue, reviewRating: rating, name, year };
+    const newObj: IReview = {
+      id,
+      section,
+      reviewText: textareaValue,
+      reviewRating: rating,
+      name,
+      year,
+      genres
+    };
 
     const reviews = reviewsArr.map((element) =>
       element.sectionName === section

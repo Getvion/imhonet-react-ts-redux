@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { LoadingSpinner, SectionCard } from '../../../components';
 
 import { IRequestResult } from '../../../@types/state';
+import { SectionType } from '../../../@types/intefaces';
 
 import { setNotification } from '../../../features';
 
@@ -14,7 +15,7 @@ import 'swiper/css';
 
 interface IProps {
   content: { results: IRequestResult[]; isLoaded: boolean; isError: string };
-  section: string;
+  section: SectionType;
 }
 
 export const MainContent: React.FC<IProps> = ({ content, section }) => {
