@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-
 import { useSelector } from 'react-redux';
 
 import {
@@ -10,13 +9,17 @@ import {
   selectBestContent
 } from '../../features/best/bestContentSlice';
 
+import { SectionType } from '../../@types/intefaces';
+
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+
+import { Pagination } from '../../components';
 import { ContentInner } from './components';
 
 import classes from './Content.module.scss';
 
 interface IProps {
-  sectionName: string;
+  sectionName: SectionType;
 }
 
 export const Content: React.FC<IProps> = ({ sectionName }) => {
@@ -41,10 +44,23 @@ export const Content: React.FC<IProps> = ({ sectionName }) => {
   return (
     <div className={classes.content}>
       <h2 className={classes.content__title}>Лучшие {contentTypeCheck()}</h2>
-      {sectionName === 'games' ? <ContentInner content={games} section={sectionName} /> : null}
-      {sectionName === 'movies' ? <ContentInner content={movies} section={sectionName} /> : null}
-      {sectionName === 'shows' ? <ContentInner content={shows} section={sectionName} /> : null}
-      {sectionName === 'books' ? <ContentInner content={books} section={sectionName} /> : null}
+      {sectionName === 'games' && <ContentInner content={games} section={sectionName} />}
+      {sectionName === 'movies' && <ContentInner content={movies} section={sectionName} />}
+      {sectionName === 'shows' && <ContentInner content={shows} section={sectionName} />}
+      {sectionName === 'books' && <ContentInner content={books} section={sectionName} />}
+
+      {sectionName === 'games' && (
+        <Pagination onClick={(page: number) => dispatch(loadBestGames(String(page)))} />
+      )}
+      {sectionName === 'movies' && (
+        <Pagination onClick={(page: number) => dispatch(loadBestMovies(String(page)))} />
+      )}
+      {sectionName === 'shows' && (
+        <Pagination onClick={(page: number) => dispatch(loadBestShows(String(page)))} />
+      )}
+      {sectionName === 'books' && (
+        <Pagination onClick={(page: number) => dispatch(loadBestBooks(String(page)))} />
+      )}
     </div>
   );
 };
