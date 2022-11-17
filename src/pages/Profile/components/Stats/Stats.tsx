@@ -1,136 +1,26 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-return-assign */
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { BarChart, Bar, PieChart, Pie, Tooltip, XAxis, YAxis } from 'recharts';
 
 import { IItem, IReview, SectionType } from '../../../../@types/intefaces';
 
 import { selectUser } from '../../../../features/auth/userSlice';
 
-import { useWindowDimensions } from '../../../../hooks';
+import { StatsGenres, StatsGraph, StatsYear } from './StatsCompoents';
 
 import classes from './Stats.module.scss';
 
-interface IStatsService {
-  title: string;
-  content: { favorite: number; waiting: number; completed: number };
-}
-
-const StatsGraph: React.FC<IStatsService> = ({ content, title }) => {
-  const { completed, favorite, waiting } = content;
-
-  const all = completed + favorite + waiting;
-
-  const calcBarWidth = (part: number) => `${(part / all) * 100}%`;
-
-  return (
-    <div className={classes.graph}>
-      <h2 className={classes.graph__title}>
-        {title}
-        <span className={classes.graph__title__number}> {all}</span>
-      </h2>
-      <div className={classes.graph__item}>
-        <span className={classes.graph__item__text}>Оценено</span>
-        <div className={classes.graph__line}>
-          <span className={classes.graph__line__full} />
-          <span className={classes.graph__line__part} style={{ width: calcBarWidth(completed) }} />
-        </div>
-        <span className={classes.graph__item__number}>{completed}</span>
-      </div>
-
-      <div className={classes.graph__item}>
-        <span className={classes.graph__item__text}>Позже</span>
-        <div className={classes.graph__line}>
-          <span className={classes.graph__line__full} />
-          <span className={classes.graph__line__part} style={{ width: calcBarWidth(favorite) }} />
-        </div>
-        <span className={classes.graph__item__number}>{favorite}</span>
-      </div>
-
-      <div className={classes.graph__item}>
-        <span className={classes.graph__item__text}>Любимое</span>
-        <div className={classes.graph__line}>
-          <span className={classes.graph__line__full} />
-          <span className={classes.graph__line__part} style={{ width: calcBarWidth(waiting) }} />
-        </div>
-        <span className={classes.graph__item__number}>{waiting}</span>
-      </div>
-    </div>
-  );
+export type YearsDataType = {
+  [key in 'year' | 'games' | 'shows' | 'books' | 'movies' | 'all']: number;
 };
 
-interface IStatsYear {
-  title: string;
-  section: keyof IYearsStateData;
-  data: IYearsStateData[];
+export interface IGenreData {
+  name: string;
+  count: number;
 }
-
-interface IYearsStateData {
-  year: number;
-  games: number;
-  shows: number;
-  books: number;
-  movies: number;
-  all: number;
-}
-
-const StatsYear: React.FC<IStatsYear> = ({ title, data, section }) => {
-  const { windowWidth } = useWindowDimensions();
-  const [width, setWidth] = useState(windowWidth / 2);
-
-  const sortedData = data.sort((a, b) => a.year - b.year);
-
-  const screenOffset = 100;
-  useEffect(() => {
-    if (windowWidth < 800) setWidth(windowWidth - screenOffset);
-    if (windowWidth > 1200) setWidth(windowWidth / 2);
-  }, [windowWidth]);
-
-  return (
-    <div style={{ width }}>
-      <h2>{title}</h2>
-      <BarChart width={width} height={150} data={sortedData}>
-        <YAxis dataKey='all' />
-        <XAxis dataKey='year' />
-        <Bar dataKey={section} fill='rgb(67, 84, 186)' />
-        <Tooltip />
-      </BarChart>
-    </div>
-  );
-};
-
-interface IStatsGenresProps {
-  title: string;
-}
-
-const StatsGenres: React.FC<IStatsGenresProps> = ({ title }) => {
-  const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-    { name: 'Group E', value: 278 },
-    { name: 'Group F', value: 189 }
-  ];
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <h2 style={{ marginBottom: 20 }}>{title}</h2>
-      <PieChart width={200} height={200}>
-        <Pie
-          dataKey='value'
-          isAnimationActive={false}
-          data={data}
-          outerRadius={99}
-          fill='#8884d8'
-        />
-        <Tooltip />
-      </PieChart>
-    </div>
-  );
-};
 
 export const Stats = () => {
-  // const [genresData, setGenresData] = useState([]);
-
   const { favoriteContent, reviews, waitingContent } = useSelector(selectUser);
 
   const allContent: IItem[] & IReview[] = [];
@@ -143,34 +33,19 @@ export const Stats = () => {
     (elem, index, self) => index === self.findIndex((t) => t.id === elem.id)
   );
 
-  // years stats
-  let yearData: IYearsStateData[] = [];
-
-  arrWithoutDublicates.forEach(({ section, year }) => {
-    const baseYear: IYearsStateData = { year: 0, games: 0, shows: 0, books: 0, movies: 0, all: 0 };
-    const yearsAdded = yearData.find((elem) => elem.year === Number(year));
-    const yearsWithoutAdded = yearData.filter((elem) => Number(elem.year) !== Number(year));
-
-    if (yearsAdded) {
-      yearData = [
-        ...yearsWithoutAdded,
-        { ...yearsAdded, [section]: yearsAdded[section] + 1, all: yearsAdded.all + 1 }
-      ];
-    } else {
-      yearData = [...yearsWithoutAdded, { ...baseYear, year: Number(year), [section]: 1, all: 1 }];
-    }
-  });
-
   // stats graph
-  const allCompleted = [...reviews.map((elem) => elem.items)].length;
-  const allWaiting = [...waitingContent.map((elem) => elem.items)].length;
-  const allFavorite = [...favoriteContent.map((elem) => elem.items)].length;
+  const allObj = { completed: 0, favorite: 0, waiting: 0 };
 
-  const allObj = { completed: allCompleted, favorite: allFavorite, waiting: allWaiting };
+  favoriteContent.forEach(({ items }) => items.forEach(() => (allObj.favorite += 1)));
+  waitingContent.forEach(({ items }) => items.forEach(() => (allObj.waiting += 1)));
+  reviews.forEach(({ items }) => items.forEach(() => (allObj.completed += 1)));
 
-  type ContentType = { sectionName: SectionType; items: IReview[] | IItem[] };
+  interface IContent {
+    sectionName: SectionType;
+    items: IReview[] | IItem[];
+  }
 
-  const getContentLength = (content: ContentType[], sectionName: SectionType): number =>
+  const getContentLength = (content: IContent[], sectionName: SectionType): number =>
     content.find((elem) => elem.sectionName === sectionName)?.items.length as number;
 
   const gamesObj = {
@@ -197,6 +72,60 @@ export const Stats = () => {
     favorite: getContentLength(favoriteContent, 'books')
   };
 
+  // years stats
+  let yearsData: YearsDataType[] = [];
+
+  arrWithoutDublicates.forEach(({ section, year }) => {
+    const yearAdded = yearsData.find((elem) => elem.year === Number(year));
+    const yearsWithoutAdded = yearsData.filter((elem) => Number(elem.year) !== Number(year));
+
+    if (yearAdded) {
+      yearsData = [
+        ...yearsWithoutAdded,
+        { ...yearAdded, [section]: yearAdded[section] + 1, all: yearAdded.all + 1 }
+      ];
+    } else {
+      const baseYear: YearsDataType = { year: 0, games: 0, shows: 0, books: 0, movies: 0, all: 1 };
+      yearsData = [...yearsWithoutAdded, { ...baseYear, year: Number(year), [section]: 1 }];
+    }
+  });
+
+  // stats genres
+  type GenresDataType = {
+    [key in 'all' | 'games' | 'books' | 'shows' | 'movies']: IGenreData[];
+  };
+
+  const addGenreContent = (
+    withoutAdded: GenresDataType,
+    newContent: IGenreData,
+    section: SectionType
+  ) => ({
+    ...withoutAdded,
+    all: [...withoutAdded.all, newContent],
+    [section]: [...withoutAdded[section], newContent]
+  });
+
+  let genresData: GenresDataType = { all: [], games: [], movies: [], shows: [], books: [] };
+
+  arrWithoutDublicates.forEach(({ genres, section }) => {
+    genres.forEach((genre) => {
+      const genreAdded = genresData[section].find((elem) => genre === elem.name);
+      const genresWithoutAdded = {
+        ...genresData,
+        all: [...genresData.all.filter((elem) => genre !== elem.name)],
+        [section]: genresData[section].filter((elem) => genre !== elem.name)
+      };
+
+      if (genreAdded) {
+        const baseAddedGenre: IGenreData = { ...genreAdded, count: genreAdded.count + 1 };
+        genresData = addGenreContent(genresWithoutAdded, baseAddedGenre, section);
+      } else {
+        const baseGenre: IGenreData = { name: genre, count: 1 };
+        genresData = addGenreContent(genresWithoutAdded, baseGenre, section);
+      }
+    });
+  });
+
   return (
     <div className={classes.stats}>
       <div className={classes.graph__container}>
@@ -210,23 +139,23 @@ export const Stats = () => {
       </div>
 
       <div className={classes.stats__container}>
-        <StatsYear section='all' data={yearData} title='Все' />
+        <StatsYear section='all' data={yearsData} title='Все' />
         <div className={classes.stats__row}>
-          <StatsYear section='games' data={yearData} title='Игры' />
-          <StatsYear section='movies' data={yearData} title='Фильмы' />
+          <StatsYear section='games' data={yearsData} title='Игры' />
+          <StatsYear section='movies' data={yearsData} title='Фильмы' />
         </div>
         <div className={classes.stats__row}>
-          <StatsYear section='shows' data={yearData} title='Сериалы' />
-          <StatsYear section='books' data={yearData} title='Книги' />
+          <StatsYear section='shows' data={yearsData} title='Сериалы' />
+          <StatsYear section='books' data={yearsData} title='Книги' />
         </div>
       </div>
 
       <div className={classes.pie__container}>
-        <StatsGenres title='all' />
-        <StatsGenres title='games' />
-        <StatsGenres title='movies' />
-        <StatsGenres title='shows' />
-        <StatsGenres title='books' />
+        {genresData.all.length ? <StatsGenres title='Все' data={genresData.all} /> : null}
+        {genresData.games.length ? <StatsGenres title='Игры' data={genresData.games} /> : null}
+        {genresData.movies.length ? <StatsGenres title='Фильмы' data={genresData.movies} /> : null}
+        {genresData.shows.length ? <StatsGenres title='Сериалы' data={genresData.shows} /> : null}
+        {genresData.books.length ? <StatsGenres title='Книги' data={genresData.books} /> : null}
       </div>
     </div>
   );
