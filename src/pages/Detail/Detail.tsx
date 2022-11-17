@@ -36,23 +36,34 @@ interface IProps {
 export const Detail: React.FC<IProps> = ({ sectionName }) => {
   const dispatch = useAppDispatch();
 
-  const { userData } = useSelector(selectUser);
+  const { email } = useSelector(selectUserData);
   const pageDetails = useSelector(selectPageDetails);
-  const { name, nameOriginal, id, posterUrl, rating1, rating2, description } = pageDetails;
+  const { name, nameOriginal, id, posterUrl, rating1, rating2, description, year, genres } =
+    pageDetails;
 
-  const addContent = (contentType: IAdd[]) =>
-    contentType.map((element) => {
-      if (element.sectionName === sectionName) {
-        return {
-          ...element,
-          items: [
-            ...element.items,
-            { id, name, nameOrig: nameOriginal, bgImg: posterUrl, section: sectionName }
-          ]
-        };
-      }
-      return element;
-    });
+  const updateBaseContent = async (content: IAdd[], section: string) => {
+    const newObj: IItem = {
+      id,
+      name,
+      nameOrig: nameOriginal,
+      bgImg: posterUrl,
+      section: sectionName,
+      year,
+      genres
+    };
+
+    const newContent = content.map((element) =>
+      element.sectionName === sectionName
+        ? { ...element, items: [...element.items, newObj] }
+        : element
+    );
+
+    await updateDoc(doc(db, 'users', email), { [section]: newContent })
+      .then(() => dispatch(setNotification({ type: 'success', text: 'Успешно добавлено' })))
+      .catch(() =>
+        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' }))
+      );
+  };
 
   const onLaterClick = async (waitingContent: IAdd[]) => {
     const findWaitSection = waitingContent.find((item: IAdd) => item.sectionName === sectionName);
@@ -64,13 +75,7 @@ export const Detail: React.FC<IProps> = ({ sectionName }) => {
       );
     }
 
-    await updateDoc(doc(db, 'users', userData.email), {
-      waitingContent: addContent(waitingContent)
-    })
-      .then(() => dispatch(setNotification({ type: 'success', text: 'Успешно добавлено' })))
-      .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' }))
-      );
+    updateBaseContent(waitingContent, 'waitingContent');
   };
 
   const onFavoriteClick = async (favoriteContent: IAdd[]) => {
@@ -82,13 +87,7 @@ export const Detail: React.FC<IProps> = ({ sectionName }) => {
         setNotification({ type: 'warning', text: 'Вы уже добавляли этот элемент в список' })
       );
 
-    await updateDoc(doc(db, 'users', userData.email), {
-      favoriteContent: addContent(favoriteContent)
-    })
-      .then(() => dispatch(setNotification({ type: 'success', text: 'Успешно добавлено' })))
-      .catch(() =>
-        dispatch(setNotification({ type: 'reject', text: 'Произошла ошибка попробуйте снова' }))
-      );
+    updateBaseContent(favoriteContent, 'favoriteContent');
   };
 
   const onAddCustomList = () => {
@@ -104,9 +103,9 @@ export const Detail: React.FC<IProps> = ({ sectionName }) => {
   };
 
   const onAddItem = async (triggerList: string) => {
-    if (!userData.email) return dispatch(setLoginOffer(true));
+    if (!email) return dispatch(setLoginOffer(true));
 
-    const docRef = doc(db, 'users', userData.email);
+    const docRef = doc(db, 'users', email);
     const docSnap = await getDoc(docRef);
     const fetchData = docSnap.data();
     if (!fetchData) return null;
